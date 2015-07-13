@@ -69,6 +69,12 @@ import AVFoundation
             }
         }
         
+        stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
+        if captureSession.canAddOutput(stillImageOutput) {
+            captureSession.addOutput(stillImageOutput)
+        }
+
+        
         //Translucence
         var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
         visualEffectView.frame = cameraControlsView.bounds
@@ -82,17 +88,6 @@ import AVFoundation
     @IBAction func imagePickerButtonPressed(sender: UIButton) {
         let photoPicker = TWPhotoPickerController()
         delegate?.cameraViewimagePickerTapped()
-        
-        //do this stuff
-//        self.presentViewController(photoPicker, animated: true, completion: nil)
-//        photoPicker.cropBlock = { (image:UIImage!) -> () in
-//            self.dismissViewControllerAnimated(false, completion: { () -> Void in
-//                self.editSpotVc.addImage(image)
-//                
-//                self.presentViewController(self.editSpotVc, animated: false, completion: nil)
-//            })
-//        }
-        
     }
     
     
@@ -102,29 +97,23 @@ import AVFoundation
     //IBACTION: TAKE PHOTO
     @IBAction func shutterButtonPressed(sender: UIButton) {
         
-        // Get the image
-        stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
-        if captureSession.canAddOutput(stillImageOutput) {
-            captureSession.addOutput(stillImageOutput)
-        }
-        let delay = 0.25 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue()) {
-            var videoConnection = self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)
-            if videoConnection != nil {
-                self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo))
-                    { (imageDataSampleBuffer, error) -> Void in
-                        self.imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                        let convertedImage:UIImage = UIImage(data: self.imageData!)!
-                        let croppedImage = ImageUtil.scaleAndCropImage(convertedImage)
-                        self.delegate?.cameraViewShutterButtonTapped(croppedImage)
-                }
-            } else {
-                self.delegate?.cameraViewShutterButtonTapped(nil)
+    // Get the image
+        var videoConnection = self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)
+        if videoConnection != nil {
+            self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection)
+                { (imageDataSampleBuffer, error) -> Void in
+                    self.imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    let convertedImage = UIImage(data: self.imageData!)!
+                    let croppedImage = ImageUtil.scaleAndCropImage(convertedImage)
+                    self.delegate?.cameraViewShutterButtonTapped(croppedImage)
             }
+        } else {
+            self.delegate?.cameraViewShutterButtonTapped(nil)
+            println("ELSE???")
         }
+
     }
-        
+    
     @IBAction func switchCameraButtonPressed(sender: UIButton) {
         captureSession.beginConfiguration()
         if captureDeviceInputFront == nil {
@@ -160,6 +149,8 @@ import AVFoundation
             isInputBack = true
         }
         captureSession.commitConfiguration()
+
+        
     }
     
     
@@ -175,10 +166,7 @@ import AVFoundation
     func beginSession() {
         configureDevice()
         var err : NSError? = nil
-        
-        //        captureDeviceInputFront = AVCaptureDeviceInput(device: captureDeviceFront, error: &err)
         captureDeviceInputBack = AVCaptureDeviceInput(device: captureDeviceBack, error: &err)
-        
         captureSession.addInput(captureDeviceInputBack)
         if err != nil {
             println("error: \(err?.localizedDescription)")
@@ -187,6 +175,25 @@ import AVFoundation
         self.view.layer.addSublayer(previewLayer)
         previewLayer?.frame = screenSize
         captureSession.startRunning()
+    }
+
+    /**
+        REQUIRED In viewWillAppear of camera view controller.
+        Fixes bug with sessions running on two camera view controllers.
+    */
+    func startCaptureSessionIfStopped() {
+        if captureSession.running == false {
+            captureSession.startRunning()
+        }
+    }
+    /**
+        REQUIRED In viewWillDisappear of camera view controller.
+        Fixes bug with sessions running on two camera view controllers.
+    */
+    func stopCaptureSessionIfRunning() {
+        if captureSession.running == true {
+            captureSession.stopRunning()
+        }
     }
     
     

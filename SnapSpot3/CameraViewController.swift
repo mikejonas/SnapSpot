@@ -40,16 +40,12 @@ class CameraViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.barTintColor = nil
         self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        cameraView.startCaptureSessionIfStopped()
     }
-    override func viewDidAppear(animated: Bool) {
-        if cameraView.captureSession.running {
-            cameraView.captureSession.stopRunning()
-            cameraView.captureSession.startRunning()
-        }
+    override func viewWillDisappear(animated: Bool) {
+        cameraView.stopCaptureSessionIfRunning()
     }
 }
-
-
 
 
 //-------------------
@@ -59,9 +55,7 @@ extension CameraViewController: CameraViewDelegate {
     func cameraViewimagePickerTapped() {
         self.presentViewController(photoPicker, animated: true, completion: nil)
         photoPicker.cropBlock = { (image:UIImage!) -> () in
-            
             self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                
                 self.editSpotVc.addImage(image)
                 self.presentViewController(self.editSpotVc, animated: false, completion: nil)
             })
@@ -78,11 +72,9 @@ extension CameraViewController: CameraViewDelegate {
 //-------------------
 extension CameraViewController: EditSpotViewControllerDelegate {
     func spotClosed() {
-        println("CLOSED!")
         dismissViewControllerAnimated(false, completion: nil)
     }
     func spotSaved() {
-        println("Saved")
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

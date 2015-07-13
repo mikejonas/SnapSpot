@@ -24,23 +24,19 @@ class AddImageCameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        println("AddImageCameraViewController")
-        
+                
         cameraView.delegate = self
         // Do any additional setup after loading the view.
     }
     override func viewDidLayoutSubviews() {
 //        navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for your navBar
     }
-    override func viewDidAppear(animated: Bool) {
-        if cameraView.captureSession.running {
-            cameraView.captureSession.stopRunning()
-            cameraView.captureSession.startRunning()
-        }
-        
+    override func viewWillAppear(animated: Bool) {
+        cameraView.startCaptureSessionIfStopped()
     }
-
+    override func viewWillDisappear(animated: Bool) {
+        cameraView.stopCaptureSessionIfRunning()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

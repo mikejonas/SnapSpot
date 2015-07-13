@@ -19,12 +19,10 @@ class ImageUtil {
         let navbarHeight:CGFloat = 64
         let posX:CGFloat = (image.size.width / screenWidth) * navbarHeight
         let posY:CGFloat = 0
-        println(posY)
         
         let rect: CGRect = CGRectMake(posX, posY, image.size.width, image.size.width)
         let imageRef: CGImageRef = CGImageCreateWithImageInRect(image.CGImage, rect)
         let croppedImage: UIImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)!
-//        println(croppedImage.size.width, croppedImage.size.height)
         return croppedImage
     }
     

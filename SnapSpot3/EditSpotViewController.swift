@@ -134,7 +134,6 @@ extension EditSpotViewController: AddImageCameraViewControllerDelegate {
         })
     }
     func reloadImages() {
-        println(imageArray.count)
         if (imageArray.count == 0) {
             self.photoThumbnail0?.image = nil
         }
