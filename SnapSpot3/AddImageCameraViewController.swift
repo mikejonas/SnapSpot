@@ -1,0 +1,69 @@
+//
+//  AddImageCameraViewController.swift
+//  SnapSpot3
+//
+//  Created by Mike Jonas on 7/9/15.
+//  Copyright (c) 2015 Mike Jonas. All rights reserved.
+//
+
+import UIKit
+
+protocol AddImageCameraViewControllerDelegate {
+    func addImageCanceled()
+    func ImageAdded(image:UIImage)
+}
+
+
+class AddImageCameraViewController: UIViewController {
+
+    
+    @IBOutlet weak var navigationBar: CameraView!
+    @IBOutlet weak var cameraView: CameraView!
+    let photoPicker = TWPhotoPickerController()
+    var delegate: AddImageCameraViewControllerDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        println("AddImageCameraViewController")
+        
+        cameraView.delegate = self
+        // Do any additional setup after loading the view.
+    }
+    override func viewDidLayoutSubviews() {
+//        navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for your navBar
+    }
+    override func viewDidAppear(animated: Bool) {
+        if cameraView.captureSession.running {
+            cameraView.captureSession.stopRunning()
+            cameraView.captureSession.startRunning()
+        }
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func backBarButtonItemTapped(sender: UIBarButtonItem) {
+        delegate?.addImageCanceled()
+    }
+    
+}
+
+//-------------------
+//Camera Delegate
+//-------------------
+extension AddImageCameraViewController: CameraViewDelegate {
+    func cameraViewimagePickerTapped() {
+        self.presentViewController(photoPicker, animated: true, completion: nil)
+        photoPicker.cropBlock = { (image:UIImage!) -> () in
+            self.delegate?.ImageAdded(image)
+        }
+    }
+    func cameraViewShutterButtonTapped(image: UIImage?) {
+            self.delegate?.ImageAdded(image!)
+        
+    }
+}

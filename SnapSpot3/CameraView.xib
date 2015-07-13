@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraView" customModule="SnapSpot3" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraControlsView" destination="c6x-5r-Gg6" id="k60-6E-LVk"/>
+                <outlet property="view" destination="iN0-l3-epB" id="7qH-MA-sX5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6x-5r-Gg6" userLabel="Camera Controls View">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <view alpha="0.40000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ps-an-Xpt">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAi-m9-6T9">
+                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <state key="normal" image="camera-roll-icon">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                        <rect key="frame" x="28" y="55" width="40" height="40"/>
+                                    </variation>
+                                    <connections>
+                                        <action selector="imagePickerButtonPressed:" destination="-1" eventType="touchUpInside" id="Wp1-n2-EJS"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8x-br-QsT">
+                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <state key="normal" image="shutter">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                        <rect key="frame" x="118" y="35" width="80" height="80"/>
+                                    </variation>
+                                    <connections>
+                                        <action selector="shutterButtonPressed:" destination="-1" eventType="touchUpInside" id="mbx-BQ-7XH"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <variation key="default">
+                                <mask key="subviews">
+                                    <exclude reference="ZAi-m9-6T9"/>
+                                    <exclude reference="j8x-br-QsT"/>
+                                </mask>
+                            </variation>
+                            <variation key="widthClass=compact" fixedFrame="YES">
+                                <rect key="frame" x="0.0" y="47" width="400" height="163"/>
+                                <mask key="subviews">
+                                    <include reference="ZAi-m9-6T9"/>
+                                    <include reference="j8x-br-QsT"/>
+                                </mask>
+                            </variation>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRr-Bj-wtC">
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                            <state key="normal" title="Button" image="camera-swap">
+                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="widthClass=compact" fixedFrame="YES">
+                                <rect key="frame" x="262" y="11" width="28" height="28"/>
+                            </variation>
+                            <connections>
+                                <action selector="switchCameraButtonPressed:" destination="-1" eventType="touchUpInside" id="S5r-lX-kE8"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="6Ps-an-Xpt"/>
+                            <exclude reference="lRr-Bj-wtC"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="0.0" y="390" width="400" height="210"/>
+                        <mask key="subviews">
+                            <include reference="6Ps-an-Xpt"/>
+                            <include reference="lRr-Bj-wtC"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="c6x-5r-Gg6"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="c6x-5r-Gg6"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+    <resources>
+        <image name="camera-roll-icon" width="40" height="40"/>
+        <image name="camera-swap" width="128" height="128"/>
+        <image name="shutter" width="80" height="80"/>
+    </resources>
+</document>
