@@ -54,12 +54,18 @@ class CameraViewController: UIViewController {
 extension CameraViewController: CameraViewDelegate {
     func cameraViewimagePickerTapped() {
         self.presentViewController(photoPicker, animated: true, completion: nil)
-        photoPicker.cropBlock = { (image:UIImage!) -> () in
+        
+        //CROPBLOCK
+        photoPicker.cropBlock = { (image:UIImage!, coord2d: CLLocationCoordinate2D) -> () in
             self.dismissViewControllerAnimated(false, completion: { () -> Void in
                 self.editSpotVc.addImage(image)
+                if(coord2d.latitude != 0 && coord2d.longitude != 0){
+                    println(coord2d.latitude, coord2d.longitude)
+                }
                 self.presentViewController(self.editSpotVc, animated: false, completion: nil)
             })
         }
+        
     }
     func cameraViewShutterButtonTapped(image: UIImage?) {
         self.editSpotVc.addImage(image!)

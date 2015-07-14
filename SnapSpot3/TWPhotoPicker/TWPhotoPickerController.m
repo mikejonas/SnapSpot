@@ -13,6 +13,9 @@
 
 @interface TWPhotoPickerController ()<UICollectionViewDataSource, UICollectionViewDelegate> {
     CGFloat beginOriginY;
+    float lat;
+    float lon;
+    TWPhoto *photoSelected;
 }
 @property (strong, nonatomic) UIView *topView;
 @property (strong, nonatomic) UIImageView *maskView;
@@ -68,11 +71,9 @@
 #pragma mark - UICollectionViewDelegate
 //HERE
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    TWPhoto *photo = [self.allPhotos objectAtIndex:indexPath.row];
-    [self.imageScrollView displayImage:photo.originalImage];
-    
-    NSLog(@"GPSData: %@",photo.asset.defaultRepresentation.metadata[@"{GPS}"]);
-
+    photoSelected = [self.allPhotos objectAtIndex:indexPath.row];
+    [self.imageScrollView displayImage:photoSelected.originalImage];
+//    NSLog(@"GPSData: %@",photoSelected.asset.defaultRepresentation.metadata[@"{GPS}"]);
     if (self.topView.frame.origin.y != 0) {
         [self tapGestureAction:nil];
     }
@@ -94,14 +95,20 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)cropAction {
-    if (self.cropBlock) {
+    - (void)cropAction {
         
-        self.cropBlock(self.imageScrollView.capture);
-    } else {
-    [self backAction];
+        if (self.cropBlock) {
+            
+            NSDictionary * dict = photoSelected.asset.defaultRepresentation.metadata[@"{GPS}"];
+            CLLocationCoordinate2D coord2D;
+            coord2D.longitude = (CLLocationDegrees)[[dict objectForKey:@"Longitude"] floatValue];
+            coord2D.latitude = (CLLocationDegrees)[[dict objectForKey:@"Latitude"] floatValue];
+
+            self.cropBlock(self.imageScrollView.capture, coord2D);
+            
+        }
+        [self backAction];
     }
-}
 
 - (void)panGestureAction:(UIPanGestureRecognizer *)panGesture {
     switch (panGesture.state)
@@ -176,8 +183,8 @@
         if (!error) {
             self.allPhotos = [NSArray arrayWithArray:photos];
             if (self.allPhotos.count) {
-                TWPhoto *firstPhoto = [self.allPhotos objectAtIndex:0];
-                [self.imageScrollView displayImage:firstPhoto.originalImage];
+                photoSelected = [self.allPhotos objectAtIndex:0];
+                [self.imageScrollView displayImage:photoSelected.originalImage];
             }
             [self.collectionView reloadData];
         } else {

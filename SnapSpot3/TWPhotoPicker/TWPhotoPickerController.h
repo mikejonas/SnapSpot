@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AssetsLibrary/AssetsLibrary.h>
-
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface TWPhotoPickerController : UIViewController
 
-@property (nonatomic, copy) void(^cropBlock)(UIImage *image);
-
-@property (nonatomic, strong) ALAsset *asset;
+@property (nonatomic, copy) void(^cropBlock)(UIImage *image , CLLocationCoordinate2D coord2D);
 
 @end

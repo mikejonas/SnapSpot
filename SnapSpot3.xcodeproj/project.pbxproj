@@ -14,7 +14,6 @@
 		DD1B0D271B47688900D06BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D261B47688900D06BC5 /* Images.xcassets */; };
 		DD1B0D2A1B47688900D06BC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D281B47688900D06BC5 /* LaunchScreen.xib */; };
 		DD1B0D361B47688900D06BC5 /* SnapSpot3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D351B47688900D06BC5 /* SnapSpot3Tests.swift */; };
-		DD1B0D401B47690700D06BC5 /* CameraViewController-old.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D3F1B47690700D06BC5 /* CameraViewController-old.swift */; };
 		DD1B0D451B476CE100D06BC5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */; };
 		DD1B0D471B476CE800D06BC5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */; };
 		DD1B0D571B478AE200D06BC5 /* AddressComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D561B478AE200D06BC5 /* AddressComponents.swift */; };
@@ -64,7 +63,6 @@
 		DD1B0D2F1B47688900D06BC5 /* SnapSpot3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapSpot3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD1B0D341B47688900D06BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD1B0D351B47688900D06BC5 /* SnapSpot3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapSpot3Tests.swift; sourceTree = "<group>"; };
-		DD1B0D3F1B47690700D06BC5 /* CameraViewController-old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CameraViewController-old.swift"; sourceTree = "<group>"; };
 		DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		DD1B0D561B478AE200D06BC5 /* AddressComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressComponents.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 				DD1B0D621B478DE900D06BC5 /* Views */,
 				DD1B0D261B47688900D06BC5 /* Images.xcassets */,
 				DD1B0D281B47688900D06BC5 /* LaunchScreen.xib */,
-				DD1B0D3F1B47690700D06BC5 /* CameraViewController-old.swift */,
 				DD1B0D1D1B47688900D06BC5 /* Supporting Files */,
 			);
 			path = SnapSpot3;
@@ -443,7 +440,6 @@
 				DD1B0D7C1B478E7A00D06BC5 /* TWPhoto.m in Sources */,
 				DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */,
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
-				DD1B0D401B47690700D06BC5 /* CameraViewController-old.swift in Sources */,
 				DD1B0D7B1B478E7A00D06BC5 /* TWImageScrollView.m in Sources */,
 				DD1B0D7D1B478E7A00D06BC5 /* TWPhotoCollectionViewCell.m in Sources */,
 			);
