@@ -199,56 +199,48 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sNZ-J8-LZl" customClass="CameraView" customModule="SnapSpot3" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <subviews>
-                                    <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="aNk-fO-prY">
-                                        <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                        <textAttributes key="titleTextAttributes">
-                                            <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
-                                        </textAttributes>
-                                        <items>
-                                            <navigationItem id="DUT-de-ZHF">
-                                                <barButtonItem key="leftBarButtonItem" image="Back" style="done" id="Of3-N9-Pl5">
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <connections>
-                                                        <action selector="backBarButtonItemTapped:" destination="TEU-RP-F6L" id="FZU-wW-p9r"/>
-                                                    </connections>
-                                                </barButtonItem>
-                                            </navigationItem>
-                                        </items>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                        </variation>
-                                    </navigationBar>
-                                </subviews>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="aNk-fO-prY"/>
-                                    </mask>
-                                </variation>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
-                                    <mask key="subviews">
-                                        <include reference="aNk-fO-prY"/>
-                                    </mask>
                                 </variation>
                             </view>
+                            <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="aNk-fO-prY">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem id="DUT-de-ZHF">
+                                        <barButtonItem key="leftBarButtonItem" image="Back" style="done" id="Of3-N9-Pl5">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="backBarButtonItemTapped:" destination="TEU-RP-F6L" id="FZU-wW-p9r"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="20" width="400" height="44"/>
+                                </variation>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="sNZ-J8-LZl"/>
+                                <exclude reference="aNk-fO-prY"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="sNZ-J8-LZl"/>
+                                <include reference="aNk-fO-prY"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="sNZ-J8-LZl" id="hZW-q5-AeL"/>
-                        <outlet property="navigationBar" destination="sNZ-J8-LZl" id="2AK-cs-c7c"/>
+                        <outlet property="navigationBar" destination="aNk-fO-prY" id="hff-6P-U5N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5h-89-U1N" userLabel="First Responder" sceneMemberID="firstResponder"/>

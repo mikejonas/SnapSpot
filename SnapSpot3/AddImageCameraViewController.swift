@@ -15,9 +15,9 @@ protocol AddImageCameraViewControllerDelegate {
 
 
 class AddImageCameraViewController: UIViewController {
-
     
-    @IBOutlet weak var navigationBar: CameraView!
+    
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var cameraView: CameraView!
     let photoPicker = TWPhotoPickerController()
     var delegate: AddImageCameraViewControllerDelegate?
@@ -29,7 +29,7 @@ class AddImageCameraViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     override func viewDidLayoutSubviews() {
-//        navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for your navBar
+        navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for your navBar
     }
     override func viewWillAppear(animated: Bool) {
         cameraView.startCaptureSessionIfStopped()
