@@ -229,7 +229,6 @@ extension EditSpotViewController {
 }
 
 extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
-    
     func placeNotSaved() {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -254,7 +253,6 @@ extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
         }
         return (topString, bottomString)
     }
-    
 }
 
 extension EditSpotViewController: UITextViewDelegate {
@@ -304,6 +302,5 @@ extension EditSpotViewController: UITextViewDelegate {
             return true
         }
     }
+    
 }
-
-

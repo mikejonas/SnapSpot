@@ -14,6 +14,8 @@ class CameraViewController: UIViewController {
    
     //IBOUTLETS
     @IBOutlet weak var cameraView: CameraView!
+    @IBOutlet weak var debugTextView: UITextView!
+    var debugi:Int = 0
     
    
     //VC INIT
@@ -97,50 +99,36 @@ extension CameraViewController: CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 5.0
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        //        if (locationFixAchieved == false) {
-        //            locationFixAchieved = true
-        //            var locationArray = locations as NSArray
-        //            var locationObj = locationArray.lastObject as CLLocation
-        //            self.locationCoordinates = locationObj
-        //        }
         var locationArray = locations as NSArray
         var locationObj = locationArray.lastObject as! CLLocation
         self.locationCoordinates = locationObj
         
-        //        LocationUtil.getLocationAddress(locationCoordinates, getLocCompletionHandler: { (addressString, error) -> Void in
-        //            self.debugTextView.text = "\(self.debugi)a:\(addressString!) \(self.locationCoordinates!.horizontalAccuracy) \n\n " + self.debugTextView.text
-        //
-        //            self.debugi++
-        //        })
-        //
-        //        LocationUtil.getLocationAddress2(locationCoordinates!)
+        if let coord2d = locationCoordinates?.coordinate {
+            self.debugTextView.text = "\(self.debugi): \(coord2d.latitude, coord2d.longitude) \(self.locationCoordinates!.horizontalAccuracy) \n\n " + self.debugTextView.text
+            self.debugi++
+        }
+        println("locationManager didupdatelocation")
+//        LocationUtil.getLocationAddress2(locationCoordinates, getLocCompletionHandler: { (spot:Spot, error) -> Void in
+//        })
     }
-    
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         var shouldIAllow = false
-        
         switch status {
-        case CLAuthorizationStatus.Restricted:
-            locationStatus = "Restricted Access to location"
-        case CLAuthorizationStatus.Denied:
-            locationStatus = "User denied access to location"
-        case CLAuthorizationStatus.NotDetermined:
-            locationStatus = "Status not determined"
+        case CLAuthorizationStatus.Restricted: locationStatus = "Restricted Access to location"
+        case CLAuthorizationStatus.Denied: locationStatus = "User denied access to location"
+        case CLAuthorizationStatus.NotDetermined: locationStatus = "Status not determined"
         default:
             locationStatus = "Allowed to location Access"
             shouldIAllow = true
         }
         NSNotificationCenter.defaultCenter().postNotificationName("LabelHasbeenUpdated", object: nil)
-        if (shouldIAllow == true) {
-            NSLog("Location to Allowed")
-            // Start location services
-            locationManager.startUpdatingLocation()
-        } else {
-            NSLog("Denied access: \(locationStatus)")
-        }
+        
+        // Start location services
+        shouldIAllow ? locationManager.startUpdatingLocation() : NSLog("Denied access: \(locationStatus)")
     }
 }

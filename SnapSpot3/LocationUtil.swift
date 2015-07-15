@@ -13,60 +13,36 @@ import AddressBookUI
 
 class LocationUtil: CLLocation {
     
-    class func getLocationAddress(location: CLLocation?, getLocCompletionHandler : (addressString : String?, error : NSError?) -> Void) {
-        if location != nil {
-            var geocoder = CLGeocoder()
-            geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)->Void in
-                var addressString : String = ""
-                //Your current code
-                var placemark:CLPlacemark!
-                if error == nil && placemarks.count > 0 {
-                    placemark = placemarks[0] as! CLPlacemark
-                    addressString = ABCreateStringWithAddressDictionary(placemark.addressDictionary, false)
-                    if placemark.areasOfInterest != nil {
-                        addressString = "\(placemark.areasOfInterest) " + addressString
-                    }
-                }
-                //Instead of returning the address string, call the 'getLocCompletionHandler'
-                getLocCompletionHandler(addressString: addressString, error: error)
-            })
-        } else {
-            println("Location = nil")
-        }
+    class func getLocationAddress2(location: CLLocation?, getLocCompletionHandler : (spot:Spot, error : NSError?) -> Void) {
+        var geocoder = CLGeocoder()
+        println("-> Finding user address...")
+        geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)->Void in
+            var placemark:CLPlacemark!
+            var spot = Spot()
+            if error == nil && placemarks.count > 0 {
+                placemark = placemarks[0] as! CLPlacemark
+    
+                spot.location = location
+                if placemark.ISOcountryCode != nil { spot.ISOcountryCode = placemark.ISOcountryCode }
+                if placemark.country != nil { spot.country = placemark.country }
+                if placemark.postalCode != nil { spot.postalCode = placemark.postalCode }
+                if placemark.administrativeArea != nil { spot.administrativeArea = placemark.administrativeArea }
+                if placemark.subAdministrativeArea != nil { spot.subAdministrativeArea = placemark.subAdministrativeArea }
+                if placemark.locality != nil { spot.locality = placemark.locality }
+                if placemark.subLocality != nil { spot.subLocality = placemark.subLocality }
+                if placemark.thoroughfare != nil { spot.thoroughfare = placemark.thoroughfare }
+                if placemark.region != nil { spot.region = placemark.region}
+                if placemark.inlandWater != nil { spot.inlandWater = placemark.inlandWater }
+                if placemark.ocean != nil { spot.ocean = placemark.ocean }
+                if placemark.areasOfInterest != nil { spot.areasOfInterest = placemark.areasOfInterest }
+                spot.addressString = self.makeAddress(placemark)
+            }
+            
+            //Instead of returning the address string, call the 'getLocCompletionHandler'
+            getLocCompletionHandler(spot: spot, error: error)
+            
+        })
     }
-
-//    class func getLocationAddress2(location: CLLocation?, getLocCompletionHandler : (spot:Spot, error : NSError?) -> Void) {
-//        var geocoder = CLGeocoder()
-//        
-//        println("-> Finding user address...")
-//        
-//        geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)->Void in
-//            var placemark:CLPlacemark!
-//            var spot = Spot()
-//            if error == nil && placemarks.count > 0 {
-//                placemark = placemarks[0] as! CLPlacemark
-//    
-//                spot.location = location
-//                if placemark.ISOcountryCode != nil { spot.ISOcountryCode = placemark.ISOcountryCode }
-//                if placemark.country != nil { spot.country = placemark.country }
-//                if placemark.postalCode != nil { spot.postalCode = placemark.postalCode }
-//                if placemark.administrativeArea != nil { spot.administrativeArea = placemark.administrativeArea }
-//                if placemark.subAdministrativeArea != nil { spot.subAdministrativeArea = placemark.subAdministrativeArea }
-//                if placemark.locality != nil { spot.locality = placemark.locality }
-//                if placemark.subLocality != nil { spot.subLocality = placemark.subLocality }
-//                if placemark.thoroughfare != nil { spot.thoroughfare = placemark.thoroughfare }
-//                if placemark.region != nil { spot.region = placemark.region}
-//                if placemark.inlandWater != nil { spot.inlandWater = placemark.inlandWater }
-//                if placemark.ocean != nil { spot.ocean = placemark.ocean }
-//                if placemark.areasOfInterest != nil { spot.areasOfInterest = placemark.areasOfInterest }
-//                spot.addressString = self.makeAddress(placemark)
-//            }
-//            
-//            //Instead of returning the address string, call the 'getLocCompletionHandler'
-//            getLocCompletionHandler(spot: spot, error: error)
-//            
-//        })
-//    }
     
     private class func makeAddress(placemark:CLPlacemark) -> String {
         var addressString : String = ""
