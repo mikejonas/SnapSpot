@@ -21,8 +21,8 @@ class LocationUtil: CLLocation {
             var spot = Spot()
             if error == nil && placemarks.count > 0 {
                 placemark = placemarks[0] as! CLPlacemark
-    
-                spot.location = location
+                
+                spot.coordinates = location?.coordinate
                 if placemark.ISOcountryCode != nil { spot.ISOcountryCode = placemark.ISOcountryCode }
                 if placemark.country != nil { spot.country = placemark.country }
                 if placemark.postalCode != nil { spot.postalCode = placemark.postalCode }

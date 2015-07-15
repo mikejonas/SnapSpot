@@ -302,5 +302,4 @@ extension EditSpotViewController: UITextViewDelegate {
             return true
         }
     }
-    
 }

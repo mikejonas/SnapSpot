@@ -36,6 +36,7 @@
 		DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */; };
 		DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */; };
 		DD55EDAF1B55B6C90014A0D0 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDAE1B55B6C90014A0D0 /* Spot.swift */; };
+		DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */; };
 		DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */; };
 		DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */; };
 /* End PBXBuildFile section */
@@ -92,6 +93,7 @@
 		DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUtil.swift; sourceTree = "<group>"; };
 		DD55EDAE1B55B6C90014A0D0 /* Spot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
+		DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
 		DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageCameraViewController.swift; sourceTree = "<group>"; };
 		DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,7 +142,7 @@
 		DD1B0D1C1B47688900D06BC5 /* SnapSpot3 */ = {
 			isa = PBXGroup;
 			children = (
-				DD55EDAD1B55B6B30014A0D0 /* Data */,
+				DD55EDB01B570A270014A0D0 /* Controller */,
 				DD1B0D231B47688900D06BC5 /* Main.storyboard */,
 				DD1B0D1F1B47688900D06BC5 /* AppDelegate.swift */,
 				DD1E4DDB1B4C39D1005147DD /* Utils */,
@@ -203,6 +205,7 @@
 		DD1B0D581B478AE700D06BC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DD55EDAE1B55B6C90014A0D0 /* Spot.swift */,
 				DD1B0D561B478AE200D06BC5 /* AddressComponents.swift */,
 			);
 			name = Model;
@@ -278,12 +281,12 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
-		DD55EDAD1B55B6B30014A0D0 /* Data */ = {
+		DD55EDB01B570A270014A0D0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				DD55EDAE1B55B6C90014A0D0 /* Spot.swift */,
+				DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */,
 			);
-			name = Data;
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		FCEF56118A83DA7C4337A840 /* Pods */ = {
@@ -444,6 +447,7 @@
 				DD1B0D571B478AE200D06BC5 /* AddressComponents.swift in Sources */,
 				DD1B0D831B4AF70800D06BC5 /* CameraView.swift in Sources */,
 				DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */,
+				DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */,
 				DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */,
 				DD1B0D611B478C0500D06BC5 /* EditSpotViewController.swift in Sources */,
 				DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */,

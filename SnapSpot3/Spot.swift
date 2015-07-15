@@ -6,12 +6,8 @@
 //  Copyright (c) 2015 Mike Jonas. All rights reserved.
 //
 
-import Foundation
-import UIKit
-import MapKit
-
 struct Spot {
-    var location:CLLocation?
+    var coordinates:CLLocationCoordinate2D?
     var ISOcountryCode:String?
     var country:String?
     var postalCode:String?
