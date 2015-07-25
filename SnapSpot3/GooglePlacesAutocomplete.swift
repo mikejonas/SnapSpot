@@ -147,9 +147,12 @@ public class GooglePlacesAutocomplete: UINavigationController {
         placeDelegate?.placeSaved?()
     }
     
-    public func reset() {
+    public func resetView() {
         gpaViewController.searchBar.text = ""
+        gpaViewController.searchBarAddressText = ""
         gpaViewController.searchBar(gpaViewController.searchBar, textDidChange: "")
+        gpaViewController.spotAddressComponents = nil
+        gpaViewController.coordinates = nil
     }
 }
 
@@ -162,17 +165,17 @@ public class GooglePlacesAutocompleteContainer: UIViewController {
     @IBOutlet public weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var mapView: GMSMapView!
     
+    let locationUtil = LocationUtil()
     var delegate: GooglePlacesAutocompleteDelegate?
     var apiKey: String?
     var places = [Place]()
     var placeType: PlaceType = .All
     
-    var spotAddressComponents:AddressComponents?
+    var spotAddressComponents:SpotAddressComponents?
     
-    var searchBarAddressText = ""
+    var searchBarAddressText:String?
     var coordinates: CLLocationCoordinate2D?
     var marker = GMSMarker()
     
@@ -202,20 +205,28 @@ public class GooglePlacesAutocompleteContainer: UIViewController {
         tableView.registerClass(LocationSearchCell.self, forCellReuseIdentifier: "Cell")
         
         //MAPS
-        coordinates = CLLocationCoordinate2D(latitude: 32.792429399999996, longitude: -116.99222749999998)
-        setupMap(coordinates)
-        dropPin(coordinates)
+        setupMap(nil)
     }
     
     func setupMap(coordinates:CLLocationCoordinate2D?) {
+        var camera: GMSCameraPosition
+        if coordinates != nil { camera = GMSCameraPosition.cameraWithTarget(coordinates!, zoom: 18)}
+        else { camera = GMSCameraPosition.cameraWithTarget(CLLocationCoordinate2DMake(38, -90), zoom: 2)}
+        mapView.camera = camera
+        mapView.mapType = kGMSTypeHybrid
+        mapView.settings.myLocationButton = true
+        mapView.delegate = self
+    }
+    
+    func updateMap(coordinates:CLLocationCoordinate2D?) {
         if let coordinates = coordinates {
-            var camera = GMSCameraPosition.cameraWithTarget(coordinates, zoom: 18)
+            let camera = GMSCameraPosition.cameraWithTarget(coordinates, zoom: 18)
             mapView.camera = camera
-            mapView.mapType = kGMSTypeHybrid
-            mapView.settings.myLocationButton = true
-            mapView.delegate = self
+            marker.position = coordinates
+            dropPin(coordinates)
         }
     }
+    
     
     func dropPin(coordinates:CLLocationCoordinate2D?) {
         if let coordinates = coordinates {
@@ -246,44 +257,21 @@ public class GooglePlacesAutocompleteContainer: UIViewController {
 
 // MARK: - GooglePlacesAutocompleteContainer (GMSMapViewDelegate)
 extension GooglePlacesAutocompleteContainer: GMSMapViewDelegate {
-    
     public func mapView(mapView: GMSMapView!, didLongPressAtCoordinate coordinate: CLLocationCoordinate2D) {
         self.searchBar.resignFirstResponder()
         self.tableView.hidden = true
         dropPin(coordinate)
-        reverseGeocodeCoordinate(coordinate)
+        locationUtil.reverseGeoCodeCoordinate(coordinate, completion: { (updatedAddressComponents) -> Void in
+            self.spotAddressComponents = updatedAddressComponents
+            self.searchBar.text = self.spotAddressComponents!.fullAddress
+            self.searchBarAddressText = self.spotAddressComponents!.fullAddress!
+        })
     }
     public func mapView(mapView: GMSMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
         if self.searchBar.text == "" {
                 self.searchBar.resignFirstResponder()
                 self.tableView.hidden = true
                 self.searchBar.text = searchBarAddressText
-        }
-    }
-}
-
-
-extension GooglePlacesAutocompleteContainer {
-    //GEOCODER FOR DROPPED PIN
-    func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
-        let geocoder = GMSGeocoder()
-        geocoder.reverseGeocodeCoordinate(coordinate) { response , error in
-            
-            if let address = response?.firstResult() {
-                let fullAddress = ", ".join(address.lines as! [String])
-                self.spotAddressComponents = AddressComponents(
-                    coordinates: CLLocationCoordinate2D(latitude: address.coordinate.latitude, longitude: address.coordinate.longitude),
-                    locality: address.locality,
-                    administrativeArea: address.administrativeArea,
-                    country: address.country,
-                    fullAddress: fullAddress
-                )
-            } else {
-                self.spotAddressComponents = AddressComponents(coordinates: coordinate, locality: nil, administrativeArea: nil, country: nil, fullAddress: "\(coordinate.latitude), \(coordinate.longitude)")
-            }
-            self.searchBar.text = self.spotAddressComponents!.fullAddress
-            self.searchBarAddressText = self.spotAddressComponents!.fullAddress!
-            
         }
     }
 }
@@ -318,7 +306,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
         searchBar.resignFirstResponder()
         tableView.hidden = true
         self.places[indexPath.row].getDetails { details in
-            self.spotAddressComponents = AddressComponents(coordinates: details.coordinates, locality: details.locality, administrativeArea: details.administrativeArea, country: details.country, fullAddress: details.fullAddress)
+            self.spotAddressComponents = SpotAddressComponents(coordinates: details.coordinates, locality: details.locality, administrativeArea: details.administrativeArea, country: details.country, fullAddress: details.fullAddress)
             self.dropPin(self.spotAddressComponents!.coordinates)
             self.setupMap(self.spotAddressComponents!.coordinates)
         }

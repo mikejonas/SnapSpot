@@ -7,12 +7,14 @@
 //
 
 import Foundation
-import CoreLocation
 
-struct AddressComponents {
+struct SpotAddressComponents: Printable {
     var coordinates: CLLocationCoordinate2D?
     var locality: String? // City
     var administrativeArea: String? // State
     var country: String? // Country
     var fullAddress: String?
+    var description: String {
+        return " coordinates: \(coordinates) \n locality: \(locality) \n administrative area: \(administrativeArea) \n country: \(country) \n fullAddress \(fullAddress)"
+    }
 }

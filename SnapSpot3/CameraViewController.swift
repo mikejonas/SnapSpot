@@ -9,20 +9,16 @@
 import UIKit
 
 class CameraViewController: UIViewController {
-   
-    //IBOUTLETS
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     @IBOutlet weak var cameraView: CameraView!
     @IBOutlet weak var debugTextView: UITextView!
     var debugi:Int = 0
-    
-    //VC INIT
+
     let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("editSpotViewController") as! EditSpotViewController!
     let photoPicker = TWPhotoPickerController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //DELEGATES
         cameraView.delegate = self
         editSpotVc.delegate = self
     }
@@ -43,23 +39,23 @@ class CameraViewController: UIViewController {
 extension CameraViewController: CameraViewDelegate {
     func cameraViewimagePickerTapped() {
         self.presentViewController(photoPicker, animated: true, completion: nil)
-        
         //CROPBLOCK
         photoPicker.cropBlock = { (image:UIImage!, coord2d: CLLocationCoordinate2D) -> () in
+            var photoCoordiantes: CLLocationCoordinate2D?
+            if coord2d.latitude != 0 {photoCoordiantes = coord2d}
             self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                self.editSpotVc.addImage(image)
-                
-                if(coord2d.latitude != 0 && coord2d.longitude != 0){
-                    self.editSpotVc.coordinates = coord2d
+                self.presentViewController(self.editSpotVc, animated: false) { () -> Void in
+                    self.editSpotVc.addImage(image)
+                    self.editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
                 }
-                self.presentViewController(self.editSpotVc, animated: false, completion: nil)
             })
         }
-        
     }
     func cameraViewShutterButtonTapped(image: UIImage?) {
-        self.editSpotVc.addImage(image!)
-        self.presentViewController(self.editSpotVc, animated: false, completion: nil)
+        editSpotVc.addImage(image!)
+        presentViewController(self.editSpotVc, animated: false) { () -> Void in
+            self.editSpotVc.updateMapAndReverseGeocode(self.appDelegate.coreLocationController!.locationCoordinates?.coordinate)
+        }
     }
 }
 

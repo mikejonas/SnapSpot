@@ -8,91 +8,61 @@
 
 import UIKit
 import CoreLocation
-import MapKit
-import AddressBookUI
+import GoogleMaps
+
 
 class LocationUtil: CLLocation {
-    
-    class func getLocationAddress2(location: CLLocation?, getLocCompletionHandler : (spot:Spot, error : NSError?) -> Void) {
-        var geocoder = CLGeocoder()
-        println("-> Finding user address...")
-        geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)->Void in
-            var placemark:CLPlacemark!
-            var spot = Spot()
-            if error == nil && placemarks.count > 0 {
-                placemark = placemarks[0] as! CLPlacemark
-                
-                spot.coordinates = location?.coordinate
-                if placemark.ISOcountryCode != nil { spot.ISOcountryCode = placemark.ISOcountryCode }
-                if placemark.country != nil { spot.country = placemark.country }
-                if placemark.postalCode != nil { spot.postalCode = placemark.postalCode }
-                if placemark.administrativeArea != nil { spot.administrativeArea = placemark.administrativeArea }
-                if placemark.subAdministrativeArea != nil { spot.subAdministrativeArea = placemark.subAdministrativeArea }
-                if placemark.locality != nil { spot.locality = placemark.locality }
-                if placemark.subLocality != nil { spot.subLocality = placemark.subLocality }
-                if placemark.thoroughfare != nil { spot.thoroughfare = placemark.thoroughfare }
-                if placemark.region != nil { spot.region = placemark.region}
-                if placemark.inlandWater != nil { spot.inlandWater = placemark.inlandWater }
-                if placemark.ocean != nil { spot.ocean = placemark.ocean }
-                if placemark.areasOfInterest != nil { spot.areasOfInterest = placemark.areasOfInterest }
-                spot.addressString = self.makeAddress(placemark)
+    func reverseGeoCodeCoordinate(coordinate:CLLocationCoordinate2D, completion:(spotAddressComponents:SpotAddressComponents!) -> Void) {
+        let geocoder = GMSGeocoder()
+        geocoder.reverseGeocodeCoordinate(coordinate) { response , error in
+            var spotAddressComponents:SpotAddressComponents?
+            if let address = response?.firstResult() {
+                let fullAddress = ", ".join(address.lines as! [String])
+                spotAddressComponents = SpotAddressComponents(
+                    coordinates: CLLocationCoordinate2D(latitude: address.coordinate.latitude, longitude: address.coordinate.longitude),
+                    locality: address.locality,
+                    administrativeArea: address.administrativeArea,
+                    country: address.country,
+                    fullAddress: fullAddress
+                )
+            } else {
+                spotAddressComponents = SpotAddressComponents(coordinates: coordinate, locality: nil, administrativeArea: nil, country: nil, fullAddress: "\(coordinate.latitude), \(coordinate.longitude)")
             }
-            
-            //Instead of returning the address string, call the 'getLocCompletionHandler'
-            getLocCompletionHandler(spot: spot, error: error)
-            
-        })
-    }
-    
-    private class func makeAddress(placemark:CLPlacemark) -> String {
-        var addressString : String = ""
-        if placemark.ISOcountryCode == "TW" /*Address Format in Chinese*/ {
-            if placemark.country != nil {
-                addressString = placemark.country
-            }
-            if placemark.subAdministrativeArea != nil {
-                addressString = addressString + placemark.subAdministrativeArea + ", "
-            }
-            if placemark.locality != nil {
-                addressString = addressString + placemark.locality
-            }
-            if placemark.thoroughfare != nil {
-                addressString = addressString + placemark.thoroughfare
-            }
-            if placemark.subThoroughfare != nil {
-                addressString = addressString + placemark.subThoroughfare
-            }
-        } else {
-            if placemark.subThoroughfare != nil {
-                addressString = placemark.subThoroughfare + " "
-            }
-            if placemark.thoroughfare != nil {
-                addressString = addressString + placemark.thoroughfare + ", "
-            }
-            if placemark.locality != nil {
-                addressString = addressString + placemark.locality + ", "
-            }
-            if placemark.administrativeArea != nil {
-                addressString = addressString + placemark.administrativeArea + " "
-            }
-            if placemark.country != nil {
-                addressString = addressString + placemark.country
-            }
+            completion(spotAddressComponents: spotAddressComponents)
         }
-        return addressString
+    }
+
+    var counter:Double = 0
+    func getCoordinatesWithDelayUpTo(#seconds:Double, completion:(CLLocationCoordinate2D?) -> Void) {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        var locationCoordinates:CLLocation?
+        let interval:Double = 0.20
+        let intervals:Double = seconds / interval
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            do {
+                locationCoordinates = appDelegate.coreLocationController?.locationCoordinates
+                println("\(self.counter++) <= \(intervals)")
+                if let locationCoordinates = locationCoordinates {
+                    println(locationCoordinates.horizontalAccuracy)
+                    if locationCoordinates.horizontalAccuracy < 6 {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            completion(locationCoordinates.coordinate)
+                        })
+                        println("BREAK!")
+                        self.counter = 0
+                        break
+                    }
+                }
+                NSThread.sleepForTimeInterval(interval)
+            } while self.counter <= intervals
+        })
+        
+        if locationCoordinates?.horizontalAccuracy <= 5 || counter <= intervals {
+            completion(locationCoordinates?.coordinate)
+        } else {
+            completion(locationCoordinates?.coordinate)
+        }
     }
     
-    //                println("isocountryCode: \(spot.ISOcountryCode)")
-    //                println("country: \(spot.country)")
-    //                println("postalCode: \(spot.postalCode)")
-    //                println("administrativeArea \(spot.administrativeArea)")
-    //                println("subAdministrativeArea \(spot.subAdministrativeArea)")
-    //                println("locality \(spot.locality)")
-    //                println("subLocality \(spot.subLocality)")
-    //                println("thoroughfare \(spot.thoroughfare)")
-    //                println("region \(spot.region)")
-    //                println("inlandWater \(spot.inlandWater)")
-    //                println("ocean \(spot.ocean)")
-    //                println("areasOfInterest \(spot.areasOfInterest)")
-    
+
 }

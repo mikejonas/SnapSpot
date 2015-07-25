@@ -16,7 +16,7 @@
 		DD1B0D361B47688900D06BC5 /* SnapSpot3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D351B47688900D06BC5 /* SnapSpot3Tests.swift */; };
 		DD1B0D451B476CE100D06BC5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */; };
 		DD1B0D471B476CE800D06BC5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */; };
-		DD1B0D571B478AE200D06BC5 /* AddressComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D561B478AE200D06BC5 /* AddressComponents.swift */; };
+		DD1B0D571B478AE200D06BC5 /* SpotAddressComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D561B478AE200D06BC5 /* SpotAddressComponents.swift */; };
 		DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D5C1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift */; };
 		DD1B0D5F1B478BD600D06BC5 /* GooglePlacesAutocomplete.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D5D1B478BD600D06BC5 /* GooglePlacesAutocomplete.xib */; };
 		DD1B0D611B478C0500D06BC5 /* EditSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D601B478C0500D06BC5 /* EditSpotViewController.swift */; };
@@ -35,7 +35,7 @@
 		DD1B0D851B4AF72500D06BC5 /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D841B4AF72500D06BC5 /* CameraView.xib */; };
 		DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */; };
 		DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */; };
-		DD55EDAF1B55B6C90014A0D0 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDAE1B55B6C90014A0D0 /* Spot.swift */; };
+		DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024EC1B63455600D23489 /* SpotComponents.swift */; };
 		DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */; };
 		DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */; };
 		DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */; };
@@ -67,7 +67,7 @@
 		DD1B0D351B47688900D06BC5 /* SnapSpot3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapSpot3Tests.swift; sourceTree = "<group>"; };
 		DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		DD1B0D561B478AE200D06BC5 /* AddressComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressComponents.swift; sourceTree = "<group>"; };
+		DD1B0D561B478AE200D06BC5 /* SpotAddressComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAddressComponents.swift; sourceTree = "<group>"; };
 		DD1B0D5C1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesAutocomplete.swift; sourceTree = "<group>"; };
 		DD1B0D5D1B478BD600D06BC5 /* GooglePlacesAutocomplete.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GooglePlacesAutocomplete.xib; sourceTree = "<group>"; };
 		DD1B0D601B478C0500D06BC5 /* EditSpotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSpotViewController.swift; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 		DD1B0D841B4AF72500D06BC5 /* CameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
 		DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUtil.swift; sourceTree = "<group>"; };
-		DD55EDAE1B55B6C90014A0D0 /* Spot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
+		DD4024EC1B63455600D23489 /* SpotComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotComponents.swift; sourceTree = "<group>"; };
 		DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
 		DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageCameraViewController.swift; sourceTree = "<group>"; };
 		DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
@@ -205,8 +205,8 @@
 		DD1B0D581B478AE700D06BC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DD55EDAE1B55B6C90014A0D0 /* Spot.swift */,
-				DD1B0D561B478AE200D06BC5 /* AddressComponents.swift */,
+				DD1B0D561B478AE200D06BC5 /* SpotAddressComponents.swift */,
+				DD4024EC1B63455600D23489 /* SpotComponents.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -349,6 +349,7 @@
 				TargetAttributes = {
 					DD1B0D191B47688900D06BC5 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = Q5W3Y6NXEB;
 					};
 					DD1B0D2E1B47688900D06BC5 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -444,7 +445,7 @@
 				DD1B0D7E1B478E7A00D06BC5 /* TWPhotoLoader.m in Sources */,
 				DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */,
 				DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */,
-				DD1B0D571B478AE200D06BC5 /* AddressComponents.swift in Sources */,
+				DD1B0D571B478AE200D06BC5 /* SpotAddressComponents.swift in Sources */,
 				DD1B0D831B4AF70800D06BC5 /* CameraView.swift in Sources */,
 				DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */,
 				DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */,
@@ -453,9 +454,9 @@
 				DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */,
 				DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */,
 				DD1B0D7C1B478E7A00D06BC5 /* TWPhoto.m in Sources */,
-				DD55EDAF1B55B6C90014A0D0 /* Spot.swift in Sources */,
 				DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */,
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
+				DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */,
 				DD1B0D7B1B478E7A00D06BC5 /* TWImageScrollView.m in Sources */,
 				DD1B0D7D1B478E7A00D06BC5 /* TWPhotoCollectionViewCell.m in Sources */,
 			);
@@ -535,7 +536,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -573,7 +574,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -585,9 +586,13 @@
 			baseConfigurationReference = 54B3E08B5FCA9286E1D3F02B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SnapSpot3/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SnapSpot3/Bridging-Header.h";
 			};
 			name = Debug;
@@ -597,9 +602,13 @@
 			baseConfigurationReference = 773AB6C257BA9B92DDF22C61 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SnapSpot3/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SnapSpot3/Bridging-Header.h";
 			};
 			name = Release;

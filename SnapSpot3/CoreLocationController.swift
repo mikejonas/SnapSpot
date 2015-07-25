@@ -29,28 +29,37 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         var shouldIAllow = false
         switch status {
-        case CLAuthorizationStatus.Restricted: locationStatus = "RRestricted Access to location"
-        case CLAuthorizationStatus.Denied: locationStatus = "UUser denied access to location"
-        case CLAuthorizationStatus.NotDetermined: locationStatus = "SStatus not determined"
+        case CLAuthorizationStatus.Restricted: locationStatus = "Restricted Access to location"
+        case CLAuthorizationStatus.Denied: locationStatus = "User denied access to location"
+        case CLAuthorizationStatus.NotDetermined: locationStatus = "Status not determined"
         default:
-            locationStatus = "AAllowed to location Access"
+            locationStatus = "Allowed to location Access"
             shouldIAllow = true
         }
         NSNotificationCenter.defaultCenter().postNotificationName("LabelHasbeenUpdated", object: nil)
-        
         // Start location services
         shouldIAllow ? locationManager.startUpdatingLocation() : NSLog("Denied access: \(locationStatus)")
-        
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         var locationArray = locations as NSArray
         var locationObj = locationArray.lastObject as! CLLocation
         self.locationCoordinates = locationObj
-        
-        println("\(self.locationCoordinates!.horizontalAccuracy), \(self.locationCoordinates?.coordinate.latitude)")
-        //        LocationUtil.getLocationAddress2(locationCoordinates, getLocCompletionHandler: { (spot:Spot, error) -> Void in
-        //        })
+//        println("\(self.locationCoordinates!.horizontalAccuracy), \(self.locationCoordinates?.coordinate.latitude)")
     }
-
 }
+
+//extension CoreLocationController {
+//    func getLocationWithDelay(delay:Float) -> CLLocationCoordinate2D? {
+//        let accuracy = locationCoordinates?.horizontalAccuracy
+//        let coordinates = locationCoordinates?.coordinate
+//        println(accuracy)
+//        
+//        if coordinates != nil {
+//            return coordinates
+//        } else {
+//            return nil
+//        }
+//    }
+//}
+

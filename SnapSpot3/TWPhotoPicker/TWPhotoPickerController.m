@@ -103,7 +103,13 @@
             CLLocationCoordinate2D coord2D;
             coord2D.longitude = (CLLocationDegrees)[[dict objectForKey:@"Longitude"] floatValue];
             coord2D.latitude = (CLLocationDegrees)[[dict objectForKey:@"Latitude"] floatValue];
-
+            if ([[dict objectForKey:@"LatitudeRef"]  isEqual: @"S"]) {
+                coord2D.latitude = coord2D.longitude * -1;
+            }
+            if ([[dict objectForKey:@"LongitudeRef"]  isEqual: @"W"]) {
+                coord2D.longitude = coord2D.longitude * -1;
+            }
+            NSLog(@"%@", dict);
             self.cropBlock(self.imageScrollView.capture, coord2D);
             
         }
