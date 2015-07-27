@@ -15,7 +15,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: ""), style: UIBarButtonItemStyle.Plain, target: self, action: goToCamera:)
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 33.0 / 255.0, green: 33.0 / 255.0, blue: 33.0 / 255.0, alpha: 1)
     }
     
     override func viewDidLoad() {
@@ -27,6 +27,7 @@ class SettingsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
     @IBAction func cameraBarButtonItemTapped(sender: AnyObject) {
         pageController.goToNextVC()
     }

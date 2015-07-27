@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-8r-Txo">
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-8r-Txo">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <textAttributes key="titleTextAttributes">
                                     <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
@@ -24,11 +24,13 @@
                                 <items>
                                     <navigationItem title="Edit spot" id="yKH-le-PEX">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="qbe-wi-H4t">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="cancelButtonTapped:" destination="Jye-Xx-Lud" id="BcS-4m-JtM"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="J6n-HS-jNc">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="saveButtonTapped:" destination="Jye-Xx-Lud" id="W9L-5V-SbS"/>
                                             </connections>
@@ -182,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKr-wO-CKH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-397.5" y="1144"/>
+            <point key="canvasLocation" x="-398" y="1144"/>
         </scene>
         <!--Add Image Camera View Controller-->
         <scene sceneID="4hd-O3-sqG">
@@ -268,7 +270,8 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="uxk-75-jMm">
-                        <barButtonItem key="rightBarButtonItem" image="Navigation Camera" id="7Ew-xy-y1J">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="Navigation Camera" id="7Ew-xy-y1J">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cameraBarButtonItemTapped:" destination="lf7-87-8SN" id="Sd6-LB-CdU"/>
                             </connections>
@@ -283,7 +286,7 @@
         <scene sceneID="RA8-Iv-Csy">
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavController" id="8R7-cm-wPx" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cjO-pg-Rb5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="cjO-pg-Rb5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -386,7 +389,7 @@
             </objects>
             <point key="canvasLocation" x="1450.5" y="276"/>
         </scene>
-        <!--List Spots View Controller-->
+        <!--Spots-->
         <scene sceneID="6Av-r2-lPd">
             <objects>
                 <viewController id="TS0-aU-a6e" customClass="ListSpotsViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
@@ -398,8 +401,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gnB-s6-WFT">
+                    <navigationItem key="navigationItem" title="Spots" id="gnB-s6-WFT">
                         <barButtonItem key="leftBarButtonItem" image="Navigation Camera" id="gAv-No-P3F">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cameraBarButtonItemTapped:" destination="TS0-aU-a6e" id="Ao7-pR-Q9e"/>
                             </connections>
@@ -484,7 +488,7 @@
             <objects>
                 <navigationController storyboardIdentifier="CameraNavController" automaticallyAdjustsScrollViewInsets="NO" id="LhH-re-tGC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Doo-FJ-krL">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Doo-FJ-krL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -502,7 +506,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ListSpotsNavController" automaticallyAdjustsScrollViewInsets="NO" id="IFH-xy-P10" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1vX-iE-252">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="1vX-iE-252">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -20,10 +20,10 @@ class ListSpotsViewController: UIViewController {
         let swiftPagesView : SwiftPages!
         swiftPagesView = SwiftPages(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
         swiftPagesView.initializeWithVCIDsArrayAndButtonTitlesArray(VCIDs, buttonTitlesArray: buttonTitles)
-        swiftPagesView.setTopBarHeight(40)
+        swiftPagesView.setTopBarHeight(34)
         swiftPagesView.enableBarShadow(false)
+        swiftPagesView.setButtonsTextFontAndSize(UIFont(name: "Helvetica Neue", size: 13)!)
         self.view.addSubview(swiftPagesView)
-
     }
 
     override func didReceiveMemoryWarning() {
