@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LhH-re-tGC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ycw-vD-uau">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Edit Spot View Controller-->
         <scene sceneID="OB4-Q9-4Ar">
             <objects>
-                <viewController storyboardIdentifier="editSpotViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jye-Xx-Lud" customClass="EditSpotViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditSpotViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jye-Xx-Lud" customClass="EditSpotViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7pg-wU-kJh"/>
                         <viewControllerLayoutGuide type="bottom" id="VxO-Ld-964"/>
@@ -72,7 +72,7 @@
                                     <rect key="frame" x="0.0" y="360" width="320" height="203"/>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fbd-WL-PKg" userLabel="Images">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fbd-WL-PKg" userLabel="Image Container View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ULu-4X-Hfh">
@@ -246,6 +246,55 @@
             </objects>
             <point key="canvasLocation" x="1414.5" y="1574"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="ia5-cL-VSG">
+            <objects>
+                <tableViewController id="lf7-87-8SN" customClass="SettingsTableViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Rie-GB-FAW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="81n-UP-NfE" customClass="SettingsTableCell" customModule="SnapSpot3" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="81n-UP-NfE" id="eTJ-1I-6VC">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lf7-87-8SN" id="9Uy-1Q-rNv"/>
+                            <outlet property="delegate" destination="lf7-87-8SN" id="WBx-q0-mIc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="uxk-75-jMm">
+                        <barButtonItem key="rightBarButtonItem" image="Navigation Camera" id="7Ew-xy-y1J">
+                            <connections>
+                                <action selector="cameraBarButtonItemTapped:" destination="lf7-87-8SN" id="Sd6-LB-CdU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rNd-FM-MXN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1419" y="138"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="RA8-Iv-Csy">
+            <objects>
+                <navigationController storyboardIdentifier="SettingsNavController" id="8R7-cm-wPx" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cjO-pg-Rb5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lf7-87-8SN" kind="relationship" relationship="rootViewController" id="TAo-Ha-uGN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZWr-ZH-5ce" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="702" y="138"/>
+        </scene>
         <!--Camera View Controller-->
         <scene sceneID="Oxm-FG-FLa">
             <objects>
@@ -317,6 +366,9 @@
                     <navigationItem key="navigationItem" id="1f7-sl-br1">
                         <barButtonItem key="leftBarButtonItem" image="Settings" id="fGy-gL-nqS">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="settingsBarButtonItemTapped:" destination="b3g-RL-qYh" id="ZHU-aW-ILO"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Menu Filled" id="1uZ-Ki-qOK">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -331,10 +383,28 @@
             </objects>
             <point key="canvasLocation" x="1414.5" y="876"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="igM-TH-TXK">
+            <objects>
+                <viewController id="Ycw-vD-uau" customClass="ViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wwP-cZ-y3l"/>
+                        <viewControllerLayoutGuide type="bottom" id="rXQ-fU-be1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="44M-3J-Ata">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q2a-ZS-GWs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-106.5" y="876"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="W79-lh-zAG">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LhH-re-tGC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CameraNavController" automaticallyAdjustsScrollViewInsets="NO" id="LhH-re-tGC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Doo-FJ-krL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -353,6 +423,7 @@
     <resources>
         <image name="Back" width="22" height="22"/>
         <image name="Menu Filled" width="22" height="22"/>
+        <image name="Navigation Camera" width="22" height="22"/>
         <image name="Settings" width="22" height="22"/>
     </resources>
 </document>

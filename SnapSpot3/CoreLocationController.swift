@@ -48,18 +48,3 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
 //        println("\(self.locationCoordinates!.horizontalAccuracy), \(self.locationCoordinates?.coordinate.latitude)")
     }
 }
-
-//extension CoreLocationController {
-//    func getLocationWithDelay(delay:Float) -> CLLocationCoordinate2D? {
-//        let accuracy = locationCoordinates?.horizontalAccuracy
-//        let coordinates = locationCoordinates?.coordinate
-//        println(accuracy)
-//        
-//        if coordinates != nil {
-//            return coordinates
-//        } else {
-//            return nil
-//        }
-//    }
-//}
-

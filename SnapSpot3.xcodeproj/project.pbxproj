@@ -36,6 +36,10 @@
 		DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */; };
 		DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */; };
 		DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024EC1B63455600D23489 /* SpotComponents.swift */; };
+		DD4024EF1B63FF3F00D23489 /* EditSpotUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */; };
+		DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */; };
+		DD4024F61B659DE700D23489 /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F51B659DE700D23489 /* SettingsTableCell.swift */; };
+		DD4024F81B65A4E800D23489 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F71B65A4E800D23489 /* ViewController.swift */; };
 		DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */; };
 		DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */; };
 		DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */; };
@@ -93,6 +97,10 @@
 		DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUtil.swift; sourceTree = "<group>"; };
 		DD4024EC1B63455600D23489 /* SpotComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotComponents.swift; sourceTree = "<group>"; };
+		DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSpotUtil.swift; sourceTree = "<group>"; };
+		DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		DD4024F51B659DE700D23489 /* SettingsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
+		DD4024F71B65A4E800D23489 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
 		DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageCameraViewController.swift; sourceTree = "<group>"; };
 		DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
@@ -147,7 +155,8 @@
 				DD1B0D1F1B47688900D06BC5 /* AppDelegate.swift */,
 				DD1E4DDB1B4C39D1005147DD /* Utils */,
 				DD1B0D581B478AE700D06BC5 /* Model */,
-				DD1B0D621B478DE900D06BC5 /* Views */,
+				DD4024F41B659DA400D23489 /* Views */,
+				DD1B0D621B478DE900D06BC5 /* ViewControllers */,
 				DD1B0D261B47688900D06BC5 /* Images.xcassets */,
 				DD1B0D281B47688900D06BC5 /* LaunchScreen.xib */,
 				DD1B0D1D1B47688900D06BC5 /* Supporting Files */,
@@ -221,15 +230,17 @@
 			name = GooglePlacesAutocomplete;
 			sourceTree = "<group>";
 		};
-		DD1B0D621B478DE900D06BC5 /* Views */ = {
+		DD1B0D621B478DE900D06BC5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				DD4024F71B65A4E800D23489 /* ViewController.swift */,
 				DD1B0D211B47688900D06BC5 /* CameraViewController.swift */,
+				DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */,
 				DD1B0D811B4AF6C000D06BC5 /* CameraView */,
 				DD1B0D631B478E7A00D06BC5 /* TWPhotoPicker */,
 				DD1B0D4F1B4786D500D06BC5 /* Edit Spot View Controller */,
 			);
-			name = Views;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		DD1B0D631B478E7A00D06BC5 /* TWPhotoPicker */ = {
@@ -277,8 +288,17 @@
 			children = (
 				DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */,
 				DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */,
+				DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		DD4024F41B659DA400D23489 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DD4024F51B659DE700D23489 /* SettingsTableCell.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		DD55EDB01B570A270014A0D0 /* Controller */ = {
@@ -449,6 +469,7 @@
 				DD1B0D831B4AF70800D06BC5 /* CameraView.swift in Sources */,
 				DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */,
 				DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */,
+				DD4024F61B659DE700D23489 /* SettingsTableCell.swift in Sources */,
 				DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */,
 				DD1B0D611B478C0500D06BC5 /* EditSpotViewController.swift in Sources */,
 				DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */,
@@ -458,7 +479,10 @@
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
 				DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */,
 				DD1B0D7B1B478E7A00D06BC5 /* TWImageScrollView.m in Sources */,
+				DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */,
+				DD4024F81B65A4E800D23489 /* ViewController.swift in Sources */,
 				DD1B0D7D1B478E7A00D06BC5 /* TWPhotoCollectionViewCell.m in Sources */,
+				DD4024EF1B63FF3F00D23489 /* EditSpotUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

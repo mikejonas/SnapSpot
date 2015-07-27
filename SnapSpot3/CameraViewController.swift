@@ -15,7 +15,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var debugTextView: UITextView!
     var debugi:Int = 0
 
-    let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("editSpotViewController") as! EditSpotViewController!
+    let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EditSpotViewController") as! EditSpotViewController!
+    
     let photoPicker = TWPhotoPickerController()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,12 @@ class CameraViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         cameraView.stopCaptureSessionIfRunning()
     }
+    @IBAction func settingsBarButtonItemTapped(sender: UIBarButtonItem) {
+        pageController.goToPreviousVC()
+    }
 }
+
+
 
 
 //-------------------
