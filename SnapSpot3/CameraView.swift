@@ -247,8 +247,4 @@ import AVFoundation
         }
     }
 
-    
-
-    
-
 }

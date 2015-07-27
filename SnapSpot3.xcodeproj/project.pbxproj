@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		11C38C3C0A4F453229D28305 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6296593DD1281AE5F9C4D50C /* libPods.a */; };
+		DD1397D41B65F62D00421CD6 /* SwiftPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397D31B65F62D00421CD6 /* SwiftPages.swift */; };
+		DD1397D61B65F6F900421CD6 /* ListSpotsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397D51B65F6F900421CD6 /* ListSpotsViewController.swift */; };
+		DD1397D81B66003A00421CD6 /* ListSpotsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397D71B66003A00421CD6 /* ListSpotsCollectionViewController.swift */; };
+		DD1397DA1B66006800421CD6 /* ListSpotsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397D91B66006800421CD6 /* ListSpotsMapViewController.swift */; };
+		DD1397DC1B6600CB00421CD6 /* ListSpotsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397DB1B6600CB00421CD6 /* ListSpotsTableViewController.swift */; };
 		DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D1F1B47688900D06BC5 /* AppDelegate.swift */; };
 		DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D211B47688900D06BC5 /* CameraViewController.swift */; };
 		DD1B0D251B47688900D06BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D231B47688900D06BC5 /* Main.storyboard */; };
@@ -59,6 +64,11 @@
 		54B3E08B5FCA9286E1D3F02B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6296593DD1281AE5F9C4D50C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		773AB6C257BA9B92DDF22C61 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		DD1397D31B65F62D00421CD6 /* SwiftPages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPages.swift; sourceTree = "<group>"; };
+		DD1397D51B65F6F900421CD6 /* ListSpotsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotsViewController.swift; sourceTree = "<group>"; };
+		DD1397D71B66003A00421CD6 /* ListSpotsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotsCollectionViewController.swift; sourceTree = "<group>"; };
+		DD1397D91B66006800421CD6 /* ListSpotsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotsMapViewController.swift; sourceTree = "<group>"; };
+		DD1397DB1B6600CB00421CD6 /* ListSpotsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotsTableViewController.swift; sourceTree = "<group>"; };
 		DD1B0D1A1B47688900D06BC5 /* SnapSpot3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapSpot3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD1B0D1E1B47688900D06BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD1B0D1F1B47688900D06BC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,14 +211,14 @@
 			path = SnapSpot3.xcodeproj;
 			sourceTree = "<group>";
 		};
-		DD1B0D4F1B4786D500D06BC5 /* Edit Spot View Controller */ = {
+		DD1B0D4F1B4786D500D06BC5 /* EditSpotViewController */ = {
 			isa = PBXGroup;
 			children = (
 				DD1B0D601B478C0500D06BC5 /* EditSpotViewController.swift */,
 				DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */,
 				DD1B0D5B1B478B5500D06BC5 /* GooglePlacesAutocomplete */,
 			);
-			name = "Edit Spot View Controller";
+			name = EditSpotViewController;
 			sourceTree = "<group>";
 		};
 		DD1B0D581B478AE700D06BC5 /* Model */ = {
@@ -236,9 +246,12 @@
 				DD4024F71B65A4E800D23489 /* ViewController.swift */,
 				DD1B0D211B47688900D06BC5 /* CameraViewController.swift */,
 				DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */,
-				DD1B0D811B4AF6C000D06BC5 /* CameraView */,
+				DD1397D51B65F6F900421CD6 /* ListSpotsViewController.swift */,
+				DD1397D71B66003A00421CD6 /* ListSpotsCollectionViewController.swift */,
+				DD1397D91B66006800421CD6 /* ListSpotsMapViewController.swift */,
+				DD1397DB1B6600CB00421CD6 /* ListSpotsTableViewController.swift */,
 				DD1B0D631B478E7A00D06BC5 /* TWPhotoPicker */,
-				DD1B0D4F1B4786D500D06BC5 /* Edit Spot View Controller */,
+				DD1B0D4F1B4786D500D06BC5 /* EditSpotViewController */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -274,15 +287,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		DD1B0D811B4AF6C000D06BC5 /* CameraView */ = {
-			isa = PBXGroup;
-			children = (
-				DD1B0D821B4AF70800D06BC5 /* CameraView.swift */,
-				DD1B0D841B4AF72500D06BC5 /* CameraView.xib */,
-			);
-			name = CameraView;
-			sourceTree = "<group>";
-		};
 		DD1E4DDB1B4C39D1005147DD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,7 +300,10 @@
 		DD4024F41B659DA400D23489 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DD1397D31B65F62D00421CD6 /* SwiftPages.swift */,
 				DD4024F51B659DE700D23489 /* SettingsTableCell.swift */,
+				DD1B0D821B4AF70800D06BC5 /* CameraView.swift */,
+				DD1B0D841B4AF72500D06BC5 /* CameraView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -462,14 +469,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD1397DA1B66006800421CD6 /* ListSpotsMapViewController.swift in Sources */,
 				DD1B0D7E1B478E7A00D06BC5 /* TWPhotoLoader.m in Sources */,
 				DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */,
 				DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */,
 				DD1B0D571B478AE200D06BC5 /* SpotAddressComponents.swift in Sources */,
 				DD1B0D831B4AF70800D06BC5 /* CameraView.swift in Sources */,
 				DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */,
+				DD1397DC1B6600CB00421CD6 /* ListSpotsTableViewController.swift in Sources */,
 				DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */,
+				DD1397D61B65F6F900421CD6 /* ListSpotsViewController.swift in Sources */,
 				DD4024F61B659DE700D23489 /* SettingsTableCell.swift in Sources */,
+				DD1397D41B65F62D00421CD6 /* SwiftPages.swift in Sources */,
+				DD1397D81B66003A00421CD6 /* ListSpotsCollectionViewController.swift in Sources */,
 				DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */,
 				DD1B0D611B478C0500D06BC5 /* EditSpotViewController.swift in Sources */,
 				DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */,

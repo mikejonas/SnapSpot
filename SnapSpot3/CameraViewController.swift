@@ -1,5 +1,5 @@
 //
-//  CameraViewController.swift
+//  CameraVController.swift
 //  SnapSpot3
 //
 //  Created by Mike Jonas on 7/3/15.
@@ -34,6 +34,10 @@ class CameraViewController: UIViewController {
     @IBAction func settingsBarButtonItemTapped(sender: UIBarButtonItem) {
         pageController.goToPreviousVC()
     }
+    @IBAction func ListSpotsBarButtonItemTapped(sender: UIBarButtonItem) {
+        pageController.goToNextVC()
+    }
+    
 }
 
 

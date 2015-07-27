@@ -14,6 +14,7 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
 
     let cameraVC: UIViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CameraNavController") as! UIViewController
     let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController") as! UIViewController
+    let listSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ListSpotsNavController") as! UIViewController
 
     
     override func viewDidLoad() {
@@ -37,7 +38,6 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     }
 
     func goToPreviousVC() {
-        println(viewControllers)
         let previousVC = pageViewController(self, viewControllerBeforeViewController: viewControllers[0] as! UIViewController)!
         setViewControllers([previousVC], direction: UIPageViewControllerNavigationDirection.Reverse, animated: true, completion: nil)
     }
@@ -48,6 +48,8 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         
         switch viewController {
+        case listSpotsVC:
+            return cameraVC
         case cameraVC:
             return settingsVC
         case settingsVC:
@@ -59,8 +61,10 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     }
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         switch viewController {
-        case cameraVC:
+        case listSpotsVC:
             return nil
+        case cameraVC:
+            return listSpotsVC
         case settingsVC:
             return cameraVC
         default:
