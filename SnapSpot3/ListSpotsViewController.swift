@@ -9,17 +9,14 @@
 import UIKit
 
 class ListSpotsViewController: UIViewController {
-
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        var VCIDs : [String] = ["ListSpotsCollectionViewController", "ListSpotsMapViewController", "ListSpotsTableViewController"]
-        var buttonTitles : [String] = ["Collection", "Map", "Table"]
+        var VCIDs : [String] = ["ListSpotsCollectionViewController", "ListSpotsTableViewController", "ListSpotsMapViewController"]
+        var buttonTitles : [String] = ["Collection", "Table", "Map"]
         let swiftPagesView : SwiftPages!
         swiftPagesView = SwiftPages(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
         swiftPagesView.initializeWithVCIDsArrayAndButtonTitlesArray(VCIDs, buttonTitlesArray: buttonTitles)
+        swiftPagesView.backgroundColor = UIColor.whiteColor()
         swiftPagesView.setTopBarHeight(34)
         swiftPagesView.enableBarShadow(false)
         swiftPagesView.setButtonsTextFontAndSize(UIFont(name: "Helvetica Neue", size: 13)!)
@@ -31,9 +28,15 @@ class ListSpotsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cameraBarButtonItemTapped(sender: UIBarButtonItem) {
+    @IBAction func leftBarButtonItemTapped(sender: UIBarButtonItem) {
         pageController.goToPreviousVC()
     }
+    @IBAction func rightBarButtonItemTapped(sender: UIBarButtonItem) {
+        pageController.goToNextVC()
+    }
+    
+    
+    
 
     /*
     // MARK: - Navigation

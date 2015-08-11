@@ -28,6 +28,9 @@
 @implementation TWPhotoPickerController
 
 #pragma mark - life cycle
+- (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,6 +40,10 @@
     [self.view insertSubview:self.collectionView belowSubview:self.topView];
     
     [self loadPhotos];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (BOOL)prefersStatusBarHidden {

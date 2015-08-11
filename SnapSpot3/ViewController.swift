@@ -8,25 +8,27 @@
 
 import UIKit
 
+//GLOBALS!!!
 let pageController = ViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EditSpotViewController") as! EditSpotViewController!
 
-class ViewController: UIPageViewController, UIPageViewControllerDataSource {
-
-    let cameraVC: UIViewController! = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CameraNavController") as! UIViewController
+class ViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+ 
     let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController") as! UIViewController
+    let cameraVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CameraNavController") as! UIViewController
     let listSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ListSpotsNavController") as! UIViewController
+    let filterSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FilterSpotsNavController") as! UIViewController
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         
         view.backgroundColor = UIColor.whiteColor()
         dataSource = self
         setViewControllers([cameraVC], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -43,11 +45,12 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     }
     
     
-    
     // MARK: UIPageViewControllerDataSource
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         
         switch viewController {
+        case filterSpotsVC:
+            return listSpotsVC
         case listSpotsVC:
             return cameraVC
         case cameraVC:
@@ -61,8 +64,10 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     }
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         switch viewController {
-        case listSpotsVC:
+        case filterSpotsVC:
             return nil
+        case listSpotsVC:
+            return filterSpotsVC
         case cameraVC:
             return listSpotsVC
         case settingsVC:
@@ -71,13 +76,4 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
             return nil
         }
     }
-    
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

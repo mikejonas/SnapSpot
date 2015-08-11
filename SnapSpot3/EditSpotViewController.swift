@@ -76,9 +76,12 @@ class EditSpotViewController: UIViewController {
         }
     }
     @IBAction func testButtonTapped(sender: AnyObject) {
-        var testString = getColoredText(descriptionTextView.text)
-        descriptionTextView.attributedText = testString
-        descriptionTextView.font = UIFont(name: descriptionTextView.font.fontName, size: 14)
+        
+        descriptionTextView.extractHashTags { extractedHashtags in
+            println(extractedHashtags)
+        }
+        
+        
 //        locationUtil.getCoordinatesWithDelayUpTo(seconds: 5) {(cooordinates) -> Void in
 //            self.updateMapAndReverseGeocode(cooordinates)
 //        }
@@ -236,14 +239,17 @@ extension EditSpotViewController {
 extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
     func placeNotSaved() {
         dismissViewControllerAnimated(true, completion: nil)
-        self.updateMarkerModal(self.spotAddressComponents!)
-
+        if self.spotAddressComponents != nil {
+            self.updateMarkerModal(self.spotAddressComponents!)
+        }
     }
     func placeSaved() {
         dismissViewControllerAnimated(true, completion: { () -> Void in
             self.spotAddressComponents = self.gpaViewController.gpaViewController.spotAddressComponents
             self.updateMap(self.spotAddressComponents?.coordinates)
-            self.updateMarkerModal(self.spotAddressComponents!)
+            if self.spotAddressComponents != nil {
+                self.updateMarkerModal(self.spotAddressComponents!)
+            }
         })
     }
 }

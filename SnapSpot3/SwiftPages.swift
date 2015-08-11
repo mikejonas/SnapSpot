@@ -8,25 +8,8 @@
 
 import UIKit
 
-private var swiftPagesAssociationKey: UInt8 = 0
-
-extension UIViewController {
-    var swiftPages: SwiftPages! {
-        get {
-            return objc_getAssociatedObject(self, &swiftPagesAssociationKey) as? SwiftPages
-        }
-        set(newValue) {
-            objc_setAssociatedObject(self, &swiftPagesAssociationKey, newValue, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN))
-        }
-    }
-}
-
-
-
 class SwiftPages: UIView, UIScrollViewDelegate {
-    
-    
-    var originalValue :CGFloat = 0.0
+
     //Items variables
     private var containerView: UIView!
     private var scrollView: UIScrollView!
@@ -215,11 +198,9 @@ class SwiftPages: UIView, UIScrollViewDelegate {
         }
         
         //Use optional binding to check if the view has already been loaded
-        if let pageView = pageViews[page]
-        {
+        if let pageView = pageViews[page] {
             // Do nothing. The view is already loaded.
-        } else
-        {
+        } else {
             println("Loading Page \(page)")
             //The pageView instance is nil, create the page
             var frame = scrollView.bounds
@@ -231,7 +212,6 @@ class SwiftPages: UIView, UIScrollViewDelegate {
             
             //Look for the VC by its identifier in the storyboard and add it to the scrollview
             newPageView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(viewControllerIDs[page]) as! UIViewController
-            newPageView.swiftPages = self
             newPageView.view.frame = frame
             scrollView.addSubview(newPageView.view)
             
@@ -261,28 +241,6 @@ class SwiftPages: UIView, UIScrollViewDelegate {
         var index: Int = sender!.tag
         let pagesScrollViewSize = scrollView.frame.size
         [scrollView .setContentOffset(CGPointMake(pagesScrollViewSize.width * (CGFloat)(index), 0), animated: true)]
-        resetWindowOrigin()
-    }
-    
-    func resetWindowOrigin(){
-        
-        let statusBarWindow = UIApplication.sharedApplication().valueForKey("statusBarWindow") as! UIWindow
-        var statusFrame = statusBarWindow.frame
-        let mainWindow = UIApplication.sharedApplication().keyWindow
-        
-        var mainFrame = mainWindow!.frame
-        
-        statusFrame.origin.y = 0
-        mainFrame.origin.y = 0
-        
-        var rootFrame = mainWindow?.rootViewController?.view.frame
-        if originalValue != 0.0{
-            rootFrame!.size.height = originalValue
-        }
-        
-        statusBarWindow.frame = statusFrame
-        mainWindow?.frame = mainFrame
-        mainWindow?.rootViewController!.view.frame = rootFrame!
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView)
@@ -294,60 +252,6 @@ class SwiftPages: UIView, UIScrollViewDelegate {
         //The offset addition is based on the width of the animated bar (button width times 0.8)
         var offsetAddition = (containerView.frame.size.width/(CGFloat)(viewControllerIDs.count))*0.1
         animatedBar.frame = CGRectMake((offsetAddition + (scrollView.contentOffset.x/(CGFloat)(viewControllerIDs.count))), animatedBar.frame.origin.y, animatedBar.frame.size.width, animatedBar.frame.size.height);
-    }
-    
-    func didScrollViewInPage(scrollView:UIScrollView){
-        
-        let offset = scrollView.contentOffset
-        println(offset)
-        let margin = 60.0 + self.topBarHeight + 20
-        
-        
-        
-        let statusBarWindow = UIApplication.sharedApplication().valueForKey("statusBarWindow") as! UIWindow
-        var statusFrame = statusBarWindow.frame
-        let mainWindow = UIApplication.sharedApplication().keyWindow
-        
-        var mainFrame = mainWindow!.frame
-        
-        var rootFrame = mainWindow?.rootViewController?.view.frame
-        if originalValue == 0.0{
-            originalValue = rootFrame!.size.height
-        }
-        
-        var scrollFrame = self.pageViews[0]!.view.frame
-        
-        var spFrame = self.frame
-        
-        if offset.y < margin && offset.y > 0{
-            
-            statusFrame.origin.y = -1 * offset.y
-            
-            mainFrame.origin.y = -1 * offset.y
-            
-            spFrame.size.height += (originalValue + offset.y - rootFrame!.size.height)
-            scrollFrame.size.height += (originalValue + offset.y - rootFrame!.size.height)
-            rootFrame!.size.height = originalValue + offset.y
-        }
-        else{
-            if offset.y > 0{
-                statusFrame.origin.y = -1 * margin
-                mainFrame.origin.y = -1 * margin
-                rootFrame!.size.height = originalValue + margin
-            }
-            else{
-                statusFrame.origin.y = 0
-                mainFrame.origin.y = 0
-                rootFrame!.size.height = originalValue
-            }
-            
-        }
-                self.frame = spFrame
-                scrollView.setTranslatesAutoresizingMaskIntoConstraints(true)
-                scrollView.frame = scrollFrame
-        statusBarWindow.frame = statusFrame
-        mainWindow?.frame = mainFrame
-        mainWindow?.rootViewController!.view.frame = rootFrame!
     }
     
 }

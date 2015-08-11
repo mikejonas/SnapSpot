@@ -15,26 +15,28 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var debugTextView: UITextView!
     var debugi:Int = 0
 
-    let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EditSpotViewController") as! EditSpotViewController!
+
     
     let photoPicker = TWPhotoPickerController()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        cameraView.delegate = self
-        editSpotVc.delegate = self
-    }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.barTintColor = nil
         self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
         cameraView.startCaptureSessionIfStopped()
     }
+    override func viewDidAppear(animated: Bool) {
+        editSpotVc.delegate = self
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        cameraView.delegate = self
+    }
     override func viewWillDisappear(animated: Bool) {
         cameraView.stopCaptureSessionIfRunning()
     }
-    @IBAction func settingsBarButtonItemTapped(sender: UIBarButtonItem) {
+    @IBAction func leftBarButtonItemTapped(sender: UIBarButtonItem) {
         pageController.goToPreviousVC()
     }
-    @IBAction func ListSpotsBarButtonItemTapped(sender: UIBarButtonItem) {
+    @IBAction func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         pageController.goToNextVC()
     }
     
@@ -54,17 +56,17 @@ extension CameraViewController: CameraViewDelegate {
             var photoCoordiantes: CLLocationCoordinate2D?
             if coord2d.latitude != 0 {photoCoordiantes = coord2d}
             self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                self.presentViewController(self.editSpotVc, animated: false) { () -> Void in
-                    self.editSpotVc.addImage(image)
-                    self.editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
+                self.presentViewController(editSpotVc, animated: false) { () -> Void in
+                    editSpotVc.addImage(image)
+                    editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
                 }
             })
         }
     }
     func cameraViewShutterButtonTapped(image: UIImage?) {
         editSpotVc.addImage(image!)
-        presentViewController(self.editSpotVc, animated: false) { () -> Void in
-            self.editSpotVc.updateMapAndReverseGeocode(self.appDelegate.coreLocationController!.locationCoordinates?.coordinate)
+        presentViewController(editSpotVc, animated: false) { () -> Void in
+            editSpotVc.updateMapAndReverseGeocode(self.appDelegate.coreLocationController!.locationCoordinates?.coordinate)
         }
     }
 }
@@ -75,8 +77,11 @@ extension CameraViewController: CameraViewDelegate {
 extension CameraViewController: EditSpotViewControllerDelegate {
     func spotClosed() {
         dismissViewControllerAnimated(false, completion: nil)
+        editSpotVc.delegate = nil
     }
     func spotSaved() {
         dismissViewControllerAnimated(true, completion: nil)
+        editSpotVc.delegate = nil
+        pageController.goToNextVC()
     }
 }

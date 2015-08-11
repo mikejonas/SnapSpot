@@ -28,9 +28,11 @@ class SettingsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    @IBAction func cameraBarButtonItemTapped(sender: AnyObject) {
+    @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         pageController.goToNextVC()
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKr-wO-CKH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-398" y="1144"/>
+            <point key="canvasLocation" x="2655" y="-596"/>
         </scene>
         <!--Add Image Camera View Controller-->
         <scene sceneID="4hd-O3-sqG">
@@ -246,7 +246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5h-89-U1N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="1144"/>
+            <point key="canvasLocation" x="1935" y="-596"/>
         </scene>
         <!--Settings-->
         <scene sceneID="ia5-cL-VSG">
@@ -273,14 +273,14 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="Navigation Camera" id="7Ew-xy-y1J">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="cameraBarButtonItemTapped:" destination="lf7-87-8SN" id="Sd6-LB-CdU"/>
+                                <action selector="rightBarButtonItemTapped:" destination="lf7-87-8SN" id="fxC-fa-Jpj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rNd-FM-MXN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15" y="276"/>
+            <point key="canvasLocation" x="1224" y="-1284"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RA8-Iv-Csy">
@@ -296,7 +296,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZWr-ZH-5ce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-666" y="276"/>
+            <point key="canvasLocation" x="540" y="-1284"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="Oxm-FG-FLa">
@@ -370,13 +370,13 @@
                         <barButtonItem key="leftBarButtonItem" image="Settings" id="fGy-gL-nqS">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="settingsBarButtonItemTapped:" destination="b3g-RL-qYh" id="ZHU-aW-ILO"/>
+                                <action selector="leftBarButtonItemTapped:" destination="b3g-RL-qYh" id="sCi-Ee-HiX"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Menu Filled" id="1uZ-Ki-qOK" userLabel="List Spots Item">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="ListSpotsBarButtonItemTapped:" destination="b3g-RL-qYh" id="XQY-u0-So3"/>
+                                <action selector="rightBarButtonItemTapped:" destination="b3g-RL-qYh" id="3Tm-LX-2Ow"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -387,17 +387,19 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oRP-Py-wmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1450.5" y="276"/>
+            <point key="canvasLocation" x="1224" y="-588"/>
         </scene>
         <!--Spots-->
         <scene sceneID="6Av-r2-lPd">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="50G-tN-b8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="TS0-aU-a6e" customClass="ListSpotsViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HL5-iQ-3ZF"/>
                         <viewControllerLayoutGuide type="bottom" id="ber-mK-6eO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7tO-rv-nkN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -405,31 +407,133 @@
                         <barButtonItem key="leftBarButtonItem" image="Navigation Camera" id="gAv-No-P3F">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="cameraBarButtonItemTapped:" destination="TS0-aU-a6e" id="Ao7-pR-Q9e"/>
+                                <action selector="leftBarButtonItemTapped:" destination="TS0-aU-a6e" id="fEk-w4-nAd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Nav Hashtag" id="U3K-08-ufp">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="rightBarButtonItemTapped:" destination="TS0-aU-a6e" id="bjv-mT-AQG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="50G-tN-b8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2886" y="276"/>
+            <point key="canvasLocation" x="1224" y="124"/>
+        </scene>
+        <!--Filter Spots-->
+        <scene sceneID="qW1-77-bnk">
+            <objects>
+                <viewController id="qxf-Lr-nld" customClass="FilterSpotsViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Gmy-Ui-Odg"/>
+                        <viewControllerLayoutGuide type="bottom" id="1qG-Zh-uTO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Sz5-jy-ESN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Filter Spots" id="D4D-qq-HXt">
+                        <barButtonItem key="leftBarButtonItem" image="Menu Filled" id="0qK-gO-VkA">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="leftBarButtonItemTapped:" destination="qxf-Lr-nld" id="MQh-DZ-S91"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oa2-lZ-eUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1224" y="844"/>
         </scene>
         <!--List Spots Collection View Controller-->
-        <scene sceneID="hfN-y8-Ika">
+        <scene sceneID="vZb-YC-sZf">
             <objects>
-                <viewController storyboardIdentifier="ListSpotsCollectionViewController" id="42v-RU-zKE" customClass="ListSpotsCollectionViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="cFf-Nd-7rO"/>
-                        <viewControllerLayoutGuide type="bottom" id="Vvv-I0-go4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="wgw-5o-8nv">
+                <collectionViewController storyboardIdentifier="ListSpotsCollectionViewController" id="Cnw-5w-qLk" customClass="ListSpotsCollectionViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5af-fq-0K9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.74899372168752421" green="1" blue="0.75792794252051343" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PoO-SN-WeN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="QWK-l5-MBh">
+                            <size key="itemSize" width="159" height="159"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="1" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpotGridCell" id="VFl-6K-fAp">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="159" height="159"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Barcelona" translatesAutoresizingMaskIntoConstraints="NO" id="b1S-tG-rcD">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="159" height="159"/>
+                                            </variation>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdk-ro-anz">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="120" y="105" width="31" height="34"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAY" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyR-CL-s0y">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="127" y="97" width="24" height="14"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAN DIEGO, CA" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnF-mh-Y70">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="67" y="137" width="84" height="14"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="b1S-tG-rcD"/>
+                                        <exclude reference="mdk-ro-anz"/>
+                                        <exclude reference="MyR-CL-s0y"/>
+                                        <exclude reference="JnF-mh-Y70"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="b1S-tG-rcD"/>
+                                        <include reference="mdk-ro-anz"/>
+                                        <include reference="MyR-CL-s0y"/>
+                                        <include reference="JnF-mh-Y70"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="lNf-F4-Sc8" kind="show" identifier="ViewSpotSegue" id="Gwe-zI-EGK"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Cnw-5w-qLk" id="YB1-W8-T8f"/>
+                            <outlet property="delegate" destination="Cnw-5w-qLk" id="Fs8-57-CJs"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Be3-EO-RCZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2202" y="962"/>
+            <point key="canvasLocation" x="1935" y="124"/>
         </scene>
         <!--List Spots Map View Controller-->
         <scene sceneID="LvE-GK-9No">
@@ -440,13 +544,96 @@
                         <viewControllerLayoutGuide type="bottom" id="ciW-ra-e0a"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fWr-8h-dhO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.78280298226643352" green="0.81439153246839213" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="srm-bu-Dbd" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="srm-bu-Dbd"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="srm-bu-Dbd"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9MA-wa-nCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2886" y="962"/>
+            <point key="canvasLocation" x="1935" y="788"/>
+        </scene>
+        <!--View Spot View Controller-->
+        <scene sceneID="4kh-fp-AmB">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="So3-Dh-5f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="lNf-F4-Sc8" customClass="ViewSpotViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="J0A-kh-YhR"/>
+                        <viewControllerLayoutGuide type="bottom" id="2ZZ-ro-sgO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="v6Y-CZ-C8R">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nr7-CJ-Zdg">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <state key="normal" image="Nav Down Round"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="7" y="23" width="32" height="32"/>
+                                </variation>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="lNf-F4-Sc8" eventType="touchUpInside" id="ZN2-wS-3QF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpz-Ko-F9T">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title=".">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="283" y="24" width="34" height="32"/>
+                                </variation>
+                                <connections>
+                                    <action selector="editButtonTapped:" destination="lNf-F4-Sc8" eventType="touchUpInside" id="ebD-DX-ae9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.91366454423592491" green="0.91366454423592491" blue="0.91366454423592491" alpha="1" colorSpace="calibratedRGB"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="nr7-CJ-Zdg"/>
+                                <exclude reference="hpz-Ko-F9T"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="nr7-CJ-Zdg"/>
+                                <include reference="hpz-Ko-F9T"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="kel-PG-6xm">
+                        <barButtonItem key="leftBarButtonItem" image="Back" id="zv8-KS-KSA">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="leftBarButtonItemTapped:" destination="lNf-F4-Sc8" id="Pso-B4-MzM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2800.5" y="124"/>
         </scene>
         <!--List Spots Table View Controller-->
         <scene sceneID="0hT-Nz-U0N">
@@ -457,13 +644,48 @@
                         <viewControllerLayoutGuide type="bottom" id="rwX-6s-EMc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ILw-pZ-eb5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cXL-Uh-Kp0">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="0.70926859408180176" blue="0.82528030594270074" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cXL-Uh-Kp0" secondAttribute="trailing" id="6oJ-Fw-H40"/>
+                            <constraint firstItem="cXL-Uh-Kp0" firstAttribute="top" secondItem="ILw-pZ-eb5" secondAttribute="top" id="fjY-8L-Jew"/>
+                            <constraint firstItem="cXL-Uh-Kp0" firstAttribute="leading" secondItem="ILw-pZ-eb5" secondAttribute="leading" id="hsB-LY-sFV"/>
+                            <constraint firstItem="cXL-Uh-Kp0" firstAttribute="bottom" secondItem="rwX-6s-EMc" secondAttribute="top" id="xyD-Dy-zx6"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="cXL-Uh-Kp0"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="6oJ-Fw-H40"/>
+                                <exclude reference="fjY-8L-Jew"/>
+                                <exclude reference="hsB-LY-sFV"/>
+                                <exclude reference="xyD-Dy-zx6"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="cXL-Uh-Kp0"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="6oJ-Fw-H40"/>
+                                <include reference="fjY-8L-Jew"/>
+                                <include reference="hsB-LY-sFV"/>
+                                <include reference="xyD-Dy-zx6"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yfg-R6-3Zs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3573" y="962"/>
+            <point key="canvasLocation" x="1935" y="1463"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="igM-TH-TXK">
@@ -481,7 +703,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q2a-ZS-GWs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1093.5" y="-476"/>
+            <point key="canvasLocation" x="-196.5" y="-472"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="W79-lh-zAG">
@@ -499,11 +721,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWy-oc-qny" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="786" y="276"/>
+            <point key="canvasLocation" x="540" y="-588"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8is-Ac-kO7">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wgm-LE-Edu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="ListSpotsNavController" automaticallyAdjustsScrollViewInsets="NO" id="IFH-xy-P10" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="1vX-iE-252">
@@ -515,14 +738,34 @@
                         <segue destination="TS0-aU-a6e" kind="relationship" relationship="rootViewController" id="QzU-uB-fQL"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wgm-LE-Edu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2202" y="276"/>
+            <point key="canvasLocation" x="540" y="124"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VOL-kJ-kb1">
+            <objects>
+                <navigationController storyboardIdentifier="FilterSpotsNavController" automaticallyAdjustsScrollViewInsets="NO" id="knr-K7-ci5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="2JB-CG-h0O">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qxf-Lr-nld" kind="relationship" relationship="rootViewController" id="Irn-fu-OLL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R5b-a0-vPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="540" y="844"/>
         </scene>
     </scenes>
     <resources>
         <image name="Back" width="22" height="22"/>
+        <image name="Barcelona" width="598" height="598"/>
         <image name="Menu Filled" width="22" height="22"/>
+        <image name="Nav Down Round" width="22" height="22"/>
+        <image name="Nav Hashtag" width="22" height="22"/>
         <image name="Navigation Camera" width="22" height="22"/>
         <image name="Settings" width="22" height="22"/>
     </resources>
