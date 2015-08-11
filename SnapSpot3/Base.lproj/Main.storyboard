@@ -392,7 +392,6 @@
         <!--Spots-->
         <scene sceneID="6Av-r2-lPd">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="50G-tN-b8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="TS0-aU-a6e" customClass="ListSpotsViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HL5-iQ-3ZF"/>
@@ -418,6 +417,7 @@
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="50G-tN-b8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1224" y="124"/>
         </scene>
@@ -574,13 +574,13 @@
         <!--View Spot View Controller-->
         <scene sceneID="4kh-fp-AmB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="So3-Dh-5f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="lNf-F4-Sc8" customClass="ViewSpotViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="J0A-kh-YhR"/>
                         <viewControllerLayoutGuide type="bottom" id="2ZZ-ro-sgO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="v6Y-CZ-C8R">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nr7-CJ-Zdg">
@@ -632,6 +632,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="So3-Dh-5f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2800.5" y="124"/>
         </scene>
@@ -726,7 +727,6 @@
         <!--Navigation Controller-->
         <scene sceneID="8is-Ac-kO7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wgm-LE-Edu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="ListSpotsNavController" automaticallyAdjustsScrollViewInsets="NO" id="IFH-xy-P10" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="1vX-iE-252">
@@ -738,6 +738,7 @@
                         <segue destination="TS0-aU-a6e" kind="relationship" relationship="rootViewController" id="QzU-uB-fQL"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wgm-LE-Edu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="540" y="124"/>
         </scene>

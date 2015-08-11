@@ -17,14 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
+        // GOOGLE MAPS SDK
         GMSServices.provideAPIKey("AIzaSyB-0-hv2zKDeYl17vRTaDOPKhuQiZnsXmo")
         self.coreLocationController = CoreLocationController()
         
+        // PARSE SDK.
+        Parse.enableLocalDatastore()
+        Parse.setApplicationId("jdPBPoucTIJWhKQ3X1qWcxNPJUIYXu95gafFYmSa",
+            clientKey: "d9KidMZPEgd1rDKvgKFL7LJrd0Jww3qu4QWnLopH")
+        // [Optional] Track statistics around application opens.
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+        
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-        
-        
         
         var initialViewController:UIViewController
         initialViewController = pageController
