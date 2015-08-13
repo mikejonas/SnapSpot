@@ -12,7 +12,7 @@ import CoreLocation
 
 protocol EditSpotViewControllerDelegate {
     func spotClosed()
-    func spotSaved()
+    func spotSaved(spotComponents:SpotComponents)
 }
 
 class EditSpotViewController: UIViewController {
@@ -24,6 +24,7 @@ class EditSpotViewController: UIViewController {
     )
     let locationUtil = LocationUtil()
     
+    var spotComponents = SpotComponents()
     var spotAddressComponents:SpotAddressComponents?
     var marker = GMSMarker()
     
@@ -43,7 +44,7 @@ class EditSpotViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
         setupTextView()
         setupTextViewPlaceholder()
         setupImages()
@@ -70,8 +71,25 @@ class EditSpotViewController: UIViewController {
         
     }
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
+        
+        //Caption
+        spotComponents.caption = descriptionTextView.text
+        spotComponents.date = NSDate()
+        
+        //HashTags
+        descriptionTextView.extractHashTags { extractedHashtags in
+            self.spotComponents.hashTags = extractedHashtags
+        }
+        
+        //Image
+        spotComponents.images = imageArray
+        
+        //Address components
+        spotComponents.addressComponents = spotAddressComponents
+        
         if (delegate != nil) {
-            delegate?.spotSaved()
+            println(spotComponents.description)
+            delegate?.spotSaved(spotComponents)
             resetView()
         }
     }

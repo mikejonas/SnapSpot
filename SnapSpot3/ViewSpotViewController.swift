@@ -17,9 +17,11 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
     var kHeaderHeight:CGFloat?
     var kImageHeight:CGFloat!
     
+    var spotObject: PFObject?
+    
     var scrollView: UIScrollView!
     var imageView : UIImageView?
-    var spotDescriptionText:UITextView = UITextView()
+    var caption:UITextView = UITextView()
     
     var mapView:GMSMapView!
     var marker = GMSMarker()
@@ -33,6 +35,7 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
     
     
     override func viewWillAppear(animated: Bool) {
+        reloadData(spotObject!)
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
     }
     
@@ -53,15 +56,14 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
         scrollView.scrollEnabled = true
         self.scrollView.delegate = self
         
-        self.spotImages.append(UIImage(named: "Barcelona")!)
         self.loadSnappedImages(self.spotImages)
     
-        setupSpotDescription(spotDescriptionText)
-        spotDescriptionText.delegate = self
+        setupSpotDescription(caption)
+        caption.delegate = self
 
         self.mapView = GMSMapView()
         setupMap()
-        self.scrollView.contentSize = CGSizeMake(kScreenSize.width, spotDescriptionText.bounds.height + mapView.bounds.height + kMargin)
+        self.scrollView.contentSize = CGSizeMake(kScreenSize.width, caption.bounds.height + mapView.bounds.height + kMargin)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -92,7 +94,6 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
     
     
     func setupImages() {
-        println(kStatusBarHeight)
         self.imageView = UIImageView(frame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.width))
         self.imageView?.backgroundColor = UIColor.lightGrayColor()
         self.view.addSubview(imageView!)
@@ -114,9 +115,7 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
         textView.scrollEnabled = false
         textView.frame = CGRectMake(0, 0, kScreenSize.width, 30)
         textView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
-        textView.text = "Lorem ipsum #dolor sit consectetur adipiscing elit."
         self.scrollView.addSubview(textView)
-        textView.resolveHashTags()
         textView.font = UIFont.systemFontOfSize(15)
         textView.sizeToFit()
         textView.layoutIfNeeded()
@@ -124,7 +123,7 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func setupMap() {
-        mapView.frame = CGRectMake(0, spotDescriptionText.bounds.height + kMargin, kScreenSize.width, kScreenSize.width / 1.3)
+        mapView.frame = CGRectMake(0, caption.bounds.height + kMargin, kScreenSize.width, kScreenSize.width / 1.3)
         self.scrollView.addSubview(mapView)
         mapView.mapType = kGMSTypeHybrid
         mapView.settings.setAllGesturesEnabled(false)
@@ -148,6 +147,29 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
+    func reloadData(spotObject:PFObject) {
+        //Caption
+        caption.text = spotObject["caption"] as? String
+        caption.resolveHashTags()
+        
+        //Image
+        let imageFileNames = spotObject["localImagePaths"] as? [String]
+        let images = retrieveImageLocally(imageFileNames!)
+        self.spotImages.append(images[0])
+        self.loadSnappedImages(self.spotImages)
+        
+        //Map
+        if let pfCoordinates = spotObject["coordinates"] as? PFGeoPoint {
+            let coord2d = CLLocationCoordinate2D(latitude: pfCoordinates.latitude, longitude: pfCoordinates.longitude)
+            updateMap(coord2d)
+
+        }
+        
+//        spotComponents.hashTags = spotsObject["hashTags"] as? [String]
+//        if let image1 = spotsObject["image1"]
+//        spotComponents.images?.append()
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -170,7 +192,7 @@ extension ViewSpotViewController: EditSpotViewControllerDelegate {
         dismissViewControllerAnimated(false, completion: nil)
         editSpotVc.delegate = nil
     }
-    func spotSaved() {
+    func spotSaved(spotComponents: SpotComponents) {
         println("delegate from view spot vc saved")
         dismissViewControllerAnimated(true, completion: nil)
         editSpotVc.delegate = nil

@@ -12,6 +12,21 @@ let reuseIdentifier = "SpotGridCell"
 
 class ListSpotsCollectionViewController: UICollectionViewController {
 
+    var spots:[PFObject] = []
+    
+    override func viewWillAppear(animated: Bool) {
+        var query = PFQuery(className:"Spot")
+        query.fromLocalDatastore()
+        query.orderByDescending("createdAt")
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if let spots = objects {
+                self.spots = spots as! [PFObject]
+            }
+            self.collectionView!.reloadData()
+            println(self.spots)
+        }
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +37,7 @@ class ListSpotsCollectionViewController: UICollectionViewController {
 //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,11 +52,25 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
+//        if segue.identifier == "ViewSpotSegue" {
+//            let destinationVC = segue.destinationViewController as! ViewSpotViewController
+//           
+//            let indexPath : NSArray = self.collectionView!.indexPathsForSelectedItems()
+//            println(indexPath)
+////            destinationVC.reloadData(<#spotObject: [String : AnyObject?]#>)
+//            destinationVC.modalPresentationCapturesStatusBarAppearance = true
+//        }
+        
         if segue.identifier == "ViewSpotSegue" {
             let destinationVC = segue.destinationViewController as! ViewSpotViewController
-            destinationVC.modalPresentationCapturesStatusBarAppearance = true
+            let cell = sender as! UICollectionViewCell
+            let indexPath = self.collectionView!.indexPathForCell(cell)
+            let spotObject = self.spots[indexPath!.row]
+            destinationVC.spotObject = spotObject
         }
+        
     }
+
 
 
     // MARK: UICollectionViewDataSource
@@ -53,12 +83,17 @@ class ListSpotsCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return 11
+        return spots.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
-    
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SpotCollectionCell
+
+        let imageFileNames = spots[indexPath.row]["localImagePaths"] as? [String]
+        let images = retrieveImageLocally(imageFileNames!)
+        cell.imageThumbnail.image = images[0]
+
+
         // Configure the cell
         return cell
     }

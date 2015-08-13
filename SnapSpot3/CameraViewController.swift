@@ -79,7 +79,9 @@ extension CameraViewController: EditSpotViewControllerDelegate {
         dismissViewControllerAnimated(false, completion: nil)
         editSpotVc.delegate = nil
     }
-    func spotSaved() {
+    
+    func spotSaved(spotComponents: SpotComponents) {
+        saveSpotLocally(spotComponents)
         dismissViewControllerAnimated(true, completion: nil)
         editSpotVc.delegate = nil
         pageController.goToNextVC()
