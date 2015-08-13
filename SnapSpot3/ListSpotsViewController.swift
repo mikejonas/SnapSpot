@@ -9,6 +9,9 @@
 import UIKit
 
 class ListSpotsViewController: UIViewController {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         var VCIDs : [String] = ["ListSpotsCollectionViewController", "ListSpotsTableViewController", "ListSpotsMapViewController"]
@@ -21,6 +24,8 @@ class ListSpotsViewController: UIViewController {
         swiftPagesView.enableBarShadow(false)
         swiftPagesView.setButtonsTextFontAndSize(UIFont(name: "Helvetica Neue", size: 13)!)
         self.view.addSubview(swiftPagesView)
+        self.automaticallyAdjustsScrollViewInsets = false
+
     }
 
     override func didReceiveMemoryWarning() {
