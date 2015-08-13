@@ -9,9 +9,7 @@
 import UIKit
 
 class ListSpotsViewController: UIViewController {
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         var VCIDs : [String] = ["ListSpotsCollectionViewController", "ListSpotsTableViewController", "ListSpotsMapViewController"]
