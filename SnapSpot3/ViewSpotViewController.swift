@@ -20,9 +20,8 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
     var spotObject: PFObject?
     
     var scrollView: UIScrollView!
-    var imageView : UIImageView?
+    var imageScrollView : ImageScrollView!
     var caption:UITextView = UITextView()
-    
     var mapView:GMSMapView!
     var marker = GMSMarker()
     
@@ -49,21 +48,16 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
 
         let kNavigationBarHeight = self.navigationController?.navigationBar.frame.size.height
         kHeaderHeight = kStatusBarHeight + 0
-        setupImages()
 
-        scrollView = UIScrollView(frame: CGRectMake(0, kScreenSize.width, kScreenSize.width, kScreenSize.height - kScreenSize.width))
+        scrollView = UIScrollView(frame: CGRectMake(0, 0, kScreenSize.width, kScreenSize.height))
         self.view.addSubview(scrollView)
         scrollView.scrollEnabled = true
         self.scrollView.delegate = self
         
-        self.loadSnappedImages(self.spotImages)
-    
-        setupSpotDescription(caption)
-        caption.delegate = self
-
-        self.mapView = GMSMapView()
+        setupImageScrollView()
+        setupCaption()
         setupMap()
-        self.scrollView.contentSize = CGSizeMake(kScreenSize.width, caption.bounds.height + mapView.bounds.height + kMargin)
+        self.scrollView.contentSize = CGSizeMake(kScreenSize.width, imageScrollView.bounds.height + caption.bounds.height + mapView.bounds.height + kMargin)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -93,37 +87,31 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-    func setupImages() {
-        self.imageView = UIImageView(frame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.width))
-        self.imageView?.backgroundColor = UIColor.lightGrayColor()
-        self.view.addSubview(imageView!)
+    func setupImageScrollView() {
+        self.imageScrollView = ImageScrollView(frame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.width))
+        self.scrollView.addSubview(imageScrollView)
     }
     
     
     
-    func loadSnappedImages(imageArray:[UIImage]) {
-        for var i = 0; i < imageArray.count; ++i {
-            imageView!.image = imageArray[i]
-            imageView!.clipsToBounds = true
-            imageView!.contentMode = UIViewContentMode.ScaleAspectFill
-        }
-    }
-    
-    func setupSpotDescription(textView:UITextView) {
-        textView.editable = false
-        textView.dataDetectorTypes = UIDataDetectorTypes.Link
-        textView.scrollEnabled = false
-        textView.frame = CGRectMake(0, 0, kScreenSize.width, 30)
-        textView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
-        self.scrollView.addSubview(textView)
-        textView.font = UIFont.systemFontOfSize(15)
-        textView.sizeToFit()
-        textView.layoutIfNeeded()
-        textView.frame = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, kScreenSize.width, textView.frame.height)
+    func setupCaption() {
+        caption.delegate = self
+        caption.editable = false
+        caption.dataDetectorTypes = UIDataDetectorTypes.Link
+        caption.scrollEnabled = false
+        caption.frame = CGRectMake(0, imageScrollView.bounds.height, kScreenSize.width, 130)
+        caption.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
+        caption.font = UIFont.systemFontOfSize(15)
+        caption.sizeToFit()
+        caption.layoutIfNeeded()
+        caption.frame = CGRectMake(caption.frame.origin.x, caption.frame.origin.y, kScreenSize.width, caption.frame.height)
+        self.scrollView.addSubview(caption)
+
     }
     
     func setupMap() {
-        mapView.frame = CGRectMake(0, caption.bounds.height + kMargin, kScreenSize.width, kScreenSize.width / 1.3)
+        self.mapView = GMSMapView()
+        mapView.frame = CGRectMake(0, imageScrollView.bounds.height + caption.bounds.height + kMargin, kScreenSize.width, kScreenSize.width / 1.3)
         self.scrollView.addSubview(mapView)
         mapView.mapType = kGMSTypeHybrid
         mapView.settings.setAllGesturesEnabled(false)
@@ -155,8 +143,7 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
         //Image
         let imageFileNames = spotObject["localImagePaths"] as? [String]
         let images = retrieveImageLocally(imageFileNames!)
-        self.spotImages.append(images[0])
-        self.loadSnappedImages(self.spotImages)
+        imageScrollView.setupWithImages(images)
         
         //Map
         if let pfCoordinates = spotObject["coordinates"] as? PFGeoPoint {

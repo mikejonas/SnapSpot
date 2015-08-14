@@ -12,18 +12,19 @@ let reuseIdentifier = "SpotGridCell"
 
 class ListSpotsCollectionViewController: UICollectionViewController {
 
+    var dateFormatter: NSDateFormatter!
     var spots:[PFObject] = []
     
     override func viewWillAppear(animated: Bool) {
         var query = PFQuery(className:"Spot")
         query.fromLocalDatastore()
-        query.orderByDescending("createdAt")
+        query.orderByDescending("date")
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let spots = objects {
                 self.spots = spots as! [PFObject]
             }
             self.collectionView!.reloadData()
-            println(self.spots)
+            println(self.spots[2])
         }
 
     }
@@ -37,8 +38,11 @@ class ListSpotsCollectionViewController: UICollectionViewController {
 //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        dateFormatter = NSDateFormatter()
+        collectionView?.backgroundColor = UIColor.whiteColor()
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,18 +53,6 @@ class ListSpotsCollectionViewController: UICollectionViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-        
-//        if segue.identifier == "ViewSpotSegue" {
-//            let destinationVC = segue.destinationViewController as! ViewSpotViewController
-//           
-//            let indexPath : NSArray = self.collectionView!.indexPathsForSelectedItems()
-//            println(indexPath)
-////            destinationVC.reloadData(<#spotObject: [String : AnyObject?]#>)
-//            destinationVC.modalPresentationCapturesStatusBarAppearance = true
-//        }
-        
         if segue.identifier == "ViewSpotSegue" {
             let destinationVC = segue.destinationViewController as! ViewSpotViewController
             let cell = sender as! UICollectionViewCell
@@ -92,8 +84,16 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         let imageFileNames = spots[indexPath.row]["localImagePaths"] as? [String]
         let images = retrieveImageLocally(imageFileNames!)
         cell.imageThumbnail.image = images[0]
+        
+        let timeStamp = spots[indexPath.row]["date"] as! NSDate
+        dateFormatter.dateFormat = "MMM dd"
+        let monthDay = split( dateFormatter.stringFromDate(timeStamp) ) {$0 == " "}
+        cell.monthLabel.text = monthDay[0]
+        cell.dayLabel.text = monthDay[1]
 
-
+        if let city = spots[indexPath.row]["locality"] as? String {
+            cell.locationLabel.text = city
+        }
         // Configure the cell
         return cell
     }

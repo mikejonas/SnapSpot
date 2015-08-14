@@ -51,6 +51,7 @@
 		DD4024F61B659DE700D23489 /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F51B659DE700D23489 /* SettingsTableCell.swift */; };
 		DD4024F81B65A4E800D23489 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F71B65A4E800D23489 /* ViewController.swift */; };
 		DD530BCD1B7AD0D60094AED0 /* SpotCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530BCC1B7AD0D60094AED0 /* SpotCollectionCell.swift */; };
+		DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530C001B7D61690094AED0 /* ImageScrollView.swift */; };
 		DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */; };
 		DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */; };
 		DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */; };
@@ -123,6 +124,7 @@
 		DD4024F51B659DE700D23489 /* SettingsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
 		DD4024F71B65A4E800D23489 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DD530BCC1B7AD0D60094AED0 /* SpotCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCollectionCell.swift; sourceTree = "<group>"; };
+		DD530C001B7D61690094AED0 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
 		DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageCameraViewController.swift; sourceTree = "<group>"; };
 		DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				DD1B0D1F1B47688900D06BC5 /* AppDelegate.swift */,
 				DD1E4DDB1B4C39D1005147DD /* Utils */,
 				DD1B0D581B478AE700D06BC5 /* Model */,
+				DD530C021B7D7EB40094AED0 /* Extensions */,
 				DD4024F41B659DA400D23489 /* Views */,
 				DD1B0D621B478DE900D06BC5 /* ViewControllers */,
 				DD1B0D1D1B47688900D06BC5 /* Supporting Files */,
@@ -315,15 +318,23 @@
 		DD4024F41B659DA400D23489 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DD1398601B754DF600421CD6 /* UITextField+Extension.swift */,
 				DD1397D31B65F62D00421CD6 /* SwiftPages.swift */,
 				DD4024F51B659DE700D23489 /* SettingsTableCell.swift */,
 				DD1B0D821B4AF70800D06BC5 /* CameraView.swift */,
 				DD1B0D841B4AF72500D06BC5 /* CameraView.xib */,
+				DD530C001B7D61690094AED0 /* ImageScrollView.swift */,
 				DD1398561B6ABDEA00421CD6 /* SetupViewSpotVC.swift */,
 				DD530BCC1B7AD0D60094AED0 /* SpotCollectionCell.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		DD530C021B7D7EB40094AED0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DD1398601B754DF600421CD6 /* UITextField+Extension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		DD55EDB01B570A270014A0D0 /* Controller */ = {
@@ -512,6 +523,7 @@
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
 				DD1398551B6AB3D100421CD6 /* ViewSpotViewController.swift in Sources */,
 				DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */,
+				DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */,
 				DD1398571B6ABDEA00421CD6 /* SetupViewSpotVC.swift in Sources */,
 				DD1B0D7B1B478E7A00D06BC5 /* TWImageScrollView.m in Sources */,
 				DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */,
