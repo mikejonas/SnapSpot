@@ -20,7 +20,7 @@ extension UITextView {
         
         // you can't set the font size in the storyboard anymore, since it gets overridden here.
         var attrs = [
-            NSFontAttributeName : UIFont.systemFontOfSize(15.0)
+            NSFontAttributeName : UIFont.systemFontOfSize(16.0)
         ]
         
         // you can staple URLs onto attributed strings
@@ -65,6 +65,33 @@ extension UITextView {
         // again, this will also wipe out any fonts and colors from the storyboard,
         // so remember to re-add them in the attrs dictionary above
         self.attributedText = attrString
+    }
+    
+    func appendAttributedText(string:String, attributes:[String: NSObject]) {
+        
+        var newText = NSMutableAttributedString()
+        let newLine = NSMutableAttributedString(string: "\n")
+        
+        //Get original text
+        let originalText = NSMutableAttributedString(attributedString: self.attributedText)
+
+        //Append attributes to new Text
+        let appendedString = NSAttributedString(string: string, attributes: attributes)
+
+        //Append new
+        newText.appendAttributedString(originalText)
+        if originalText.length > 0 {
+            newText.appendAttributedString(newLine)
+        }
+        newText.appendAttributedString(appendedString)
+        
+        
+        // Define paragraph styling
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.paragraphSpacing = 10.0
+        var paraAttrs = [NSParagraphStyleAttributeName : paraStyle]
+        newText.addAttributes(paraAttrs, range: NSMakeRange(0, newText.length))
+        self.attributedText = newText
     }
     
     func extractHashTags( completion:(extractedHashtags:[String]) -> Void ){

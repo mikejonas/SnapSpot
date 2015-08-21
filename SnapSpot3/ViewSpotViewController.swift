@@ -2,121 +2,147 @@
 //  ViewSpotViewController.swift
 //  SnapSpot3
 //
-//  Created by Mike Jonas on 7/30/15.
+//  Created by Mike Jonas on 8/14/15.
 //  Copyright (c) 2015 Mike Jonas. All rights reserved.
 //
 
 import UIKit
 import GoogleMaps
 
-class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
-
-    let kStatusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
-    let kScreenSize = UIScreen.mainScreen().bounds
-    let kMargin:CGFloat = 15
-    var kHeaderHeight:CGFloat?
-    var kImageHeight:CGFloat!
+class ViewSpotViewController: UIViewController {
     
     var spotObject: PFObject?
+    var images: [UIImage]?
+    var dateFormatter = NSDateFormatter()
+    var locationCoordinates:CLLocationCoordinate2D?
+    var isScrolledTOMap:Bool = false
     
-    var scrollView: UIScrollView!
-    var imageScrollView : ImageScrollView!
-    var caption:UITextView = UITextView()
-    var mapView:GMSMapView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollViewSubView: UIView!
+    @IBOutlet weak var statusBarView: UIView!
+    @IBOutlet weak var imageScrollView: ImageScrollView!
+    @IBOutlet weak var captionTextView: UITextView!
+    @IBOutlet weak var captionTextViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var addressTextView: UITextView!
+    @IBOutlet weak var addressTextViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mapView: GMSMapView!
     var marker = GMSMarker()
+    @IBOutlet weak var mapViewHeightConstraint: NSLayoutConstraint!
     
-    var spotImages: [UIImage] = []
-    var locationCoordinates: CLLocation?
-    var address: String?
+    @IBOutlet weak var appleMapsButton: ButtonIconRight!
+    @IBOutlet weak var googleMapsButton: ButtonIconRight!
+    @IBOutlet weak var CloseMapsBar: UIView!
     
-    let tapImageRec = UITapGestureRecognizer()
-    var spot:AnyObject?
-    
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var imageScrollViewHeight:CGFloat = CGFloat()
+    var mapViewTopPosition:CGFloat = CGFloat()
+    var mapViewMinHeight:CGFloat = CGFloat()
+    var mapViewMaxHeight:CGFloat = CGFloat()
+
     
     override func viewWillAppear(animated: Bool) {
         reloadData(spotObject!)
-        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+//        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        editSpotVc.delegate = self
-    }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let kNavigationBarHeight = self.navigationController?.navigationBar.frame.size.height
-        kHeaderHeight = kStatusBarHeight + 0
-
-        scrollView = UIScrollView(frame: CGRectMake(0, 0, kScreenSize.width, kScreenSize.height))
-        self.view.addSubview(scrollView)
-        scrollView.scrollEnabled = true
         self.scrollView.delegate = self
-        
-        setupImageScrollView()
-        setupCaption()
+        self.captionTextView.delegate = self
+        statusBarView.hidden = true
+        captionTextView.textContainerInset = UIEdgeInsetsMake(12, 12, 12, 12);
+        addressTextView.textContainerInset = UIEdgeInsetsMake(12, 42, 12, 12);
         setupMap()
-        self.scrollView.contentSize = CGSizeMake(kScreenSize.width, imageScrollView.bounds.height + caption.bounds.height + mapView.bounds.height + kMargin)
+        appleMapsButton.layer.cornerRadius = 4
+        googleMapsButton.layer.cornerRadius = 4
+        
+        var effect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        var effectView = UIVisualEffectView(effect: effect)
+        CloseMapsBar.addSubview(effectView)
+        
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        updateTextViewSizes(captionTextView, constraint: captionTextViewHeightConstraint)
+        updateTextViewSizes(addressTextView, constraint: addressTextViewHeightConstraint)
+        mapViewTopPosition = addressTextView.frame.height + addressTextView.frame.origin.y
+        mapViewMinHeight = screenSize.height - mapViewTopPosition
+        mapViewMaxHeight = screenSize.height - addressTextView.frame.height - 20
+        mapView.frame = CGRectMake(mapView.frame.origin.x, mapView.frame.origin.y, mapView.frame.width, mapViewMaxHeight)
+        mapViewHeightConstraint.constant = mapView.frame.height
+        
+        println(self.scrollView.contentInset.top)
+        println(self.scrollView.contentSize.height)
+        println(self.scrollView.bounds.size.height)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func backButtonTapped(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func editButtonTapped(sender: UIButton) {
-        self.presentViewController(editSpotVc, animated: false) { () -> Void in
-//            editSpotVc.addImage(image)
-//            editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
-        }
-    }
-    
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true;
-    }
-    
-    
-    func setupImageScrollView() {
-        self.imageScrollView = ImageScrollView(frame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.width))
-        self.scrollView.addSubview(imageScrollView)
-    }
-    
-    
-    
-    func setupCaption() {
-        caption.delegate = self
-        caption.editable = false
-        caption.dataDetectorTypes = UIDataDetectorTypes.Link
-        caption.scrollEnabled = false
-        caption.frame = CGRectMake(0, imageScrollView.bounds.height, kScreenSize.width, 130)
-        caption.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
-        caption.font = UIFont.systemFontOfSize(15)
-        caption.sizeToFit()
-        caption.layoutIfNeeded()
-        caption.frame = CGRectMake(caption.frame.origin.x, caption.frame.origin.y, kScreenSize.width, caption.frame.height)
-        self.scrollView.addSubview(caption)
+    func reloadData(spotObject:PFObject) {
+        isScrolledTOMap = false
+        
+        //Image
+        let imageFileNames = spotObject["localImagePaths"] as? [String]
+        let images = retrieveImageLocally(imageFileNames!)
+        self.images = images
+        imageScrollView.setupWithImages(images)
+        imageScrollView.clipsToBounds = true
+        imageScrollViewHeight = imageScrollView.bounds.width
+        
+        //Caption
+        let caption = spotObject["caption"] as? String
+        captionTextView.text = spotObject["caption"] as? String
+        captionTextView.resolveHashTags()
+        var attrs = [
+            NSFontAttributeName : UIFont.systemFontOfSize(11.0),
+            NSForegroundColorAttributeName: UIColor.lightGrayColor()
+        ]
+        let timeStamp = spotObject["date"] as! NSDate
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        let dateString = "Added: \(dateFormatter.stringFromDate(timeStamp))"
 
+        captionTextView.appendAttributedText(dateString, attributes: attrs)
+        
+        //Address
+        let address = spotObject["address"] as? String
+        addressTextView.text = address
+
+
+        //Map
+        if let pfCoordinates = spotObject["coordinates"] as? PFGeoPoint {
+            locationCoordinates = CLLocationCoordinate2D(latitude: pfCoordinates.latitude, longitude: pfCoordinates.longitude)
+            updateMap(locationCoordinates)
+        }
+        
+        println(self.scrollView.contentInset.top)
+        println(self.scrollViewSubView.bounds.size.height)
+        println(self.scrollView.bounds.size.height)
+    }
+    
+    func updateTextViewSizes(textView:UITextView, constraint:NSLayoutConstraint) {
+        let fixedWidth = textView.frame.size.width
+        textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        var newFrame = textView.frame
+        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+        textView.frame = newFrame;
+        constraint.constant = textView.frame.height
     }
     
     func setupMap() {
-        self.mapView = GMSMapView()
-        mapView.frame = CGRectMake(0, imageScrollView.bounds.height + caption.bounds.height + kMargin, kScreenSize.width, kScreenSize.width / 1.3)
-        self.scrollView.addSubview(mapView)
         mapView.mapType = kGMSTypeHybrid
         mapView.settings.setAllGesturesEnabled(false)
         let coordinates = CLLocationCoordinate2D(latitude: 41.386486, longitude: 2.1700022)
         updateMap(coordinates)
+        
+        let tap = UITapGestureRecognizer(target: self, action: Selector("mapViewTapped"))
+        mapView.addGestureRecognizer(tap)
     }
     func updateMap(coordinates:CLLocationCoordinate2D?) {
         if let coordinates = coordinates {
@@ -134,30 +160,62 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
             marker.map = nil
         }
     }
-
-    func reloadData(spotObject:PFObject) {
-        //Caption
-        caption.text = spotObject["caption"] as? String
-        caption.resolveHashTags()
-        
-        //Image
-        let imageFileNames = spotObject["localImagePaths"] as? [String]
-        let images = retrieveImageLocally(imageFileNames!)
-        imageScrollView.setupWithImages(images)
-        
-        //Map
-        if let pfCoordinates = spotObject["coordinates"] as? PFGeoPoint {
-            let coord2d = CLLocationCoordinate2D(latitude: pfCoordinates.latitude, longitude: pfCoordinates.longitude)
-            updateMap(coord2d)
-
-        }
-        
-//        spotComponents.hashTags = spotsObject["hashTags"] as? [String]
-//        if let image1 = spotsObject["image1"]
-//        spotComponents.images?.append()
+    func mapViewTapped() {
+        if !isScrolledTOMap { scrollDownToMap() }
     }
     
+    func scrollDownToMap() {
+        var bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+        self.scrollView.setContentOffset(bottomOffset, animated: true)
+        mapView.settings.setAllGesturesEnabled(true)
+        isScrolledTOMap = true
+        UIView.animateWithDuration(0.3, animations: {
+            self.CloseMapsBar.frame =  CGRectMake(0, self.CloseMapsBar.frame.origin.y, self.CloseMapsBar.frame.width, 25)
+            }, completion: {
+                (value: Bool) in
+                self.CloseMapsBar.hidden = false
+        })
+    }
+    
+    func scrollUpFromMap() {
+        var bottomOffset = CGPointMake(0, 0 - self.scrollView.contentInset.top);
+        self.scrollView.setContentOffset(bottomOffset, animated: true)
+        mapView.settings.setAllGesturesEnabled(false)
+        isScrolledTOMap = false
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.CloseMapsBar.frame =  CGRectMake(0, self.CloseMapsBar.frame.origin.y, self.CloseMapsBar.frame.width, 0)
+            }, completion: {
+                (value: Bool) in
+                self.CloseMapsBar.hidden = true
+        })
+    }
+    
+    @IBAction func appleMapsButtonTapped(sender: ButtonIconRight) {
+        if let coordinates = locationCoordinates {
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://maps.apple.com/?q=\(coordinates.latitude),\(coordinates.longitude)&t=Hybrid")!)
+        }
+        
+    }
+    @IBAction func googleMapsButtonTapped(sender: ButtonIconRight) {
+        if let coordinates = locationCoordinates {
+            if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
+                UIApplication.sharedApplication().openURL(NSURL(string:
+                    "comgooglemapsurl://maps.google.com/maps?q=\(coordinates.latitude),\(coordinates.longitude)&views=satellite,traffic&source=SourceApp&x-success=sourceapp://?resume=true")!)
+            } else {
+                UIApplication.sharedApplication().openURL(NSURL(string: "itms://itunes.apple.com/de/app/google-maps/id585027354?mt=8")!)
+            }
+        }
+    
+    }
+    
+    
+    @IBAction func backButtonTapped(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
+    
+    
     /*
     // MARK: - Navigation
 
@@ -171,18 +229,53 @@ class ViewSpotViewController: UIViewController, UIScrollViewDelegate {
 }
 
 //-------------------
-//Edit Spot Delegate
+//Scroll View Delegate
 //-------------------
-extension ViewSpotViewController: EditSpotViewControllerDelegate {
-    func spotClosed() {
-        println("delegate from view spot vc closed")
-        dismissViewControllerAnimated(false, completion: nil)
-        editSpotVc.delegate = nil
+
+extension ViewSpotViewController:UIScrollViewDelegate {
+
+
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var scrollY = scrollView.contentOffset.y
+        var bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+        println("isScrolledToMap:\(isScrolledTOMap) scrolly:\(scrollY) bottomOffsetY:\(bottomOffset.y)")
+        
+        
+        dispatch_async(dispatch_get_main_queue()) {
+
+            if self.isScrolledTOMap == false {
+                if scrollY > 0 { self.scrollDownToMap() }
+            } else {
+                if scrollY < bottomOffset.y { self.scrollUpFromMap() }
+            }
+        }
+        
     }
-    func spotSaved(spotComponents: SpotComponents) {
-        println("delegate from view spot vc saved")
-        dismissViewControllerAnimated(true, completion: nil)
-        editSpotVc.delegate = nil
+
+    
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        self.scrollViewSubView.bringSubviewToFront(imageScrollView)
+        var scrollY = scrollView.contentOffset.y
+
+        if scrollY < 0 {
+            
+        } else {
+            mapView.frame = CGRectMake(0, mapViewTopPosition, mapView.frame.width, mapViewMinHeight + (scrollY))            
+            if scrollY > imageScrollViewHeight - 20 {
+                //CHANGE VIEW WILL DISSAPEAR TO WORK WITH CHANGING STATUS BARS!!!
+                UIApplication.sharedApplication().statusBarStyle = .Default
+
+                statusBarView.hidden = false
+            } else {
+                statusBarView.hidden = true
+                UIApplication.sharedApplication().statusBarStyle = .LightContent
+
+            }
+        }
+        
+        
+//        CloseMapsBar.frame = CGRectMake(0, CloseMapsBar.frame.origin.y, CloseMapsBar.frame.width, 25 - (scrollY / 10))
     }
 }
 
@@ -192,9 +285,8 @@ extension ViewSpotViewController: EditSpotViewControllerDelegate {
 
 extension ViewSpotViewController:UITextViewDelegate {
     
-    
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-
+        
         // check for our fake URL scheme hash:helloWorld
         if URL.scheme == "hash" {
             let alertView = UIAlertView()
@@ -207,3 +299,4 @@ extension ViewSpotViewController:UITextViewDelegate {
         return true
     }
 }
+

@@ -12,7 +12,7 @@ let reuseIdentifier = "SpotGridCell"
 
 class ListSpotsCollectionViewController: UICollectionViewController {
 
-    var dateFormatter: NSDateFormatter!
+    var dateFormatter = NSDateFormatter()
     var spots:[PFObject] = []
     
     override func viewWillAppear(animated: Bool) {
@@ -24,7 +24,6 @@ class ListSpotsCollectionViewController: UICollectionViewController {
                 self.spots = spots as! [PFObject]
             }
             self.collectionView!.reloadData()
-            println(self.spots[2])
         }
 
     }
@@ -38,7 +37,6 @@ class ListSpotsCollectionViewController: UICollectionViewController {
 //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
-        dateFormatter = NSDateFormatter()
         collectionView?.backgroundColor = UIColor.whiteColor()
         
     }

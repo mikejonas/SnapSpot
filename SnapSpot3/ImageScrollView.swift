@@ -11,59 +11,79 @@ import UIKit
 class ImageScrollView: UIView, UIScrollViewDelegate {
     
     var scrollView = UIScrollView()
-    var testView = UIView()
     var pageControl = UIPageControl()
     var pageViews: [UIImageView?] = []
+    var images: [UIImage]?
+    var currentImageView: UIImageView?
 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         initScrollView()
     }
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         initScrollView()
+
     }
 
     func initScrollView() {
         scrollView.delegate = self
         scrollView.pagingEnabled = true
 //        scrollView.alwaysBounceHorizontal = true
-        scrollView.frame = CGRectMake(0, 0, self.frame.width, self.frame.height)
         self.addSubview(scrollView)
         self.addSubview(pageControl)
-        pageControl.frame = CGRectMake(self.frame.width / 2, self.frame.height - 10, pageControl.bounds.width, pageControl.bounds.height)
+   
+        println(pageControl.bounds.width)
     }
     
     func setupWithImages(images:[UIImage]) {
-        // 0
-        pageControl.currentPage = 0
-        pageControl.numberOfPages = images.count
+        self.images = images
+        setupView()
+    }
+    func setupView() {
+        scrollView.frame = CGRectMake(0, 0, self.frame.width, self.frame.width)
+        pageControl.frame = CGRectMake(self.frame.width / 2, self.frame.width - 10, 0, 0)
         
-        // 1
-        for _ in 0..<images.count {
-            pageViews.append(nil)
-
+        if let images = images {
+            // 0
+            pageControl.currentPage = 0
+            pageControl.numberOfPages = images.count
+            if images.count <= 1 { pageControl.hidden = true }
+            
+            // 1
+            for _ in 0..<images.count {
+                pageViews.append(nil)
+                
+            }
+            // 2
+            let pagesScrollViewSize = scrollView.frame.size
+            scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(images.count), pagesScrollViewSize.height)
+            
+            loadPages()
         }
-        
-        // 2
-        let pagesScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(images.count), pagesScrollViewSize.height)
-        
-        // 3
-        loadPages(images)
     }
     
-    func loadPage(page: Int, images:[UIImage]) {
+    func calculateSize(images:[UIImage]) {
+        let pagesScrollViewSize = scrollView.frame.size
+//        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(images.count), pagesScrollViewSize.height)
+        
+        loadPages()
+    }
+    
+    func updateimageSize(height:CGFloat) {
+
+        
+    }
+    
+    func loadPage(page: Int) {
         // 1
-        var frame = scrollView.bounds
+        var frame = scrollView.frame
         frame.origin.x = frame.size.width * CGFloat(page)
         frame.origin.y = 0.0
         
         // 2
-        let newPageView = UIImageView(image: images[page])
+        let newPageView = UIImageView(image: images![page])
         newPageView.contentMode = .ScaleAspectFit
         newPageView.frame = frame
         scrollView.addSubview(newPageView)
@@ -71,10 +91,10 @@ class ImageScrollView: UIView, UIScrollViewDelegate {
         // 3
         pageViews[page] = newPageView
     }
-    func loadPages(images:[UIImage]) {
+    func loadPages() {
         // Load pages in our range
-        for i in 0 ..< images.count {
-            loadPage(i, images: images)
+        for i in 0 ..< images!.count {
+            loadPage(i)
         }
     }
     
