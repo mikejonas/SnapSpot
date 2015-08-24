@@ -15,9 +15,7 @@
 		DD1397DC1B6600CB00421CD6 /* ListSpotsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397DB1B6600CB00421CD6 /* ListSpotsTableViewController.swift */; };
 		DD1397DE1B66DAF800421CD6 /* ListSpotsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397DD1B66DAF800421CD6 /* ListSpotsCollectionViewController.swift */; };
 		DD1397E01B6743C600421CD6 /* FilterSpotsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1397DF1B6743C600421CD6 /* FilterSpotsViewController.swift */; };
-		DD1398551B6AB3D100421CD6 /* ViewSpotViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1398541B6AB3D100421CD6 /* ViewSpotViewControllerOld.swift */; };
 		DD1398571B6ABDEA00421CD6 /* SetupViewSpotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1398561B6ABDEA00421CD6 /* SetupViewSpotVC.swift */; };
-		DD13985D1B73138D00421CD6 /* ListOrViewSpotPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD13985C1B73138D00421CD6 /* ListOrViewSpotPageViewController.swift */; };
 		DD1398611B754DF600421CD6 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1398601B754DF600421CD6 /* UITextField+Extension.swift */; };
 		DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D1F1B47688900D06BC5 /* AppDelegate.swift */; };
 		DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D211B47688900D06BC5 /* CameraViewController.swift */; };
@@ -80,9 +78,7 @@
 		DD1397DB1B6600CB00421CD6 /* ListSpotsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotsTableViewController.swift; sourceTree = "<group>"; };
 		DD1397DD1B66DAF800421CD6 /* ListSpotsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotsCollectionViewController.swift; sourceTree = "<group>"; };
 		DD1397DF1B6743C600421CD6 /* FilterSpotsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSpotsViewController.swift; sourceTree = "<group>"; };
-		DD1398541B6AB3D100421CD6 /* ViewSpotViewControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotViewControllerOld.swift; sourceTree = "<group>"; };
 		DD1398561B6ABDEA00421CD6 /* SetupViewSpotVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewSpotVC.swift; sourceTree = "<group>"; };
-		DD13985C1B73138D00421CD6 /* ListOrViewSpotPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOrViewSpotPageViewController.swift; sourceTree = "<group>"; };
 		DD1398601B754DF600421CD6 /* UITextField+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		DD1B0D1A1B47688900D06BC5 /* SnapSpot3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapSpot3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD1B0D1E1B47688900D06BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -265,13 +261,11 @@
 				DD4024F71B65A4E800D23489 /* ViewController.swift */,
 				DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */,
 				DD1B0D211B47688900D06BC5 /* CameraViewController.swift */,
-				DD13985C1B73138D00421CD6 /* ListOrViewSpotPageViewController.swift */,
-				DD530C071B7E84640094AED0 /* ViewSpotViewController.swift */,
-				DD1398541B6AB3D100421CD6 /* ViewSpotViewControllerOld.swift */,
 				DD1397D51B65F6F900421CD6 /* ListSpotsViewController.swift */,
 				DD1397DD1B66DAF800421CD6 /* ListSpotsCollectionViewController.swift */,
 				DD1397DB1B6600CB00421CD6 /* ListSpotsTableViewController.swift */,
 				DD1397D91B66006800421CD6 /* ListSpotsMapViewController.swift */,
+				DD530C071B7E84640094AED0 /* ViewSpotViewController.swift */,
 				DD1397DF1B6743C600421CD6 /* FilterSpotsViewController.swift */,
 				DD1B0D631B478E7A00D06BC5 /* TWPhotoPicker */,
 				DD1B0D4F1B4786D500D06BC5 /* EditSpotViewController */,
@@ -507,7 +501,6 @@
 				DD1397DA1B66006800421CD6 /* ListSpotsMapViewController.swift in Sources */,
 				DD1B0D7E1B478E7A00D06BC5 /* TWPhotoLoader.m in Sources */,
 				DD1397DE1B66DAF800421CD6 /* ListSpotsCollectionViewController.swift in Sources */,
-				DD13985D1B73138D00421CD6 /* ListOrViewSpotPageViewController.swift in Sources */,
 				DD1398611B754DF600421CD6 /* UITextField+Extension.swift in Sources */,
 				DD530BCD1B7AD0D60094AED0 /* SpotCollectionCell.swift in Sources */,
 				DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */,
@@ -528,7 +521,6 @@
 				DD1B0D7C1B478E7A00D06BC5 /* TWPhoto.m in Sources */,
 				DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */,
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
-				DD1398551B6AB3D100421CD6 /* ViewSpotViewControllerOld.swift in Sources */,
 				DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */,
 				DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */,
 				DD1398571B6ABDEA00421CD6 /* SetupViewSpotVC.swift in Sources */,

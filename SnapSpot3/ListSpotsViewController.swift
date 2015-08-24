@@ -23,7 +23,6 @@ class ListSpotsViewController: UIViewController {
         swiftPagesView.setButtonsTextFontAndSize(UIFont(name: "Helvetica Neue", size: 13)!)
         self.view.addSubview(swiftPagesView)
         self.automaticallyAdjustsScrollViewInsets = false
-
     }
 
     override func didReceiveMemoryWarning() {

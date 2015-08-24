@@ -225,6 +225,30 @@ class ViewSpotViewController: UIViewController {
     @IBAction func backButtonTapped(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+////    @IBAction func editButtonTapped(sender: UIButton) {
+////        self.presentViewController(editSpotVc, animated: false) { () -> Void in
+////            //            editSpotVc.addImage(image)
+////            //            editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
+////        }
+////    }
+//
+//    
+//    //-------------------
+//    //Edit Spot Delegate
+//    //-------------------
+//    extension ViewSpotViewControllerOld: EditSpotViewControllerDelegate {
+//        func spotClosed() {
+//            println("delegate from view spot vc closed")
+//            dismissViewControllerAnimated(false, completion: nil)
+//            editSpotVc.delegate = nil
+//        }
+//        func spotSaved(spotComponents: SpotComponents) {
+//            println("delegate from view spot vc saved")
+//            dismissViewControllerAnimated(true, completion: nil)
+//            editSpotVc.delegate = nil
+//        }
+//    }
 
     
     
