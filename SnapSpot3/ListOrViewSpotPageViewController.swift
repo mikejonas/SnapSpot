@@ -16,9 +16,15 @@ class ListOrViewSpotPageViewController: UIPageViewController, UIPageViewControll
     let ViewSpot2VC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewSpot2ViewController") as! UIViewController
 
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        setViewControllers([listSpotsVC], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViewControllers([listSpotsVC], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+//        setViewControllers([listSpotsVC], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         
         delegate = self
         dataSource = self

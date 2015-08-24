@@ -13,13 +13,14 @@ class ViewSpotViewController: UIViewController {
     
     var spotObject: PFObject?
     var images: [UIImage]?
+    var superViewScreenShot:UIImage?
     var dateFormatter = NSDateFormatter()
     var locationCoordinates:CLLocationCoordinate2D?
     var isScrolledTOMap:Bool = false
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewSubView: UIView!
-    @IBOutlet weak var statusBarView: UIView!
+    @IBOutlet weak var statusBarBackgroundView: UIView!
     @IBOutlet weak var imageScrollView: ImageScrollView!
     @IBOutlet weak var captionTextView: UITextView!
     @IBOutlet weak var captionTextViewHeightConstraint: NSLayoutConstraint!
@@ -31,7 +32,9 @@ class ViewSpotViewController: UIViewController {
     
     @IBOutlet weak var appleMapsButton: ButtonIconRight!
     @IBOutlet weak var googleMapsButton: ButtonIconRight!
-    @IBOutlet weak var CloseMapsBar: UIView!
+    @IBOutlet weak var CloseMapsBar: UIVisualEffectView!
+    @IBOutlet weak var closeMapsBarNub: UIVisualEffectView!
+    
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var imageScrollViewHeight:CGFloat = CGFloat()
@@ -50,17 +53,27 @@ class ViewSpotViewController: UIViewController {
         super.viewDidLoad()
         self.scrollView.delegate = self
         self.captionTextView.delegate = self
-        statusBarView.hidden = true
+        
+
+        
+        if let screenShot = superViewScreenShot {
+            let backgroundView = UIImageView(image: screenShot)
+            self.view.addSubview(backgroundView)
+        }
+        
+        statusBarBackgroundView.hidden = true
         captionTextView.textContainerInset = UIEdgeInsetsMake(12, 12, 12, 12);
-        addressTextView.textContainerInset = UIEdgeInsetsMake(12, 42, 12, 12);
+        addressTextView.textContainerInset = UIEdgeInsetsMake(12, 12, 12, 12);
         setupMap()
         appleMapsButton.layer.cornerRadius = 4
         googleMapsButton.layer.cornerRadius = 4
+        CloseMapsBar.alpha = 1
         
-        var effect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        var effectView = UIVisualEffectView(effect: effect)
-        CloseMapsBar.addSubview(effectView)
+        closeMapsBarNub.layer.cornerRadius = 4
+        closeMapsBarNub.clipsToBounds = true
         
+        println(spotObject)
+
     }
 
     override func viewDidLayoutSubviews() {
@@ -86,6 +99,7 @@ class ViewSpotViewController: UIViewController {
     
     func reloadData(spotObject:PFObject) {
         isScrolledTOMap = false
+        CloseMapsBar.hidden = true
         
         //Image
         let imageFileNames = spotObject["localImagePaths"] as? [String]
@@ -206,9 +220,7 @@ class ViewSpotViewController: UIViewController {
                 UIApplication.sharedApplication().openURL(NSURL(string: "itms://itunes.apple.com/de/app/google-maps/id585027354?mt=8")!)
             }
         }
-    
     }
-    
     
     @IBAction func backButtonTapped(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -240,9 +252,11 @@ extension ViewSpotViewController:UIScrollViewDelegate {
         var bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
         println("isScrolledToMap:\(isScrolledTOMap) scrolly:\(scrollY) bottomOffsetY:\(bottomOffset.y)")
         
+        if scrollY < 0 {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
         
         dispatch_async(dispatch_get_main_queue()) {
-
             if self.isScrolledTOMap == false {
                 if scrollY > 0 { self.scrollDownToMap() }
             } else {
@@ -258,17 +272,15 @@ extension ViewSpotViewController:UIScrollViewDelegate {
 //        self.scrollViewSubView.bringSubviewToFront(imageScrollView)
         var scrollY = scrollView.contentOffset.y
 
-        if scrollY < 0 {
-            
-        } else {
+        if scrollY > 0 {
             mapView.frame = CGRectMake(0, mapViewTopPosition, mapView.frame.width, mapViewMinHeight + (scrollY))            
             if scrollY > imageScrollViewHeight - 20 {
                 //CHANGE VIEW WILL DISSAPEAR TO WORK WITH CHANGING STATUS BARS!!!
                 UIApplication.sharedApplication().statusBarStyle = .Default
 
-                statusBarView.hidden = false
+                statusBarBackgroundView.hidden = false
             } else {
-                statusBarView.hidden = true
+                statusBarBackgroundView.hidden = true
                 UIApplication.sharedApplication().statusBarStyle = .LightContent
 
             }

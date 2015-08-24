@@ -25,7 +25,6 @@ class ListSpotsCollectionViewController: UICollectionViewController {
             }
             self.collectionView!.reloadData()
         }
-
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +37,6 @@ class ListSpotsCollectionViewController: UICollectionViewController {
 
         // Do any additional setup after loading the view.
         collectionView?.backgroundColor = UIColor.whiteColor()
-        
     }
     
 
@@ -57,11 +55,25 @@ class ListSpotsCollectionViewController: UICollectionViewController {
             let indexPath = self.collectionView!.indexPathForCell(cell)
             let spotObject = self.spots[indexPath!.row]
             destinationVC.spotObject = spotObject
+            destinationVC.superViewScreenShot = screenShot()
+            
         }
         
     }
 
-
+    // Full Screen Shot function. Hope this will work well in swift.
+    
+    func screenShot() -> UIImage {
+        let layer = UIApplication.sharedApplication().keyWindow!.layer
+        let scale = UIScreen.mainScreen().scale
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+        
+        layer.renderInContext(UIGraphicsGetCurrentContext())
+        let screenShot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return screenShot
+    }
 
     // MARK: UICollectionViewDataSource
 
