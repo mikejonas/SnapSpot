@@ -37,10 +37,11 @@ class ViewSpotViewController: UIViewController {
     
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    var imageScrollViewHeight:CGFloat = CGFloat()
-    var mapViewTopPosition:CGFloat = CGFloat()
-    var mapViewMinHeight:CGFloat = CGFloat()
-    var mapViewMaxHeight:CGFloat = CGFloat()
+    var imageScrollViewHeight = CGFloat()
+    var mapViewTopPosition = CGFloat()
+    var mapViewMinHeight = CGFloat()
+    var mapViewMaxHeight = CGFloat()
+    var mapViewAmountPassedScreen = CGFloat()
 
     
     override func viewWillAppear(animated: Bool) {
@@ -59,6 +60,8 @@ class ViewSpotViewController: UIViewController {
         if let screenShot = superViewScreenShot {
             let backgroundView = UIImageView(image: screenShot)
             self.view.addSubview(backgroundView)
+        } else {
+            self.view.backgroundColor = UIColor.darkGrayColor()
         }
         
         statusBarBackgroundView.hidden = true
@@ -72,7 +75,7 @@ class ViewSpotViewController: UIViewController {
         closeMapsBarNub.layer.cornerRadius = 4
         closeMapsBarNub.clipsToBounds = true
         
-        println(spotObject)
+//        println(spotObject)
 
     }
 
@@ -81,15 +84,33 @@ class ViewSpotViewController: UIViewController {
         
         updateTextViewSizes(captionTextView, constraint: captionTextViewHeightConstraint)
         updateTextViewSizes(addressTextView, constraint: addressTextViewHeightConstraint)
-        mapViewTopPosition = addressTextView.frame.height + addressTextView.frame.origin.y
+        mapViewTopPosition = addressTextView.frame.height + addressTextView.frame.origin.y // - 40
         mapViewMinHeight = screenSize.height - mapViewTopPosition
+        if mapViewMinHeight < 0 {
+            mapViewMinHeight = 0
+        }
+        
+        if mapViewTopPosition > screenSize.height {
+            mapViewAmountPassedScreen = mapViewTopPosition - screenSize.height
+            println(":)")
+        } else {
+            mapViewAmountPassedScreen = 0
+        }
         mapViewMaxHeight = screenSize.height - addressTextView.frame.height - 20
         mapView.frame = CGRectMake(mapView.frame.origin.x, mapView.frame.origin.y, mapView.frame.width, mapViewMaxHeight)
         mapViewHeightConstraint.constant = mapView.frame.height
         
-        println(self.scrollView.contentInset.top)
-        println(self.scrollView.contentSize.height)
-        println(self.scrollView.bounds.size.height)
+        println("mapViewTopPosition \(mapViewTopPosition)")
+        println("mapView.frame.origin.y \(mapView.frame.origin.y)")
+        println("screenSize.height \(screenSize.height)")
+        println("mapViewMinHeight \(mapViewMinHeight)")
+        println("mapViewMaxHeight \(mapViewMaxHeight)")
+        println("mapViewHeightConstraint.constant \(mapViewHeightConstraint.constant) \n \n")
+        
+        
+//        println(self.scrollView.contentInset.top)
+//        println(self.scrollView.contentSize.height)
+//        println(self.scrollView.bounds.size.height)
     }
     
     override func didReceiveMemoryWarning() {
@@ -133,10 +154,6 @@ class ViewSpotViewController: UIViewController {
             locationCoordinates = CLLocationCoordinate2D(latitude: pfCoordinates.latitude, longitude: pfCoordinates.longitude)
             updateMap(locationCoordinates)
         }
-        
-        println(self.scrollView.contentInset.top)
-        println(self.scrollViewSubView.bounds.size.height)
-        println(self.scrollView.bounds.size.height)
     }
     
     func updateTextViewSizes(textView:UITextView, constraint:NSLayoutConstraint) {
@@ -274,9 +291,9 @@ extension ViewSpotViewController:UIScrollViewDelegate {
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         var scrollY = scrollView.contentOffset.y
         var bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
-        println("isScrolledToMap:\(isScrolledTOMap) scrolly:\(scrollY) bottomOffsetY:\(bottomOffset.y)")
         
-        if scrollY < 0 {
+        if scrollY < -40 {
+            println(scrollY)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         
@@ -294,19 +311,21 @@ extension ViewSpotViewController:UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
 //        self.scrollViewSubView.bringSubviewToFront(imageScrollView)
-        var scrollY = scrollView.contentOffset.y
+        var scrollY = scrollView.contentOffset.y - mapViewAmountPassedScreen
 
         if scrollY > 0 {
-            mapView.frame = CGRectMake(0, mapViewTopPosition, mapView.frame.width, mapViewMinHeight + (scrollY))            
+//           
+//            mapView.frame = CGRectMake(0, mapViewTopPosition - mapViewAmountPassedScreen, mapView.frame.width, mapViewMinHeight + (scrollY))
+//            println(mapView.frame.origin.y)
+
+            
             if scrollY > imageScrollViewHeight - 20 {
                 //CHANGE VIEW WILL DISSAPEAR TO WORK WITH CHANGING STATUS BARS!!!
                 UIApplication.sharedApplication().statusBarStyle = .Default
-
                 statusBarBackgroundView.hidden = false
             } else {
                 statusBarBackgroundView.hidden = true
                 UIApplication.sharedApplication().statusBarStyle = .LightContent
-
             }
         }
         

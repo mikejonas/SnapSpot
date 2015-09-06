@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ycw-vD-uau">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ycw-vD-uau">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -424,32 +424,6 @@
             </objects>
             <point key="canvasLocation" x="1224" y="124"/>
         </scene>
-        <!--Filter Spots-->
-        <scene sceneID="qW1-77-bnk">
-            <objects>
-                <viewController id="qxf-Lr-nld" customClass="FilterSpotsViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Gmy-Ui-Odg"/>
-                        <viewControllerLayoutGuide type="bottom" id="1qG-Zh-uTO"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Sz5-jy-ESN">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Filter Spots" id="D4D-qq-HXt">
-                        <barButtonItem key="leftBarButtonItem" image="Menu Filled" id="0qK-gO-VkA">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="leftBarButtonItemTapped:" destination="qxf-Lr-nld" id="MQh-DZ-S91"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Oa2-lZ-eUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1224" y="844"/>
-        </scene>
         <!--List Spots Collection View Controller-->
         <scene sceneID="vZb-YC-sZf">
             <objects>
@@ -551,7 +525,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2DL-Ui-wnt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fp5-hp-xSP">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dky-nH-hGN">
@@ -813,8 +787,7 @@
                                                         <exclude reference="oxa-Su-Wf4"/>
                                                     </mask>
                                                 </variation>
-                                                <variation key="widthClass=compact" fixedFrame="YES">
-                                                    <rect key="frame" x="10" y="20" width="40" height="44"/>
+                                                <variation key="widthClass=compact">
                                                     <mask key="constraints">
                                                         <include reference="7g6-Wi-Oyb"/>
                                                         <include reference="oxa-Su-Wf4"/>
@@ -860,19 +833,15 @@
                                                 <exclude reference="FRM-O9-6kq"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <exclude reference="bvJ-WZ-nTk"/>
-                                                <exclude reference="fQY-0s-ZH0"/>
-                                                <exclude reference="fzv-i7-GdJ"/>
-                                                <exclude reference="qUO-iG-yNd"/>
                                                 <exclude reference="AAb-5e-gj2"/>
                                                 <exclude reference="pRT-jA-lZq"/>
-                                                <exclude reference="9ch-b4-d2T"/>
-                                                <exclude reference="WEL-aD-AJ5"/>
-                                                <exclude reference="gIp-Ay-uUQ"/>
                                                 <exclude reference="MeO-KA-NU6"/>
                                                 <exclude reference="PEQ-Ml-wq8"/>
                                                 <exclude reference="ok9-5j-FHE"/>
                                                 <exclude reference="qda-pV-aRu"/>
+                                                <exclude reference="9ch-b4-d2T"/>
+                                                <exclude reference="WEL-aD-AJ5"/>
+                                                <exclude reference="gIp-Ay-uUQ"/>
                                                 <exclude reference="hxU-cD-0Ys"/>
                                                 <exclude reference="j4c-GH-lre"/>
                                                 <exclude reference="wjh-gR-kO9"/>
@@ -880,6 +849,10 @@
                                                 <exclude reference="db5-Su-MHr"/>
                                                 <exclude reference="euL-nL-tUH"/>
                                                 <exclude reference="qDY-ci-Zd9"/>
+                                                <exclude reference="bvJ-WZ-nTk"/>
+                                                <exclude reference="fQY-0s-ZH0"/>
+                                                <exclude reference="fzv-i7-GdJ"/>
+                                                <exclude reference="qUO-iG-yNd"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact">
@@ -892,19 +865,15 @@
                                                 <include reference="FRM-O9-6kq"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <include reference="bvJ-WZ-nTk"/>
-                                                <exclude reference="fQY-0s-ZH0"/>
-                                                <include reference="fzv-i7-GdJ"/>
-                                                <include reference="qUO-iG-yNd"/>
                                                 <include reference="AAb-5e-gj2"/>
                                                 <include reference="pRT-jA-lZq"/>
-                                                <include reference="9ch-b4-d2T"/>
-                                                <include reference="WEL-aD-AJ5"/>
-                                                <include reference="gIp-Ay-uUQ"/>
                                                 <exclude reference="MeO-KA-NU6"/>
                                                 <include reference="PEQ-Ml-wq8"/>
                                                 <include reference="ok9-5j-FHE"/>
                                                 <include reference="qda-pV-aRu"/>
+                                                <include reference="9ch-b4-d2T"/>
+                                                <include reference="WEL-aD-AJ5"/>
+                                                <include reference="gIp-Ay-uUQ"/>
                                                 <include reference="hxU-cD-0Ys"/>
                                                 <include reference="j4c-GH-lre"/>
                                                 <include reference="wjh-gR-kO9"/>
@@ -912,6 +881,10 @@
                                                 <include reference="db5-Su-MHr"/>
                                                 <include reference="euL-nL-tUH"/>
                                                 <include reference="qDY-ci-Zd9"/>
+                                                <include reference="bvJ-WZ-nTk"/>
+                                                <exclude reference="fQY-0s-ZH0"/>
+                                                <include reference="fzv-i7-GdJ"/>
+                                                <include reference="qUO-iG-yNd"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -988,14 +961,14 @@
                                 <exclude reference="2od-fl-8L8"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="8l1-Op-wY6"/>
+                                <exclude reference="Aau-1h-Fjn"/>
+                                <exclude reference="aFk-dC-qcx"/>
                                 <exclude reference="ca6-gY-Y93"/>
                                 <exclude reference="dtA-LK-jP1"/>
                                 <exclude reference="j0m-6u-bBy"/>
                                 <exclude reference="kPa-jU-aQF"/>
                                 <exclude reference="rVY-7x-b4p"/>
-                                <exclude reference="8l1-Op-wY6"/>
-                                <exclude reference="Aau-1h-Fjn"/>
-                                <exclude reference="aFk-dC-qcx"/>
                                 <exclude reference="6Bi-Jd-GxA"/>
                                 <exclude reference="8p7-HF-d3Q"/>
                                 <exclude reference="gxn-2P-ZsF"/>
@@ -1009,14 +982,14 @@
                                 <include reference="2od-fl-8L8"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="8l1-Op-wY6"/>
+                                <include reference="Aau-1h-Fjn"/>
+                                <include reference="aFk-dC-qcx"/>
                                 <include reference="ca6-gY-Y93"/>
                                 <exclude reference="dtA-LK-jP1"/>
                                 <include reference="j0m-6u-bBy"/>
                                 <exclude reference="kPa-jU-aQF"/>
                                 <include reference="rVY-7x-b4p"/>
-                                <include reference="8l1-Op-wY6"/>
-                                <include reference="Aau-1h-Fjn"/>
-                                <include reference="aFk-dC-qcx"/>
                                 <exclude reference="6Bi-Jd-GxA"/>
                                 <exclude reference="8p7-HF-d3Q"/>
                                 <exclude reference="gxn-2P-ZsF"/>
@@ -1082,7 +1055,60 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9MA-wa-nCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1935" y="788"/>
+            <point key="canvasLocation" x="1935" y="794"/>
+        </scene>
+        <!--Filter-->
+        <scene sceneID="Y8G-EA-rQO">
+            <objects>
+                <tableViewController id="2uc-YR-o60" customClass="FilterSpotsTableViewController" customModule="SnapSpot3" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="F97-T7-F5d">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="kV2-Op-oXe" detailTextLabel="im6-rt-cqt" rowHeight="60" style="IBUITableViewCellStyleValue1" id="FaJ-ZG-9uJ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FaJ-ZG-9uJ" id="j0W-T6-3x8">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kV2-Op-oXe">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact">
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="im6-rt-cqt">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact">
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2uc-YR-o60" id="pKy-oA-r0t"/>
+                            <outlet property="delegate" destination="2uc-YR-o60" id="bOn-SD-yJB"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Filter" id="kr6-5E-gKB">
+                        <barButtonItem key="leftBarButtonItem" image="Menu Filled" id="Fld-IG-TMI">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="leftBarButtonItemTapped:" destination="2uc-YR-o60" id="u48-Ml-owR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n2a-gw-sLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="934.5" y="822"/>
         </scene>
         <!--List Spots Table View Controller-->
         <scene sceneID="0hT-Nz-U0N">
@@ -1183,9 +1209,6 @@
                         <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="dLY-7L-6nZ">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <connections>
                         <segue destination="TS0-aU-a6e" kind="relationship" relationship="rootViewController" id="QzU-uB-fQL"/>
                     </connections>
@@ -1195,22 +1218,23 @@
             <point key="canvasLocation" x="540" y="124"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="VOL-kJ-kb1">
+        <scene sceneID="tts-a0-c0p">
             <objects>
-                <navigationController storyboardIdentifier="FilterSpotsNavController" automaticallyAdjustsScrollViewInsets="NO" id="knr-K7-ci5" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FilterSpotsNavController" automaticallyAdjustsScrollViewInsets="NO" id="GLO-c5-vcD" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="2JB-CG-h0O">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Bc6-ua-yzY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="qxf-Lr-nld" kind="relationship" relationship="rootViewController" id="Irn-fu-OLL"/>
+                        <segue destination="2uc-YR-o60" kind="relationship" relationship="rootViewController" id="m1q-wM-CuE"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="R5b-a0-vPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qzg-b3-e9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="540" y="844"/>
+            <point key="canvasLocation" x="145.5" y="822"/>
         </scene>
     </scenes>
     <resources>

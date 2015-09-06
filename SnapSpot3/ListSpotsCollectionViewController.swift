@@ -23,6 +23,8 @@ class ListSpotsCollectionViewController: UICollectionViewController {
             if let spots = objects {
                 self.spots = spots as! [PFObject]
             }
+            println(self.spots)
+
             self.collectionView!.reloadData()
         }
     }
@@ -55,8 +57,6 @@ class ListSpotsCollectionViewController: UICollectionViewController {
             let indexPath = self.collectionView!.indexPathForCell(cell)
             let spotObject = self.spots[indexPath!.row]
             destinationVC.spotObject = spotObject
-            destinationVC.superViewScreenShot = screenShot()
-            
         }
         
     }
@@ -107,6 +107,8 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         // Configure the cell
         return cell
     }
+    
+    
 
     // MARK: UICollectionViewDelegate
 

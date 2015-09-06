@@ -10,6 +10,10 @@ import UIKit
 
 class ListSpotsTableViewController: UIViewController {
     
+    override func viewWillAppear(animated: Bool) {
+        println("Collection")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

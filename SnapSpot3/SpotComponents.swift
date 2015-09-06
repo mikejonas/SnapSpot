@@ -50,7 +50,11 @@ func saveSpotLocally(components: SpotComponents) {
     }
     spot.pinInBackgroundWithBlock{ success, error in
         println("Object has been saved locally.")
+        spot.saveEventually({ (success, error) -> Void in
+            
+        })
     }
+    
 }
 
 

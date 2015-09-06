@@ -63,17 +63,15 @@
  */
 - (UIImage *)capture
 {
-
+    
     CGRect visibleRect = [self _calcVisibleRectForCropArea];//caculate visible rect for crop
     CGAffineTransform rectTransform = [self _orientationTransformedRectOfImage:self.imageView.image];//if need rotate caculate
     visibleRect = CGRectApplyAffineTransform(visibleRect, rectTransform);
-    //[self.imageView.image CGImage]
-
+    
     CGImageRef ref = CGImageCreateWithImageInRect([self.imageView.image CGImage], visibleRect);//crop
     UIImage* cropped = [[UIImage alloc] initWithCGImage:ref scale:self.imageView.image.scale orientation:self.imageView.image.imageOrientation] ;
-
-//    NSLog(@"%@", self.ref.asset.defaultRepresentation.metadata[@"{GPS}"]);
-
+    CGImageRelease(ref);
+    ref = NULL;
     return cropped;
 }
 
