@@ -344,12 +344,9 @@ extension ViewSpotViewController:UITextViewDelegate {
         
         // check for our fake URL scheme hash:helloWorld
         if URL.scheme == "hash" {
-            let alertView = UIAlertView()
-            alertView.title = "hash tag detected"
-            // get a handle on the payload
-            alertView.message = "\(URL.resourceSpecifier!)"
-            alertView.addButtonWithTitle("Ok")
-            alertView.show()
+            Globals.variables.filterSpotsHashtag = [URL.resourceSpecifier!]
+            self.dismissViewControllerAnimated(true, completion: nil)
+
         }
         return true
     }

@@ -8,37 +8,46 @@
 
 import UIKit
 
-let reuseIdentifier = "SpotGridCell"
 
 class ListSpotsCollectionViewController: UICollectionViewController {
 
+    let reuseIdentifier = "SpotGridCell"
+
+    var parentNavigationController : UINavigationController?
     var dateFormatter = NSDateFormatter()
     var spots:[PFObject] = []
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        println("COLLECTION VIEW WILL APPEAR")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        println("COLLECTION VIEW DID LOAD")
+        
+        // Register cell classes
+        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+
+
+        // Do any additional setup after loading the view.
+        collectionView?.backgroundColor = UIColor.whiteColor()
+    }
+    
+    func collectionViewTestReloadData() {
         var query = PFQuery(className:"Spot")
         query.fromLocalDatastore()
         query.orderByDescending("date")
+        if Globals.variables.filterSpotsHashtag.count > 0 {
+            query.whereKey("hashTags", containedIn: Globals.variables.filterSpotsHashtag)
+        }
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let spots = objects {
                 self.spots = spots as! [PFObject]
             }
-            println(self.spots)
-
             self.collectionView!.reloadData()
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
-        collectionView?.backgroundColor = UIColor.whiteColor()
     }
     
 
@@ -54,6 +63,7 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         if segue.identifier == "ViewSpotSegue" {
             let destinationVC = segue.destinationViewController as! ViewSpotViewController
             let cell = sender as! UICollectionViewCell
+
             let indexPath = self.collectionView!.indexPathForCell(cell)
             let spotObject = self.spots[indexPath!.row]
             destinationVC.spotObject = spotObject
@@ -112,9 +122,15 @@ class ListSpotsCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDelegate
 
-    override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("ViewSpotSegue", sender: self)
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+            performSegueWithIdentifier("ViewSpotSegue", sender: cell)
+        } else {
+            println("Error indexPath is not on screen: this should never happen.")
+        }
+        
     }
+    
     
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking

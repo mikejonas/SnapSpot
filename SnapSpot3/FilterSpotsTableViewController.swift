@@ -9,9 +9,6 @@
 import UIKit
 
 class FilterSpotsTableViewController: UITableViewController {
-
-    var items = ["a", "b", "c"]
-    var hashtagArrays:[[String]] = []
     
     var sortedHashtagsArr:[(String, Int)] = []
 
@@ -19,19 +16,22 @@ class FilterSpotsTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         var query = PFQuery(className:"Spot")
         query.fromLocalDatastore()
-        query.orderByDescending("date")
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            var hashtagArrays:[[String]] = []
             if let spots = objects {
                 for spot in spots {
-                    self.hashtagArrays.append(spot["hashTags"] as! [String])
+                    hashtagArrays.append(spot["hashTags"] as! [String])
                 }
-                self.sortedHashtagsArr = self.countAndsortArrays(self.hashtagArrays)
-
-                
+                self.sortedHashtagsArr = self.countAndsortArrays(hashtagArrays)
+                self.tableView.reloadData()
             }
-            
-            //            self.collectionView!.reloadData()
         }
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+
     }
     
     override func viewDidLoad() {
@@ -40,11 +40,12 @@ class FilterSpotsTableViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.setEditing(true, animated: true)
         
         
         
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+//         self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -93,20 +94,38 @@ class FilterSpotsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.sortedHashtagsArr.count
     }
+    
+    
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
-        
         let hashtag:(String,Int) = self.sortedHashtagsArr[indexPath.row]
-        
         cell.textLabel?.text = "#\(hashtag.0)"
         cell.detailTextLabel?.text = "\(hashtag.1)"
 
         return cell
     }
     
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let cellText = cell.textLabel?.text {
+            if contains(Globals.variables.filterSpotsHashtag, dropFirst(cellText)) {
+                tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            } else {
+                cell.selected = false
+            }
+        }
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let selectedHashTag = self.sortedHashtagsArr[indexPath.row].0
+        Globals.variables.filterSpotsHashtag.append(selectedHashTag)
+        find(Globals.variables.filterSpotsHashtag, selectedHashTag)!
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedHashTag = self.sortedHashtagsArr[indexPath.row].0
+        let itemToRemove = find(Globals.variables.filterSpotsHashtag, selectedHashTag)!
+        Globals.variables.filterSpotsHashtag.removeAtIndex(itemToRemove)
     }
     
 
@@ -118,6 +137,10 @@ class FilterSpotsTableViewController: UITableViewController {
     }
     */
 
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle(rawValue: 3)!
+    }
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
