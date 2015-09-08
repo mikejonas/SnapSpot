@@ -412,10 +412,10 @@
                                 <action selector="leftBarButtonItemTapped:" destination="TS0-aU-a6e" id="fEk-w4-nAd"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="Nav Hashtag" id="U3K-08-ufp">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="rightBarButtonItem" image="Nav Hashtag" id="rRl-hT-wti">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="rightBarButtonItemTapped:" destination="TS0-aU-a6e" id="bjv-mT-AQG"/>
+                                <action selector="rightBarButtonItemTapped:" destination="TS0-aU-a6e" id="APw-6c-Zfl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1242,7 +1242,7 @@
         <image name="Barcelona" width="598" height="598"/>
         <image name="Menu Filled" width="22" height="22"/>
         <image name="Nav Down Round" width="22" height="22"/>
-        <image name="Nav Hashtag" width="22" height="22"/>
+        <image name="Nav Hashtag" width="25" height="25"/>
         <image name="Navigation Camera" width="22" height="22"/>
         <image name="OpenInNewApp" width="16" height="16"/>
         <image name="Settings" width="22" height="22"/>

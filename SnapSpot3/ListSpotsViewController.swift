@@ -15,10 +15,10 @@ class ListSpotsViewController: UIViewController {
     let ListSpotsMapVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ListSpotsMapViewController") as! ListSpotsMapViewController
     
     var buttonImage = UIImage(named: "Nav Hashtag")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-    var rightButton = UIButton()
+//    var rightButton = UIButton()
     
     override func viewWillAppear(animated: Bool) {
-        updateRightBarButtonItem()
+
     }
     
     override func viewDidLoad() {
@@ -71,33 +71,38 @@ class ListSpotsViewController: UIViewController {
         
         
         
-        //Create a UIButton with an image on the left, and text to the right
-        rightButton.setTitle("0", forState: UIControlState.Normal)
-        rightButton.setImage(buttonImage, forState: UIControlState.Normal)
-        rightButton.titleEdgeInsets = UIEdgeInsetsMake(0, -35, 0, 0)
-        rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, 13, 0, -13)
-        rightButton.addTarget(self, action: "rightBarButtonItemTapped:", forControlEvents: .TouchUpInside)
-        rightButton.sizeToFit()
-        rightButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        rightButton.tintColor = UIColor.whiteColor()
+//        //Create a UIButton with an image on the left, and text to the right
+//        rightButton.frame = CGRectMake(0, 0, 35, 33)
+//        rightButton.setTitle("", forState: UIControlState.Normal)
+//        rightButton.setImage(buttonImage, forState: UIControlState.Normal)
+//        
+//        rightButton.titleEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0)
+////        rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        rightButton.addTarget(self, action: "rightBarButtonItemTapped:", forControlEvents: .TouchUpInside)
+//        rightButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        rightButton.tintColor = UIColor.whiteColor()
+//        rightButton.sizeToFit()
 
         //create a UIBarButtonItem with a UIButton as the custom view.
-        var barButtonItem = UIBarButtonItem(customView: rightButton )
-        navigationItem.rightBarButtonItem = barButtonItem
+//        var barButtonItem = UIBarButtonItem(customView: rightButton )
+//        navigationItem.rightBarButtonItem = barButtonItem
         
     }
     
-    func updateRightBarButtonItem() {
-        if Globals.variables.filterSpotsHashtag.count > 0 {
-            rightButton.setTitle("\(Globals.variables.filterSpotsHashtag.count)", forState: .Normal)
-        } else {
-            rightButton.setTitle("", forState: .Normal)
-        }
-    }
+
     
     override func viewDidAppear(animated: Bool) {
         println("LIST SPOTS VIEW CONTROLLER APPEARED!")
         listSpotsCollectionVC.collectionViewTestReloadData()
+        
+        let hashtagString = ", #".join(Globals.variables.filterSpotsHashtag)
+        println(hashtagString)
+        if hashtagString == "" {
+            self.navigationController?.navigationBar.topItem?.title = "Spots"
+        } else {
+            self.navigationController?.navigationBar.topItem?.title
+            self.navigationController?.navigationBar.topItem?.title = "#\(hashtagString)"
+        }
     }
     
 
