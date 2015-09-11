@@ -30,13 +30,13 @@ class ListSpotsViewController: UIViewController {
         var controllerArray : [UIViewController] = []
         
 
-        listSpotsCollectionVC.title = "Latest"
+        listSpotsCollectionVC.title = String.fontAwesomeIconWithName(.ThLarge)
         controllerArray.append(listSpotsCollectionVC)
         
-        ListSpotsTableVC.title = "Location"
+        ListSpotsTableVC.title = String.fontAwesomeIconWithName(.Navicon)
         controllerArray.append(ListSpotsTableVC)
         
-        ListSpotsMapVC.title = "Map"
+        ListSpotsMapVC.title = String.fontAwesomeIconWithName(.MapMarker)
         controllerArray.append(ListSpotsMapVC)
 
         
@@ -49,10 +49,10 @@ class ListSpotsViewController: UIViewController {
             .BottomMenuHairlineColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 0.1)),
             .SelectionIndicatorColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
             .MenuMargin(20.0),
-            .MenuHeight(35.0),
+            .MenuHeight(37.0),
             .SelectedMenuItemLabelColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
-            .UnselectedMenuItemLabelColor(UIColor(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0, alpha: 1.0)),
-            .MenuItemFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!),
+            .UnselectedMenuItemLabelColor(UIColor(red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)),
+            .MenuItemFont(UIFont.fontAwesomeOfSize(21)),
             .UseMenuLikeSegmentedControl(true),
             .MenuItemSeparatorRoundEdges(false),
             .SelectionIndicatorHeight(2.0),

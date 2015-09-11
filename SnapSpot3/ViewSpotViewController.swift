@@ -8,7 +8,6 @@
 
 import UIKit
 import GoogleMaps
-
 class ViewSpotViewController: UIViewController {
     
     var spotObject: PFObject?
@@ -18,9 +17,13 @@ class ViewSpotViewController: UIViewController {
     var locationCoordinates:CLLocationCoordinate2D?
     var isScrolledTOMap:Bool = false
     
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewSubView: UIView!
     @IBOutlet weak var statusBarBackgroundView: UIView!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
+    
     @IBOutlet weak var imageScrollView: ImageScrollView!
     @IBOutlet weak var captionTextView: UITextView!
     @IBOutlet weak var captionTextViewHeightConstraint: NSLayoutConstraint!
@@ -37,6 +40,8 @@ class ViewSpotViewController: UIViewController {
     
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var backButtonFrame = CGRect()
+    var editButtonFrame = CGRect()
     var imageScrollViewHeight = CGFloat()
     var mapViewTopPosition = CGFloat()
     var mapViewMinHeight = CGFloat()
@@ -46,12 +51,33 @@ class ViewSpotViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         reloadData(spotObject!)
-//        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        editSpotVc.delegate = self
+
+    }
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        backButton.backgroundColor = UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 0.6)
+        backButton.titleLabel?.font = UIFont.fontAwesomeOfSize(15)
+        backButton.setTitle(String.fontAwesomeIconWithName(FontAwesome.ChevronDown), forState: .Normal)
+        backButton.layer.cornerRadius = 16
+        
+        editButton.backgroundColor = UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 0.6)
+//        editButton.titleLabel?.font = UIFont.fontAwesomeOfSize(15)
+//        editButton.setTitle(String.fontAwesomeIconWithName(FontAwesome.Pencil), forState: .Normal)
+//        editButton.setAttributedTitle(<#title: NSAttributedString!#>, forState: <#UIControlState#>)
+        editButton.layer.cornerRadius = 16
+        
+        
+        
+        editButtonFrame = editButton.frame
+        backButtonFrame = backButton.frame
         self.scrollView.delegate = self
         self.captionTextView.delegate = self
         
@@ -81,7 +107,7 @@ class ViewSpotViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         updateTextViewSizes(captionTextView, constraint: captionTextViewHeightConstraint)
         updateTextViewSizes(addressTextView, constraint: addressTextViewHeightConstraint)
         mapViewTopPosition = addressTextView.frame.height + addressTextView.frame.origin.y // - 40
@@ -92,25 +118,13 @@ class ViewSpotViewController: UIViewController {
         
         if mapViewTopPosition > screenSize.height {
             mapViewAmountPassedScreen = mapViewTopPosition - screenSize.height
-            println(":)")
         } else {
             mapViewAmountPassedScreen = 0
         }
         mapViewMaxHeight = screenSize.height - addressTextView.frame.height - 20
         mapView.frame = CGRectMake(mapView.frame.origin.x, mapView.frame.origin.y, mapView.frame.width, mapViewMaxHeight)
         mapViewHeightConstraint.constant = mapView.frame.height
-        
-        println("mapViewTopPosition \(mapViewTopPosition)")
-        println("mapView.frame.origin.y \(mapView.frame.origin.y)")
-        println("screenSize.height \(screenSize.height)")
-        println("mapViewMinHeight \(mapViewMinHeight)")
-        println("mapViewMaxHeight \(mapViewMaxHeight)")
-        println("mapViewHeightConstraint.constant \(mapViewHeightConstraint.constant) \n \n")
-        
-        
-//        println(self.scrollView.contentInset.top)
-//        println(self.scrollView.contentSize.height)
-//        println(self.scrollView.bounds.size.height)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -243,29 +257,14 @@ class ViewSpotViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-////    @IBAction func editButtonTapped(sender: UIButton) {
-////        self.presentViewController(editSpotVc, animated: false) { () -> Void in
-////            //            editSpotVc.addImage(image)
-////            //            editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
-////        }
-////    }
-//
-//    
-//    //-------------------
-//    //Edit Spot Delegate
-//    //-------------------
-//    extension ViewSpotViewControllerOld: EditSpotViewControllerDelegate {
-//        func spotClosed() {
-//            println("delegate from view spot vc closed")
-//            dismissViewControllerAnimated(false, completion: nil)
-//            editSpotVc.delegate = nil
-//        }
-//        func spotSaved(spotComponents: SpotComponents) {
-//            println("delegate from view spot vc saved")
-//            dismissViewControllerAnimated(true, completion: nil)
-//            editSpotVc.delegate = nil
-//        }
-//    }
+    @IBAction func editButtonTapped(sender: UIButton) {
+        self.presentViewController(editSpotVc, animated: false) { () -> Void in
+            //Do stuff
+        }
+    }
+
+    
+
 
     
     
@@ -306,18 +305,19 @@ extension ViewSpotViewController:UIScrollViewDelegate {
         }
         
     }
-
-    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-//        self.scrollViewSubView.bringSubviewToFront(imageScrollView)
         var scrollY = scrollView.contentOffset.y - mapViewAmountPassedScreen
 
         if scrollY > 0 {
-//           
-//            mapView.frame = CGRectMake(0, mapViewTopPosition - mapViewAmountPassedScreen, mapView.frame.width, mapViewMinHeight + (scrollY))
-//            println(mapView.frame.origin.y)
-
+            
+            if scrollY > imageScrollViewHeight - 70 {
+                backButton.frame = CGRectMake(backButton.frame.origin.x, imageScrollViewHeight - 70  + 22 - scrollY, backButton.frame.size.width, backButton.frame.size.height)
+                editButton.frame = CGRectMake(editButton.frame.origin.x, imageScrollViewHeight - 70  + 22 - scrollY, editButton.frame.size.width, editButton.frame.size.height)
+            } else {
+                backButton.frame = backButtonFrame
+                editButton.frame = editButtonFrame
+            }
             
             if scrollY > imageScrollViewHeight - 20 {
                 //CHANGE VIEW WILL DISSAPEAR TO WORK WITH CHANGING STATUS BARS!!!
@@ -328,7 +328,6 @@ extension ViewSpotViewController:UIScrollViewDelegate {
                 UIApplication.sharedApplication().statusBarStyle = .LightContent
             }
         }
-        
         
 //        CloseMapsBar.frame = CGRectMake(0, CloseMapsBar.frame.origin.y, CloseMapsBar.frame.width, 25 - (scrollY / 10))
     }
@@ -349,6 +348,20 @@ extension ViewSpotViewController:UITextViewDelegate {
 
         }
         return true
+    }
+}
+
+//-------------------
+//Edit Spot Delegate
+//-------------------
+extension ViewSpotViewController: EditSpotViewControllerDelegate {
+    func spotClosed() {
+        println("delegate from view spot vc closed")
+        dismissViewControllerAnimated(false, completion: nil)
+    }
+    func spotSaved(spotComponents: SpotComponents) {
+        println("delegate from view spot vc saved")
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

@@ -57,6 +57,10 @@
 		DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530C001B7D61690094AED0 /* ImageScrollView.swift */; };
 		DD530C081B7E84640094AED0 /* ViewSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530C071B7E84640094AED0 /* ViewSpotViewController.swift */; };
 		DD55EDB21B570A600014A0D0 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */; };
+		DD6D91A11B9FAEC700A5FD61 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6D919C1B9FAEC700A5FD61 /* Enum.swift */; };
+		DD6D91A21B9FAEC700A5FD61 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD6D919E1B9FAEC700A5FD61 /* FontAwesome.otf */; };
+		DD6D91A31B9FAEC700A5FD61 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6D919F1B9FAEC700A5FD61 /* FontAwesome.swift */; };
+		DD6D91A41B9FAEC700A5FD61 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD6D91A01B9FAEC700A5FD61 /* Info.plist */; };
 		DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */; };
 		DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */; };
 /* End PBXBuildFile section */
@@ -134,6 +138,11 @@
 		DD530C001B7D61690094AED0 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		DD530C071B7E84640094AED0 /* ViewSpotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotViewController.swift; sourceTree = "<group>"; };
 		DD55EDB11B570A600014A0D0 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
+		DD6D919C1B9FAEC700A5FD61 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		DD6D919D1B9FAEC700A5FD61 /* FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontAwesome.h; sourceTree = "<group>"; };
+		DD6D919E1B9FAEC700A5FD61 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		DD6D919F1B9FAEC700A5FD61 /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
+		DD6D91A01B9FAEC700A5FD61 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD738E6D1B4F917D00AAE27A /* AddImageCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageCameraViewController.swift; sourceTree = "<group>"; };
 		DD738E6F1B4FAAD400AAE27A /* LocationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,11 +171,11 @@
 		DD1B0D111B47688900D06BC5 = {
 			isa = PBXGroup;
 			children = (
-				DD1B0D441B476CC600D06BC5 /* Frameworks */,
 				DD1B0D1C1B47688900D06BC5 /* SnapSpot3 */,
 				DD1B0D321B47688900D06BC5 /* SnapSpot3Tests */,
 				DD1B0D1B1B47688900D06BC5 /* Products */,
 				FCEF56118A83DA7C4337A840 /* Pods */,
+				DD1B0D441B476CC600D06BC5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -192,6 +201,7 @@
 				DD1B0D621B478DE900D06BC5 /* ViewControllers */,
 				DD211A9D1B9BE15200C30D74 /* RecentsTableViewController.swift */,
 				DD211A9E1B9BE15200C30D74 /* RecentsTableViewController.xib */,
+				DD6D919B1B9FAEC700A5FD61 /* FontAwesome */,
 				DD1B0D1D1B47688900D06BC5 /* Supporting Files */,
 			);
 			path = SnapSpot3;
@@ -357,6 +367,18 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		DD6D919B1B9FAEC700A5FD61 /* FontAwesome */ = {
+			isa = PBXGroup;
+			children = (
+				DD6D919C1B9FAEC700A5FD61 /* Enum.swift */,
+				DD6D919D1B9FAEC700A5FD61 /* FontAwesome.h */,
+				DD6D919E1B9FAEC700A5FD61 /* FontAwesome.otf */,
+				DD6D919F1B9FAEC700A5FD61 /* FontAwesome.swift */,
+				DD6D91A01B9FAEC700A5FD61 /* Info.plist */,
+			);
+			path = FontAwesome;
+			sourceTree = "<group>";
+		};
 		FCEF56118A83DA7C4337A840 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,12 +477,14 @@
 				DD1B0D751B478E7A00D06BC5 /* back@2x.png in Resources */,
 				DD1B0D771B478E7A00D06BC5 /* cameraroll-picker-grip@2x.png in Resources */,
 				DD1B0D2A1B47688900D06BC5 /* LaunchScreen.xib in Resources */,
+				DD6D91A41B9FAEC700A5FD61 /* Info.plist in Resources */,
 				DD1B0D791B478E7A00D06BC5 /* straighten-grid@2x.png in Resources */,
 				DD1B0D851B4AF72500D06BC5 /* CameraView.xib in Resources */,
 				DD1B0D271B47688900D06BC5 /* Images.xcassets in Resources */,
 				DD211AA21B9BE15200C30D74 /* RecentsTableViewController.xib in Resources */,
 				DD1B0D7A1B478E7A00D06BC5 /* straighten-grid@3x.png in Resources */,
 				DD1B0D781B478E7A00D06BC5 /* cameraroll-picker-grip@3x.png in Resources */,
+				DD6D91A21B9FAEC700A5FD61 /* FontAwesome.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,8 +566,10 @@
 				DD0D551F1B85896F0095DFDF /* ButtonIconRight.swift in Sources */,
 				DD1B0D7B1B478E7A00D06BC5 /* TWImageScrollView.m in Sources */,
 				DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */,
+				DD6D91A11B9FAEC700A5FD61 /* Enum.swift in Sources */,
 				DD211AAC1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift in Sources */,
 				DD4024F81B65A4E800D23489 /* ViewController.swift in Sources */,
+				DD6D91A31B9FAEC700A5FD61 /* FontAwesome.swift in Sources */,
 				DD1B0D7D1B478E7A00D06BC5 /* TWPhotoCollectionViewCell.m in Sources */,
 				DD211AAA1B9D07A400C30D74 /* Globals.swift in Sources */,
 				DD4024EF1B63FF3F00D23489 /* EditSpotUtil.swift in Sources */,

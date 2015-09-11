@@ -77,13 +77,11 @@ extension CameraViewController: CameraViewDelegate {
 extension CameraViewController: EditSpotViewControllerDelegate {
     func spotClosed() {
         dismissViewControllerAnimated(false, completion: nil)
-        editSpotVc.delegate = nil
     }
     
     func spotSaved(spotComponents: SpotComponents) {
         saveSpotLocally(spotComponents)
         dismissViewControllerAnimated(true, completion: nil)
-        editSpotVc.delegate = nil
         pageController.goToNextVC()
     }
 }
