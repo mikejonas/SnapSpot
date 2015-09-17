@@ -13,55 +13,87 @@ import CoreLocation
 protocol EditSpotViewControllerDelegate {
     func spotClosed()
     func spotSaved(spotComponents:SpotComponents)
+    func spotDeleted(spotComponents:SpotComponents)
 }
 
 class EditSpotViewController: UIViewController {
-    let addImageCameraVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("AddImageCameraViewController") as! AddImageCameraViewController
-    
-    let gpaViewController = GooglePlacesAutocomplete(
-        apiKey: "AIzaSyB-0-hv2zKDeYl17vRTaDOPKhuQiZnsXmo",
-        placeType: .All
-    )
-    let locationUtil = LocationUtil()
-    
-    var spotComponents = SpotComponents()
-    var spotAddressComponents:SpotAddressComponents?
-    var marker = GMSMarker()
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     
     @IBOutlet weak var navigationBar: UINavigationBar!
-    @IBOutlet weak var keyboardActiveView: UIView!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    var placeholderLabel : UILabel!
+    //    @IBOutlet weak var keyboardActiveView: UIView!
+    @IBOutlet weak var captionTextView: UITextView!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var photoThumbnail0: UIImageView!
     @IBOutlet weak var photoThumbnail1: UIImageView!
     @IBOutlet weak var photoThumbnail2: UIImageView!
-    var imageArray: [UIImage] = []
-    var imageViewArray: [UIImageView]!
-    var deleteImageButton = UIButton()
+    @IBOutlet weak var editMapLabel: UILabel!
     
+    @IBOutlet weak var refreshLocationButton: UIButton!
+    @IBOutlet weak var refreshLocationActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var locationStatusLabel: UILabel!
+    @IBOutlet weak var deleteSpotButton: UIButton!
+    
+    let addImageCameraVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("AddImageCameraViewController") as! AddImageCameraViewController
+    let gpaViewController = GooglePlacesAutocomplete(
+        apiKey: "AIzaSyB-0-hv2zKDeYl17vRTaDOPKhuQiZnsXmo",
+        placeType: .All
+    )
     var delegate: EditSpotViewControllerDelegate?
 
+    let locationUtil = LocationUtil()
+    var spotComponents = SpotComponents()
+    var spotAddressComponents:SpotAddressComponents?
+    var marker = GMSMarker()
+    var getLocationTimer:NSTimer?
+    var getLocationTimerCycles = 0
+    var getLocationFound = false
+
+    var captionPlaceholderLabel: UILabel!
+    var imageArray: [UIImage] = []
+    var imageViewArray: [UIImageView]!
+    
+    var isEditing:Bool?
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        var contentViewFrameHeight = contentView.frame.height
+        if deleteSpotButton.hidden == true {
+            contentViewFrameHeight = contentView.frame.height - deleteSpotButton.frame.height - 5
+        }
+        scrollView.contentSize = CGSizeMake(contentView.frame.width, contentViewFrameHeight)
+
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        imageViewArray  = [photoThumbnail0, photoThumbnail1, photoThumbnail2]
+        setupMap()
+        setupImageButtons()
         setupTextView()
         setupTextViewPlaceholder()
-        setupImages()
-        setupMap()
-                
+        deleteSpotButton.hidden = true
+        scrollView.delegate = self
         addImageCameraVC.delegate = self
         gpaViewController.placeDelegate = self
+
     }
     
+
     override func viewDidLayoutSubviews() {
-        navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for your navBar
+        super.viewDidLayoutSubviews()
+        navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for
     }
+    
+
     
     // If I want to resignfirstresponder for touching anywhere
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
-        deleteImageButton.hidden = true
     }
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         if (delegate != nil) {
@@ -73,11 +105,13 @@ class EditSpotViewController: UIViewController {
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         
         //Caption
-        spotComponents.caption = descriptionTextView.text
-        spotComponents.date = NSDate()
+        spotComponents.caption = captionTextView.text
+        if spotComponents.date == nil {
+            spotComponents.date = NSDate()
+        }
         
         //HashTags
-        descriptionTextView.extractHashTags { extractedHashtags in
+        captionTextView.extractHashTags { extractedHashtags in
             self.spotComponents.hashTags = extractedHashtags
         }
         
@@ -88,30 +122,137 @@ class EditSpotViewController: UIViewController {
         spotComponents.addressComponents = spotAddressComponents
         
         if (delegate != nil) {
-            println(spotComponents.description)
             delegate?.spotSaved(spotComponents)
             resetView()
         }
     }
-    @IBAction func testButtonTapped(sender: AnyObject) {
-        
-        descriptionTextView.extractHashTags { extractedHashtags in
-            println(extractedHashtags)
-        }
-        
-        
-//        locationUtil.getCoordinatesWithDelayUpTo(seconds: 5) {(cooordinates) -> Void in
-//            self.updateMapAndReverseGeocode(cooordinates)
-//        }
-        if let spotAddressComponents = spotAddressComponents {
-            println(spotAddressComponents.description)
+    
+    @IBAction func deleteSpotButtonTapped(sender: AnyObject) {
+        if (delegate != nil) {
+            delegate?.spotDeleted(spotComponents)
+            resetView()
         }
     }
+    
+    @IBAction func refreshLocationButttonTapped(sender: UIButton) {
+        refreshLocation(10)
+    }
+    func stopTimerIfRunning() {
+        if self.getLocationTimer != nil {
+            getLocationTimer?.invalidate()
+            getLocationTimerCycles = 0
+            getLocationFound = false
+            refreshLocationButton.hidden = false
+            refreshLocationActivityIndicator.stopAnimating()
+        }
+    }
+    func refreshLocation(secondsToRun:Int) {
+        stopTimerIfRunning()
+        refreshLocationButton.hidden = true
+        refreshLocationActivityIndicator.startAnimating()
+        
+        let locationController = Globals.constants.appDelegate.coreLocationController
+        locationController?.locationManager.stopUpdatingLocation()
+        locationController?.locationManager.startUpdatingLocation()
+        var startTime = NSDate()
+        getLocationTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("performGetLocation"), userInfo: nil, repeats: true)
+
+    }
+    
+    func performGetLocation() {
+        let locationController = Globals.constants.appDelegate.coreLocationController
+        let location = locationController!.locationCoordinates
+        if getLocationTimerCycles == 0 {
+                updateLocationStatusLabel("Estimating Location...", labelSubText:nil, isAnimated:false)
+        } else if getLocationTimerCycles < 10{
+            println(location?.coordinate)
+            if location?.horizontalAccuracy <= 10 && location?.horizontalAccuracy >= 1 {
+                self.stopTimerIfRunning()
+                updateLocationStatusLabel("Location Found!", labelSubText: " (\(getAccuracy(location!.horizontalAccuracy))% Accuracy)", isAnimated:true)
+                self.updateMapAndReverseGeocode(location?.coordinate)
+            } else {
+                if location?.horizontalAccuracy > 0 {
+                    println(location?.horizontalAccuracy)
+                }
+            }
+        } else {
+            if location != nil {
+                self.stopTimerIfRunning()
+                updateLocationStatusLabel("Location Found!", labelSubText: " (\(getAccuracy(location!.horizontalAccuracy))% Accuracy)", isAnimated:true)
+                self.updateMapAndReverseGeocode(location?.coordinate)
+            } else {
+                self.stopTimerIfRunning()
+                updateLocationStatusLabel("Not found", labelSubText: " (Refresh or tap Map)", isAnimated:true)
+            }
+        }
+        getLocationTimerCycles = getLocationTimerCycles + 1
+    }
+
+    func updateLocationStatusLabel(labelText:String, labelSubText:String?, isAnimated:Bool) {
+        let darkTextColor = UIColor(white: 0.1, alpha: 1)
+        let lightTextColor = UIColor(white: 0.3, alpha: 1)
+        let mainLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(15),NSForegroundColorAttributeName: darkTextColor] as Dictionary!
+        var labelAttributedText = NSMutableAttributedString(string: labelText, attributes: mainLabelTextAttributes)
+        
+        if let labelSubText = labelSubText {
+            let subLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(14),NSForegroundColorAttributeName: lightTextColor] as Dictionary!
+            labelAttributedText.appendAttributedString(NSMutableAttributedString(string: labelSubText, attributes: subLabelTextAttributes))
+        }
+        
+        if isAnimated {
+            locationStatusLabel.fadeOut(completion: {
+                (finished: Bool) -> Void in
+                self.locationStatusLabel.attributedText = labelAttributedText
+                self.locationStatusLabel.fadeIn()
+                self.locationStatusLabel.sizeToFit()
+
+            })
+        } else {
+            self.locationStatusLabel.attributedText = labelAttributedText
+            self.locationStatusLabel.sizeToFit()
+
+        }
+
+    }
+    
+    func getAccuracy(meters: CLLocationAccuracy) -> Int {
+        if meters <= 5 { return 90 }
+        else if meters <= 10 { return 85 }
+        else if meters <= 50 { return 80 }
+        else if meters <= 100 { return 70 }
+        else if meters <= 200 { return 60 }
+        else if meters <= 500 { return 50 }
+        else if meters <= 1000{ return 30 }
+        else { return 20 }
+    }
+    
+    func editSpot(spotObject:PFObject?) {
+        deleteSpotButton.hidden = false
+        if let spotObject = spotObject {
+            spotComponents.date = spotObject["date"] as? NSDate
+            
+            let imageFileNames = spotObject["localImagePaths"] as? [String]
+            let caption = spotObject["caption"] as? String
+            
+            imageArray = retrieveImagesLocally(imageFileNames!)
+            captionTextView.text = caption
+            if captionTextView.text != nil {captionPlaceholderLabel.hidden = true}
+            reloadImages()
+        }
+    }
+    
     func resetView() { //clear
         imageArray = []
+        deleteSpotButton.hidden = true
+        captionPlaceholderLabel.hidden = false
+        captionTextView.text = nil
+        spotComponents = SpotComponents()
         spotAddressComponents = nil
+        updateMap(nil)
+        scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
     }
 }
+
 
 
 //IMAGE FUNCTIONS
@@ -126,14 +267,6 @@ extension EditSpotViewController: AddImageCameraViewControllerDelegate {
     }
 }
 extension EditSpotViewController {
-    func setupImages() {
-        imageViewArray  = [photoThumbnail0, photoThumbnail1, photoThumbnail2]
-        for imageView in imageViewArray {
-            let tapImage = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
-            imageView.addGestureRecognizer(tapImage)
-            imageView.userInteractionEnabled = true
-        }
-    }
     func addImage(image:UIImage) {
         imageArray.append(image)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -162,31 +295,49 @@ extension EditSpotViewController {
         if (imageArray.count == 3) {
             self.photoThumbnail2?.image = imageArray[2]
         }
+        self.reloadImageButtons()
     }
-    func imageTapped(sender:AnyObject) {
-        let senderImageView = sender.view as! UIImageView
-        
-        if senderImageView.image == nil {
-            presentViewController(addImageCameraVC, animated: true, completion: nil)
-        } else {
-            for imageView in imageViewArray {
-                if senderImageView == imageView {
-                    addDeleteButton(imageView)
-                }
-            }
+    
+    func setupImageButtons() {
+        for imageView in imageViewArray {
+            var imageButton = UIButton()
+            imageButton.frame = CGRectMake(imageView.bounds.origin.x, imageView.bounds.origin.y , 60,60)
+            imageButton.titleLabel?.font = UIFont.fontAwesomeOfSize(28)
+            imageButton.layer.shadowOffset = CGSizeMake(0, 0)
+            imageButton.layer.shadowOpacity = 1.0
+            imageButton.layer.shadowRadius = 1.0
+            
+            
+            imageButton.addTarget(self, action: Selector("imageButtonTapped:"), forControlEvents: .TouchUpInside)
+            imageView.addSubview(imageButton)
+
         }
     }
-    func addDeleteButton(photoThumbnail:UIImageView) {
-            deleteImageButton.frame = CGRectMake(photoThumbnail.bounds.origin.x - 10, photoThumbnail.bounds.origin.y - 10, 40, 40)
-            deleteImageButton.setImage(UIImage(named: "DeleteImage"), forState: .Normal)
-            photoThumbnail.addSubview(deleteImageButton)
-            deleteImageButton.hidden = false
-            deleteImageButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+    func reloadImageButtons() {
+        for imageView in imageViewArray {
+            if let imageButton = imageView.subviews[0] as? UIButton {
+                if imageView.image != nil {
+                    imageButton.setTitle(String.fontAwesomeIconWithName(.Times), forState: .Normal)
+                    imageButton.setTitleColor(UIColor(red: 254/255, green: 152/255, blue: 152/255, alpha: 1.0), forState: .Normal)
+                    imageButton.layer.opacity = 1
+                    imageButton.layer.shadowColor = UIColor.blackColor().CGColor
+                } else {
+                    imageButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+                    imageButton.setTitle(String.fontAwesomeIconWithName(.Plus), forState: .Normal)
+                    imageButton.layer.opacity = 0.3
+                    imageButton.layer.shadowColor = UIColor.clearColor().CGColor
+                }
+            }
+            
+        }
     }
-    func deleteButtonTapped(sender:UIButton) {
+    func imageButtonTapped(sender:UIButton!) {
         if let imageIndex = find(imageViewArray, sender.superview as! UIImageView) {
-            removeImage(imageIndex)
-            sender.hidden = true
+            if sender.titleLabel?.text == String.fontAwesomeIconWithName(.Times) {
+                removeImage(imageIndex)
+            } else {
+                presentViewController(addImageCameraVC, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -194,8 +345,16 @@ extension EditSpotViewController {
 //Setup Map functions
 extension EditSpotViewController {
     func setupMap() {
-        let tap = UITapGestureRecognizer(target: self, action: Selector("mapViewTapped"))
-        mapView.addGestureRecognizer(tap)
+        refreshLocationButton.titleLabel?.font = UIFont.fontAwesomeOfSize(15)
+        refreshLocationButton.setTitle(String.fontAwesomeIconWithName(.Refresh), forState: .Normal)
+        
+        let fontAwesomeAttributes = [NSFontAttributeName: UIFont.fontAwesomeOfSize(16)] as Dictionary!
+        var editMapLabelAttributedString = NSMutableAttributedString(string: String.fontAwesomeIconWithName(.Pencil), attributes: fontAwesomeAttributes)
+        editMapLabelAttributedString.appendAttributedString(NSMutableAttributedString(string: " \(editMapLabel.text!)"))
+        editMapLabel.attributedText = editMapLabelAttributedString
+        
+
+        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("mapViewTapped")))
         mapView.mapType = kGMSTypeHybrid
         mapView.settings.setAllGesturesEnabled(false)
         marker.tappable = false
@@ -228,7 +387,7 @@ extension EditSpotViewController {
         }
     }
     func mapViewTapped() {
-     //REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
+        //REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
         presentViewController(gpaViewController, animated: true) { () -> Void in
             self.gpaViewController.gpaViewController.updateMap(self.spotAddressComponents?.coordinates)
             self.gpaViewController.gpaViewController.spotAddressComponents = self.spotAddressComponents
@@ -267,6 +426,7 @@ extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
             self.updateMap(self.spotAddressComponents?.coordinates)
             if self.spotAddressComponents != nil {
                 self.updateMarkerModal(self.spotAddressComponents!)
+            
             }
         })
     }
@@ -274,39 +434,43 @@ extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
 
 extension EditSpotViewController: UITextViewDelegate {
     func setupTextView() {
-        descriptionTextView.clipsToBounds = true
-        descriptionTextView.layer.cornerRadius = 4
-        descriptionTextView.contentInset = UIEdgeInsetsMake(-2,0,-2,0)
-        descriptionTextView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.35).CGColor
-        descriptionTextView.layer.borderWidth = 1
-    }
 
+        captionTextView.layer.masksToBounds = true
+        captionTextView.textContainerInset = UIEdgeInsetsMake(10,5,10,5)
+        captionTextView.clipsToBounds = true
+        captionTextView.layer.shadowColor = UIColor.blackColor().CGColor
+        captionTextView.layer.shadowOffset = CGSizeMake(0, 1)
+        captionTextView.layer.shadowOpacity = 0.2
+        captionTextView.layer.shadowRadius = 1.0
+        captionTextView.layer.shouldRasterize = false
+    }
+    
     func setupTextViewPlaceholder() {
-        descriptionTextView.delegate = self
-        placeholderLabel = UILabel()
-        placeholderLabel.text = "Description / #tags"
-        placeholderLabel.font = descriptionTextView.font
-        placeholderLabel.sizeToFit()
-        descriptionTextView.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPointMake(5, descriptionTextView.font.pointSize / 2)
-        placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
-        placeholderLabel.hidden = count(descriptionTextView.text) != 0
+        captionTextView.delegate = self
+        captionPlaceholderLabel = UILabel()
+        captionPlaceholderLabel.text = "Caption / #tags"
+        captionPlaceholderLabel.font = captionTextView.font
+        captionPlaceholderLabel.sizeToFit()
+        captionTextView.addSubview(captionPlaceholderLabel)
+        captionPlaceholderLabel.frame.origin = CGPointMake(10, 10)
+        captionPlaceholderLabel.textColor = UIColor(white: 0, alpha: 0.5)
+        captionPlaceholderLabel.hidden = count(captionTextView.text) != 0
     }
     func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = count(textView.text) != 0
+        captionPlaceholderLabel.hidden = count(textView.text) != 0
     }
-    func textViewDidBeginEditing(textView: UITextView) {
-        keyboardActiveView.hidden = false
-        UIView.animateWithDuration(0.25, animations: {
-            self.keyboardActiveView.backgroundColor =  UIColor(white: 0, alpha: 0.5)
-        })
-    }
-    func textViewDidEndEditing(textView: UITextView) {
-        UIView.animateWithDuration(0.4, animations: {
-            self.keyboardActiveView.backgroundColor =  UIColor(white: 0, alpha: 0)
-        })
-        self.keyboardActiveView.hidden = true
-    }
+    //    func textViewDidBeginEditing(textView: UITextView) {
+    //        keyboardActiveView.hidden = false
+    //        UIView.animateWithDuration(0.25, animations: {
+    //            self.keyboardActiveView.backgroundColor =  UIColor(white: 0, alpha: 0.5)
+    //        })
+    //    }
+    //    func textViewDidEndEditing(textView: UITextView) {
+    //        UIView.animateWithDuration(0.4, animations: {
+    //            self.keyboardActiveView.backgroundColor =  UIColor(white: 0, alpha: 0)
+    //        })
+    //        self.keyboardActiveView.hidden = true
+    //    }
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()

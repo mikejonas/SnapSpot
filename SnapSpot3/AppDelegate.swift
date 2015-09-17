@@ -17,10 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        self.coreLocationController = CoreLocationController()
+
         
         // GOOGLE MAPS SDK
         GMSServices.provideAPIKey("AIzaSyB-0-hv2zKDeYl17vRTaDOPKhuQiZnsXmo")
-        self.coreLocationController = CoreLocationController()
         
         // PARSE SDK.
         Parse.enableLocalDatastore()

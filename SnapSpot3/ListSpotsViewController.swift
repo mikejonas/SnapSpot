@@ -69,24 +69,6 @@ class ListSpotsViewController: UIViewController {
 
         self.view.addSubview(pageMenu!.view)
         
-        
-        
-//        //Create a UIButton with an image on the left, and text to the right
-//        rightButton.frame = CGRectMake(0, 0, 35, 33)
-//        rightButton.setTitle("", forState: UIControlState.Normal)
-//        rightButton.setImage(buttonImage, forState: UIControlState.Normal)
-//        
-//        rightButton.titleEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0)
-////        rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-//        rightButton.addTarget(self, action: "rightBarButtonItemTapped:", forControlEvents: .TouchUpInside)
-//        rightButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-//        rightButton.tintColor = UIColor.whiteColor()
-//        rightButton.sizeToFit()
-
-        //create a UIBarButtonItem with a UIButton as the custom view.
-//        var barButtonItem = UIBarButtonItem(customView: rightButton )
-//        navigationItem.rightBarButtonItem = barButtonItem
-        
     }
     
 

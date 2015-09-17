@@ -9,11 +9,8 @@
 import UIKit
 
 class CameraViewController: UIViewController {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var cameraView: CameraView!
-    @IBOutlet weak var debugTextView: UITextView!
-    var debugi:Int = 0
 
 
     
@@ -66,7 +63,8 @@ extension CameraViewController: CameraViewDelegate {
     func cameraViewShutterButtonTapped(image: UIImage?) {
         editSpotVc.addImage(image!)
         presentViewController(editSpotVc, animated: false) { () -> Void in
-            editSpotVc.updateMapAndReverseGeocode(self.appDelegate.coreLocationController!.locationCoordinates?.coordinate)
+            
+            editSpotVc.refreshLocation(15)
         }
     }
 }
@@ -84,4 +82,9 @@ extension CameraViewController: EditSpotViewControllerDelegate {
         dismissViewControllerAnimated(true, completion: nil)
         pageController.goToNextVC()
     }
+    func spotDeleted(spotComponents: SpotComponents) {
+        println("THIS SHOULDN't EVER BE PERFORMED")
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }

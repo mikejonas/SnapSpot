@@ -31,38 +31,4 @@ class LocationUtil: CLLocation {
             completion(spotAddressComponents: spotAddressComponents)
         }
     }
-
-    var counter:Double = 0
-    func getCoordinatesWithDelayUpTo(#seconds:Double, completion:(CLLocationCoordinate2D?) -> Void) {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        var locationCoordinates:CLLocation?
-        let interval:Double = 0.20
-        let intervals:Double = seconds / interval
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            do {
-                locationCoordinates = appDelegate.coreLocationController?.locationCoordinates
-                println("\(self.counter++) <= \(intervals)")
-                if let locationCoordinates = locationCoordinates {
-                    println(locationCoordinates.horizontalAccuracy)
-                    if locationCoordinates.horizontalAccuracy < 6 {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            completion(locationCoordinates.coordinate)
-                        })
-                        println("BREAK!")
-                        self.counter = 0
-                        break
-                    }
-                }
-                NSThread.sleepForTimeInterval(interval)
-            } while self.counter <= intervals
-        })
-        
-        if locationCoordinates?.horizontalAccuracy <= 5 || counter <= intervals {
-            completion(locationCoordinates?.coordinate)
-        } else {
-            completion(locationCoordinates?.coordinate)
-        }
-    }
-    
-
 }

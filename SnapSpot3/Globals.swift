@@ -14,6 +14,6 @@ struct Globals {
     }
     
     struct constants {
-        
+        static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     }
 }

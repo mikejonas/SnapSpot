@@ -102,14 +102,15 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SpotCollectionCell
 
         let imageFileNames = spots[indexPath.row]["localImagePaths"] as? [String]
-        let images = retrieveImageLocally(imageFileNames!)
-        cell.imageThumbnail.image = images[0]
+        let imageArray = retrieveImagesLocally(imageFileNames!)
+        cell.imageThumbnail.image = imageArray[0]
         
-        let timeStamp = spots[indexPath.row]["date"] as! NSDate
-        dateFormatter.dateFormat = "MMM dd"
-        let monthDay = split( dateFormatter.stringFromDate(timeStamp) ) {$0 == " "}
-        cell.monthLabel.text = monthDay[0]
-        cell.dayLabel.text = monthDay[1]
+        if let timeStamp = spots[indexPath.row]["date"] as? NSDate {
+            dateFormatter.dateFormat = "MMM dd"
+            let monthDay = split( dateFormatter.stringFromDate(timeStamp) ) {$0 == " "}
+            cell.monthLabel.text = monthDay[0]
+            cell.dayLabel.text = monthDay[1]
+        }
 
         if let city = spots[indexPath.row]["locality"] as? String {
             cell.locationLabel.text = city

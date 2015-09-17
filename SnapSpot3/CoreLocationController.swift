@@ -12,8 +12,12 @@ import CoreLocation
 class CoreLocationController : NSObject, CLLocationManagerDelegate {
 
     var locationManager:CLLocationManager = CLLocationManager()
-    var locationStatus : NSString = "Not Started"
+    var locationStatus = "Not Started"
     var locationCoordinates: CLLocation?
+    
+    var startTime : NSDate!
+    let REQ_ACC : CLLocationAccuracy = 10
+    let REQ_TIME : NSTimeInterval = 10
 
     override init() {
         super.init()
@@ -25,6 +29,29 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
         self.locationManager.startUpdatingLocation()
 
     }
+
+    func getLocation(accuracy:CLLocationAccuracy, maxTime:NSTimeInterval) {
+        let startTime = NSDate()
+        
+        var helloWorldTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "sayHello", userInfo: nil, repeats: true)
+        
+        func sayHello()
+        {
+            NSLog("hello World")
+        }
+        
+        let elapsed = locationCoordinates?.timestamp.timeIntervalSinceDate(self.startTime)
+        let currentAccuracy = locationCoordinates?.horizontalAccuracy
+        
+        if elapsed > maxTime {
+            println("\(maxTime) elapsed")
+            
+        }
+        if currentAccuracy < 0 || currentAccuracy > accuracy {
+            
+        }
+    }
+
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         var shouldIAllow = false
@@ -42,9 +69,8 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var locationArray = locations as NSArray
-        var locationObj = locationArray.lastObject as! CLLocation
-        self.locationCoordinates = locationObj
-//        println("\(self.locationCoordinates!.horizontalAccuracy), \(self.locationCoordinates?.coordinate.latitude)")
+        let location = locations.last as! CLLocation
+        self.locationCoordinates = location
+        println("UPDATED! \(location.timestamp)")
     }
 }

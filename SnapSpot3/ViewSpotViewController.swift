@@ -19,7 +19,6 @@ class ViewSpotViewController: UIViewController {
     
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var scrollViewSubView: UIView!
     @IBOutlet weak var statusBarBackgroundView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
@@ -138,7 +137,7 @@ class ViewSpotViewController: UIViewController {
         
         //Image
         let imageFileNames = spotObject["localImagePaths"] as? [String]
-        let images = retrieveImageLocally(imageFileNames!)
+        let images = retrieveImagesLocally(imageFileNames!)
         self.images = images
         imageScrollView.setupWithImages(images)
         imageScrollView.clipsToBounds = true
@@ -152,12 +151,11 @@ class ViewSpotViewController: UIViewController {
             NSFontAttributeName : UIFont.systemFontOfSize(11.0),
             NSForegroundColorAttributeName: UIColor.lightGrayColor()
         ]
-        let timeStamp = spotObject["date"] as! NSDate
-        dateFormatter.dateFormat = "MMMM dd, yyyy"
-        let dateString = "Added: \(dateFormatter.stringFromDate(timeStamp))"
-
-        captionTextView.appendAttributedText(dateString, attributes: attrs)
-        
+        if let timeStamp = spotObject["date"] as? NSDate {
+            dateFormatter.dateFormat = "MMMM dd, yyyy"
+            let dateString = "Added: \(dateFormatter.stringFromDate(timeStamp))"
+            captionTextView.appendAttributedText(dateString, attributes: attrs)
+        }
         //Address
         let address = spotObject["address"] as? String
         addressTextView.text = address
@@ -258,9 +256,9 @@ class ViewSpotViewController: UIViewController {
     }
     
     @IBAction func editButtonTapped(sender: UIButton) {
-        self.presentViewController(editSpotVc, animated: false) { () -> Void in
-            //Do stuff
-        }
+        self.presentViewController(editSpotVc, animated: false, completion: nil)
+        editSpotVc.editSpot(self.spotObject)
+
     }
 
     
@@ -361,7 +359,14 @@ extension ViewSpotViewController: EditSpotViewControllerDelegate {
     }
     func spotSaved(spotComponents: SpotComponents) {
         println("delegate from view spot vc saved")
-        dismissViewControllerAnimated(true, completion: nil)
+        editSpotLocally(spotComponents, false)
+        dismissViewControllerAnimated(false, completion: nil)
     }
+    func spotDeleted(spotComponents: SpotComponents) {
+        editSpotLocally(spotComponents, true)
+        dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
 }
 

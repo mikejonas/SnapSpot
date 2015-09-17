@@ -23,14 +23,16 @@ struct SpotComponents: Printable {
 }
 
 func saveSpotLocally(components: SpotComponents) {
+    
     //Create Parse class named spot and save data to the class
     let spot = PFObject(className: "Spot")
     spot["caption"] = components.caption
     spot["hashTags"] = components.hashTags
     if let images = components.images {
-        spot["localImagePaths"] = saveImageLocallyFromApp(images)
+        spot["localImagePaths"] = saveImagesLocallyFromApp(images)
     }
     spot["date"] = components.date
+
     spot["isSynced"] = false
     if let coordinates = components.addressComponents?.coordinates {
         let geopoint = PFGeoPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
@@ -54,58 +56,39 @@ func saveSpotLocally(components: SpotComponents) {
             
         })
     }
-    
 }
 
-
-func saveSpot(components: SpotComponents) {
-    //Create Parse class named spot and save data to the class
-    let spot = PFObject(className: "Spot")
-    spot["caption"] = components.caption
-    spot["hashTags"] = components.hashTags
-    if let images = components.images {
-        if images.count > 0 {
-            let imageData:NSData = UIImageJPEGRepresentation(images[0], 0.5)
-            let imageFile:PFFile = PFFile(data: imageData)
-            spot["image1"] = imageFile
+func editSpotLocally(spotComponents: SpotComponents, deleteSpot:Bool) {
+    println("THE DATE!!! \(spotComponents.date!)")
+    var query = PFQuery(className:"Spot")
+    query.fromLocalDatastore()
+    query.whereKey("date", equalTo: spotComponents.date!)
+    query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+        for object in objects! {
+            println("OBJECT FOUND!!!")
+            println(object)
+            object.unpinInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    if deleteSpot {
+                        println(deleteImagesLocallyFromApp(object["localImagePaths"] as! [String]))
+                    } else {
+                        saveSpotLocally(spotComponents)
+                    }
+                }
+            })
         }
-        if images.count > 1 {
-            let imageData1:NSData = UIImageJPEGRepresentation(images[0], 0.5)
-            let imageFile1:PFFile = PFFile(data: imageData1)
-            spot["image2"] = imageFile1
-        }
-        if images.count > 2 {
-            let imageData2:NSData = UIImageJPEGRepresentation(images[0], 0.5)
-            let imageFile2:PFFile = PFFile(data: imageData2)
-            spot["image3"] = imageFile2
-        }
+        
     }
-    if let coordinates = components.addressComponents?.coordinates {
-        let geopoint = PFGeoPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        spot["coordinates"] = geopoint
-    }
-    if let address = components.addressComponents?.fullAddress {
-        spot["address"] = address
-    }
-    if let locality = components.addressComponents?.locality {
-        spot["locality"] = locality
-    }
-    if let administrativeArea = components.addressComponents?.administrativeArea {
-        spot["administrativeArea"] = administrativeArea
-    }
-    if let country = components.addressComponents?.country {
-        spot["country"] = country
-    }
-
-    spot.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-        println("Object has been saved to cloud.")
-    }
+//    if deleteSpot {
+//        deleteImagesLocallyFromApp(spotComponents.localImagePaths!)
+//    } else {
+//        saveSpotLocally(spotComponents)
+//    }
 }
-
 
 
 //THIS NEEDS TO BE FIXED: isImageSaved DOESN'T REALLY DO ANYTHING.
-func saveImageLocallyFromApp(images:[UIImage]) -> [String]? {
+func saveImagesLocallyFromApp(images:[UIImage]) -> [String]? {
     var isImageSaved:Bool = false
     var savedImages:[String] = []
     if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
@@ -122,7 +105,25 @@ func saveImageLocallyFromApp(images:[UIImage]) -> [String]? {
     return isImageSaved ? savedImages : nil
 }
 
-func retrieveImageLocally(imageFileNames:[String]) -> [UIImage] {
+func deleteImagesLocallyFromApp(imageFileNames:[String]) -> [String] {
+    var deletedImages:[String] = []
+    if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
+        let dir = dirs[0] //documents directory
+        let fileManager = NSFileManager.defaultManager()
+        for imageFileName in imageFileNames {
+            let path = dir.stringByAppendingPathComponent(imageFileName)
+            
+            var error:NSError?
+            let success = fileManager.removeItemAtPath(path, error: &error)
+            if success { deletedImages.append(imageFileName) }
+        }
+    }
+
+    
+    return deletedImages
+}
+
+func retrieveImagesLocally(imageFileNames:[String]) -> [UIImage] {
     var images:[UIImage] = []
     if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
         let dir = dirs[0] //documents directory
@@ -130,12 +131,15 @@ func retrieveImageLocally(imageFileNames:[String]) -> [UIImage] {
         //reading
         for imageFileName in imageFileNames {
             let path = dir.stringByAppendingPathComponent(imageFileName)
-            let imageData = NSData(contentsOfFile: path)
-            images.append(UIImage(data: imageData!)!)
+            if let imageData = NSData(contentsOfFile: path) {
+                images.append(UIImage(data: imageData)!)
+            }
         }
     }
     return images
 }
+
+
 
 
 
