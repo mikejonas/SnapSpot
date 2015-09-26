@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
-    
+    var allFiles:[NSURL] = []
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -26,7 +26,79 @@ class SettingsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        allFiles = listAllFiles()
+        
+        var i = 0
+        for file in allFiles {
+            print("\(i): \(file)")
+            i++
+        }
     }
+    
+    
+    func listAllFiles() -> [NSURL] {
+        let fileManager = NSFileManager.defaultManager()
+        var files:[NSURL] = []
+        // We need just to get the documents folder url
+        let documentsUrl = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL
+        do {
+            // if you want to filter the directory contents you can do like this:
+            if let directoryUrls = try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsUrl, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions.SkipsSubdirectoryDescendants) {
+                files = directoryUrls
+            }
+        }
+        return files
+    }
+
+    func removeUnattachedFiles() {
+        var allAttachedfiles:[NSURL] = []
+        let query = PFQuery(className:"Spot")
+        query.fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if let spots = objects {
+                
+                if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as [String] {
+                    let dir = dirs[0] //documents directory
+                    let fileManager = NSFileManager.defaultManager()
+                    
+                    
+                    for spot in spots {
+                        if let imageFileNames = spot["localImagePaths"] as? [String] {
+                            for imageFileName in imageFileNames {
+                                let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(imageFileName)
+                                allAttachedfiles.append(path)
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                    for file in self.allFiles {
+                        if allAttachedfiles.contains(file) {
+                            print("ATTACHED: \(file)")
+                        } else {
+                            print("UNATTACHED: \(file)")
+                            
+                            do {
+                                try fileManager.removeItemAtURL(file)
+                                print("DELETED: \(file)")
+                            } catch {
+                                print("IMAGE NOT DELETED")
+                            }
+
+                            
+                        }
+                        
+                    }
+
+
+                }
+            }
+        }
+    }
+    
+    
+    
     
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         pageController.goToNextVC()

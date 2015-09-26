@@ -11,32 +11,28 @@ import UIKit
 
 class ListSpotsCollectionViewController: UICollectionViewController {
 
-    let reuseIdentifier = "SpotGridCell"
+    let reuseIdentifier = "SpotCollectionCell"
 
     var parentNavigationController : UINavigationController?
     var dateFormatter = NSDateFormatter()
-    var spots:[PFObject] = []
+    var spots:[SpotComponents] = []
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        println("COLLECTION VIEW WILL APPEAR")
+        print("COLLECTION VIEW WILL APPEAR")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println("COLLECTION VIEW DID LOAD")
-        
-        // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-
-
+        print("COLLECTION VIEW DID LOAD")
+    
         // Do any additional setup after loading the view.
         collectionView?.backgroundColor = UIColor.whiteColor()
     }
     
     func collectionViewTestReloadData() {
-        var query = PFQuery(className:"Spot")
+        let query = PFQuery(className:"Spot")
         query.fromLocalDatastore()
         query.orderByDescending("date")
         if Globals.variables.filterSpotsHashtag.count > 0 {
@@ -44,7 +40,11 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         }
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if let spots = objects {
-                self.spots = spots as! [PFObject]
+                self.spots = []
+                for spot in spots {
+                    print(spot)
+                    self.spots.append(convertParseObjectToSpotComponents(spot))
+                }
             }
             self.collectionView!.reloadData()
         }
@@ -65,8 +65,7 @@ class ListSpotsCollectionViewController: UICollectionViewController {
             let cell = sender as! UICollectionViewCell
 
             let indexPath = self.collectionView!.indexPathForCell(cell)
-            let spotObject = self.spots[indexPath!.row]
-            destinationVC.spotObject = spotObject
+            destinationVC.spotComponents = self.spots[indexPath!.row]
         }
         
     }
@@ -78,7 +77,7 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         let scale = UIScreen.mainScreen().scale
         UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
         
-        layer.renderInContext(UIGraphicsGetCurrentContext())
+        layer.renderInContext(UIGraphicsGetCurrentContext()!) //??? added the !
         let screenShot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -99,22 +98,32 @@ class ListSpotsCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SpotCollectionCell
+        let cell:SpotCollectionCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SpotCollectionCell
 
-        let imageFileNames = spots[indexPath.row]["localImagePaths"] as? [String]
-        let imageArray = retrieveImagesLocally(imageFileNames!)
-        cell.imageThumbnail.image = imageArray[0]
+        let city = spots[indexPath.row].addressComponents!.locality
+        let city2 = spots[indexPath.row].addressComponents!.subLocality
         
-        if let timeStamp = spots[indexPath.row]["date"] as? NSDate {
+        if city != nil {
+            cell.locationLabel.text = city
+        } else if city2 != nil {
+            cell.locationLabel.text = city2
+        }
+        
+        if let imageFileNames = spots[indexPath.row].localImagePaths {
+            let imageArray = retrieveImagesLocally(imageFileNames)
+            if imageArray.count > 0 {
+                cell.imageThumbnail.image = imageArray[0]
+            }
+        }
+        
+        if let timeStamp = spots[indexPath.row].date {
             dateFormatter.dateFormat = "MMM dd"
-            let monthDay = split( dateFormatter.stringFromDate(timeStamp) ) {$0 == " "}
+            let monthDay = dateFormatter.stringFromDate(timeStamp).componentsSeparatedByString(" ")
+            
             cell.monthLabel.text = monthDay[0]
             cell.dayLabel.text = monthDay[1]
         }
 
-        if let city = spots[indexPath.row]["locality"] as? String {
-            cell.locationLabel.text = city
-        }
         // Configure the cell
         return cell
     }
@@ -127,7 +136,7 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
             performSegueWithIdentifier("ViewSpotSegue", sender: cell)
         } else {
-            println("Error indexPath is not on screen: this should never happen.")
+            print("Error indexPath is not on screen: this should never happen.")
         }
         
     }

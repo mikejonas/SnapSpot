@@ -11,7 +11,7 @@ import UIKit
 class ListSpotsTableViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
-        println("Collection")
+        print("Collection")
     }
     
     override func viewDidLoad() {

@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Thorn Technologies. All rights reserved.
 //
 
+
+// FIX ThIS FILE, MACH RANGE DOES NOTHING. CHECK THE GITHUB VERSION...
+
+
 import UIKit
 
 extension UITextView {
@@ -16,15 +20,15 @@ extension UITextView {
         let nsText:NSString = self.text
         
         // this needs to be an array of NSString.  String does not work.
-        let words:[NSString] = nsText.componentsSeparatedByString(" ") as! [NSString]
+        let words:[String] = nsText.componentsSeparatedByString(" ")   //???? THIS SHOULDN't WORK ????
         
         // you can't set the font size in the storyboard anymore, since it gets overridden here.
-        var attrs = [
+        let attrs = [
             NSFontAttributeName : UIFont.systemFontOfSize(16.0)
         ]
         
         // you can staple URLs onto attributed strings
-        var attrString = NSMutableAttributedString(string: nsText as String, attributes:attrs)
+        let attrString = NSMutableAttributedString(string: nsText as String, attributes:attrs)
         
         // tag each word if it has a hashtag
         for word in words {
@@ -41,8 +45,7 @@ extension UITextView {
                 var stringifiedWord:String = word as String
                 
                 // drop the hashtag
-                stringifiedWord = dropFirst(stringifiedWord)
-                
+                stringifiedWord = String(stringifiedWord.characters.dropFirst())  //???
                 // check to see if the hashtag has numbers.
                 // ribl is "#1" shouldn't be considered a hashtag.
                 let digits = NSCharacterSet.decimalDigitCharacterSet()
@@ -50,6 +53,7 @@ extension UITextView {
                 if let numbersExist = stringifiedWord.rangeOfCharacterFromSet(digits) {
                     // hashtag contains a number, like "#1"
                     // so don't make it clickable
+                    print("Don't make this( \(numbersExist) ) clickable")
                 } else {
                     // set a link for when the user clicks on this word.
                     // it's not enough to use the word "hash", but you need the url scheme syntax "hash://"
@@ -69,7 +73,7 @@ extension UITextView {
     
     func appendAttributedText(string:String, attributes:[String: NSObject]) {
         
-        var newText = NSMutableAttributedString()
+        let newText = NSMutableAttributedString()
         let newLine = NSMutableAttributedString(string: "\n")
         
         //Get original text
@@ -89,7 +93,7 @@ extension UITextView {
         // Define paragraph styling
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.paragraphSpacing = 10.0
-        var paraAttrs = [NSParagraphStyleAttributeName : paraStyle]
+        let paraAttrs = [NSParagraphStyleAttributeName : paraStyle]
         newText.addAttributes(paraAttrs, range: NSMakeRange(0, newText.length))
         self.attributedText = newText
     }
@@ -100,7 +104,7 @@ extension UITextView {
         let nsText:NSString = self.text
         
         // this needs to be an array of NSString.  String does not work.
-        let words:[NSString] = nsText.componentsSeparatedByString(" ") as! [NSString]
+        let words:[String] = nsText.componentsSeparatedByString(" ")  //???? THIS SHOULDN't WORK ????
         
         // Array of extracted hashtags (maybe make this a string)
         var extractedHashtags:[String] = []
@@ -117,7 +121,7 @@ extension UITextView {
                 var stringifiedWord:String = word as String
                 
                 // drop the hashtag
-                stringifiedWord = dropFirst(stringifiedWord)
+                stringifiedWord = String(stringifiedWord.characters.dropFirst())  //???
             
                 extractedHashtags.append(stringifiedWord)
             }

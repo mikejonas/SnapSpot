@@ -42,7 +42,7 @@ class ListSpotsViewController: UIViewController {
         
         
         // Customize menu (Optional)
-        var parameters: [CAPSPageMenuOption] = [
+        let parameters: [CAPSPageMenuOption] = [
             .MenuItemSeparatorWidth(0),
             .ScrollMenuBackgroundColor(UIColor.whiteColor()),
             .ViewBackgroundColor(UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1.0)),
@@ -74,11 +74,11 @@ class ListSpotsViewController: UIViewController {
 
     
     override func viewDidAppear(animated: Bool) {
-        println("LIST SPOTS VIEW CONTROLLER APPEARED!")
+        print("LIST SPOTS VIEW CONTROLLER APPEARED!")
         listSpotsCollectionVC.collectionViewTestReloadData()
         
-        let hashtagString = ", #".join(Globals.variables.filterSpotsHashtag)
-        println(hashtagString)
+        let hashtagString = (Globals.variables.filterSpotsHashtag).joinWithSeparator(". #")
+        print(hashtagString)
         if hashtagString == "" {
             self.navigationController?.navigationBar.topItem?.title = "Spots"
         } else {
@@ -119,13 +119,13 @@ class ListSpotsViewController: UIViewController {
 extension ListSpotsViewController: CAPSPageMenuDelegate {
     func willMoveToPage(controller: UIViewController, index: Int) {
         if index == 0 {
-            println("0")
+            print("0")
         }
         if index == 1 {
-            println("1")
+            print("1")
         }
         if index == 2 {
-            println("2")
+            print("2")
         }
     }
 }

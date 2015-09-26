@@ -21,17 +21,12 @@ class ImageUtil {
         let posY:CGFloat = 0
         
         let rect: CGRect = CGRectMake(posX, posY, image.size.width, image.size.width)
-        let imageRef: CGImageRef = CGImageCreateWithImageInRect(image.CGImage, rect)
-        let croppedImage: UIImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)!
+        let imageRef = CGImageCreateWithImageInRect(image.CGImage, rect)!
+        let croppedImage: UIImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
         return croppedImage
     }
     
-    private class func scaleImageTo(#newWidth:CGFloat, image:UIImage) -> UIImage {
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
-        let navbarHeight:CGFloat = 64
-        let posX:CGFloat = 0
-        let posY:CGFloat = (image.size.width / screenWidth) * navbarHeight
-        
+    private class func scaleImageTo(newWidth newWidth:CGFloat, image:UIImage) -> UIImage {
         let newHeight = (image.size.height/image.size.width) * newWidth
         let newSize = CGSizeMake(newWidth, newHeight)
         var resizedImage:UIImage

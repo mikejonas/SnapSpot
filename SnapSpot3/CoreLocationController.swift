@@ -44,7 +44,7 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
         let currentAccuracy = locationCoordinates?.horizontalAccuracy
         
         if elapsed > maxTime {
-            println("\(maxTime) elapsed")
+            print("\(maxTime) elapsed")
             
         }
         if currentAccuracy < 0 || currentAccuracy > accuracy {
@@ -53,7 +53,7 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
     }
 
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         var shouldIAllow = false
         switch status {
         case CLAuthorizationStatus.Restricted: locationStatus = "Restricted Access to location"
@@ -68,9 +68,11 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
         shouldIAllow ? locationManager.startUpdatingLocation() : NSLog("Denied access: \(locationStatus)")
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        let location = locations.last as! CLLocation
+    
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last
         self.locationCoordinates = location
-        println("UPDATED! \(location.timestamp)")
+        print("UPDATED! \(location!.timestamp)")
     }
 }

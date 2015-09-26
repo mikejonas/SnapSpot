@@ -18,9 +18,9 @@ import AVFoundation
         
     weak var delegate:CameraViewDelegate?
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
     
     @IBOutlet var view: UIView!
-    @IBOutlet weak var cameraControlsView: UIView!
     
     //Camera
     var imageData: NSData!
@@ -33,18 +33,21 @@ import AVFoundation
     var captureDeviceInputFront : AVCaptureInput?
     var isInputBack:Bool = true
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         NSBundle.mainBundle().loadNibNamed("CameraView", owner: self, options: nil)
         self.addSubview(view)
+    }
+    override func layoutSubviews() {
+        self.view.frame = screenSize
+        print(screenSize)
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.view.frame = screenSize
         // Initialization code
         self.view.backgroundColor = UIColor.blueColor()
-
         //CAMERA
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         let devices = AVCaptureDevice.devices()
@@ -56,14 +59,14 @@ import AVFoundation
                 if(device.position == AVCaptureDevicePosition.Back) {
                     captureDeviceBack = device as? AVCaptureDevice
                     if captureDeviceBack != nil {
-                        println("Capture device Back found")
+                        print("Capture device Back found")
                         beginSession()
                     }
                 }
                 if(device.position == AVCaptureDevicePosition.Front) {
                     captureDeviceFront = device as? AVCaptureDevice
                     if captureDeviceFront != nil {
-                        println("Capture device Front found")
+                        print("Capture device Front found")
                     }
                 }
             }
@@ -74,19 +77,13 @@ import AVFoundation
             captureSession.addOutput(stillImageOutput)
         }
 
-        
-        //Translucence
-        var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
-        visualEffectView.frame = cameraControlsView.bounds
-        cameraControlsView.addSubview(visualEffectView)
-        cameraControlsView.backgroundColor = UIColor.clearColor()
+    
         
     }
     
     
 
     @IBAction func imagePickerButtonPressed(sender: UIButton) {
-        let photoPicker = TWPhotoPickerController()
         delegate?.cameraViewimagePickerTapped()
     }
     
@@ -98,7 +95,7 @@ import AVFoundation
     @IBAction func shutterButtonPressed(sender: UIButton) {
         
     // Get the image
-        var videoConnection = self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)
+        let videoConnection = self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)
         if videoConnection != nil {
             self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection)
                 { (imageDataSampleBuffer, error) -> Void in
@@ -109,7 +106,7 @@ import AVFoundation
             }
         } else {
             self.delegate?.cameraViewShutterButtonTapped(nil)
-            println("ELSE???")
+            print("ELSE???")
         }
 
     }
@@ -117,8 +114,11 @@ import AVFoundation
     @IBAction func switchCameraButtonPressed(sender: UIButton) {
         captureSession.beginConfiguration()
         if captureDeviceInputFront == nil {
-            var err : NSError? = nil
-            captureDeviceInputFront = AVCaptureDeviceInput(device: captureDeviceFront, error: &err)
+            do {
+                captureDeviceInputFront = try AVCaptureDeviceInput(device: captureDeviceFront)
+            } catch {
+                print("Can't add capture device front")
+            }
         }
         if isInputBack {
             captureSession.removeInput(captureDeviceInputBack)
@@ -133,11 +133,14 @@ import AVFoundation
     }
 
     func loadWithBackCamera() {
-        println("loadWithBackCamera")
+        print("loadWithBackCamera")
         captureSession.beginConfiguration()
         if captureDeviceInputFront == nil {
-            var err : NSError? = nil
-            captureDeviceInputFront = AVCaptureDeviceInput(device: captureDeviceFront, error: &err)
+            do {
+                captureDeviceInputFront = try AVCaptureDeviceInput(device: captureDeviceFront)
+            } catch {
+                print("CATCH: Can't add capture device front")
+            }
         }
         if isInputBack {
             captureSession.removeInput(captureDeviceInputBack)
@@ -157,7 +160,13 @@ import AVFoundation
     
     func configureDevice() {
         if let device = captureDeviceBack {
-            device.lockForConfiguration(nil)
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                print("CATCH: device lock for configureation (device: \(device))")
+            }
+            
+            
             //            device.flashMode = AVCaptureFlashMode.On
             device.unlockForConfiguration()
         }
@@ -165,14 +174,14 @@ import AVFoundation
     
     func beginSession() {
         configureDevice()
-        var err : NSError? = nil
-        captureDeviceInputBack = AVCaptureDeviceInput(device: captureDeviceBack, error: &err)
-        captureSession.addInput(captureDeviceInputBack)
-        if err != nil {
-            println("error: \(err?.localizedDescription)")
+        do {
+            captureDeviceInputBack = try AVCaptureDeviceInput(device: captureDeviceBack)
+            captureSession.addInput(captureDeviceInputBack)
+        } catch {
+            print("CATCH: Can't add capture device front")
         }
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        self.view.layer.addSublayer(previewLayer)
+        self.view.layer.addSublayer(previewLayer!)
         previewLayer?.frame = screenSize
         captureSession.startRunning()
     }
@@ -203,7 +212,8 @@ import AVFoundation
         
         let viewSize:CGSize = self.view.bounds.size
         
-        if device.lockForConfiguration(nil) {
+        do {
+            try device.lockForConfiguration()
             if device.focusPointOfInterestSupported && device.isFocusModeSupported(AVCaptureFocusMode.AutoFocus) {
                 if isInputBack {
                     device.focusPointOfInterest = CGPointMake(point.y / viewSize.height, 1.0 - point.x / viewSize.width)
@@ -234,17 +244,19 @@ import AVFoundation
             
             device.unlockForConfiguration()
         }
-        else {
-            // TODO: Log error.
+        catch {
+            print("CATCH: ERROR Device.lockForConfiguration")
         }
     }
     
     //Get coordinates of touch and focus / expose at that point
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.locationInView(self.view)
             focusAndExposeAtPoint(location)
         }
     }
+        
+    
 
 }

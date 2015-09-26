@@ -23,7 +23,6 @@
 		DD1B0D361B47688900D06BC5 /* SnapSpot3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D351B47688900D06BC5 /* SnapSpot3Tests.swift */; };
 		DD1B0D451B476CE100D06BC5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */; };
 		DD1B0D471B476CE800D06BC5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */; };
-		DD1B0D571B478AE200D06BC5 /* SpotAddressComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D561B478AE200D06BC5 /* SpotAddressComponents.swift */; };
 		DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D5C1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift */; };
 		DD1B0D5F1B478BD600D06BC5 /* GooglePlacesAutocomplete.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D5D1B478BD600D06BC5 /* GooglePlacesAutocomplete.xib */; };
 		DD1B0D611B478C0500D06BC5 /* EditSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D601B478C0500D06BC5 /* EditSpotViewController.swift */; };
@@ -44,7 +43,6 @@
 		DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */; };
 		DD211A681B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211A671B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift */; };
 		DD211A9A1B9BD7DD00C30D74 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211A991B9BD7DD00C30D74 /* CAPSPageMenu.swift */; };
-		DD211AA11B9BE15200C30D74 /* RecentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211A9D1B9BE15200C30D74 /* RecentsTableViewController.swift */; };
 		DD211AA21B9BE15200C30D74 /* RecentsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD211A9E1B9BE15200C30D74 /* RecentsTableViewController.xib */; };
 		DD211AAA1B9D07A400C30D74 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211AA91B9D07A400C30D74 /* Globals.swift */; };
 		DD211AAC1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211AAB1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift */; };
@@ -99,7 +97,6 @@
 		DD1B0D351B47688900D06BC5 /* SnapSpot3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapSpot3Tests.swift; sourceTree = "<group>"; };
 		DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		DD1B0D561B478AE200D06BC5 /* SpotAddressComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAddressComponents.swift; sourceTree = "<group>"; };
 		DD1B0D5C1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesAutocomplete.swift; sourceTree = "<group>"; };
 		DD1B0D5D1B478BD600D06BC5 /* GooglePlacesAutocomplete.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GooglePlacesAutocomplete.xib; sourceTree = "<group>"; };
 		DD1B0D601B478C0500D06BC5 /* EditSpotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSpotViewController.swift; sourceTree = "<group>"; };
@@ -126,7 +123,6 @@
 		DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUtil.swift; sourceTree = "<group>"; };
 		DD211A671B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSpotsTableViewController.swift; sourceTree = "<group>"; };
 		DD211A991B9BD7DD00C30D74 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
-		DD211A9D1B9BE15200C30D74 /* RecentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsTableViewController.swift; sourceTree = "<group>"; };
 		DD211A9E1B9BE15200C30D74 /* RecentsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecentsTableViewController.xib; sourceTree = "<group>"; };
 		DD211AA91B9D07A400C30D74 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		DD211AAB1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringAndImageBarButtonItem.swift; sourceTree = "<group>"; };
@@ -201,7 +197,6 @@
 				DD530C021B7D7EB40094AED0 /* Extensions */,
 				DD4024F41B659DA400D23489 /* Views */,
 				DD1B0D621B478DE900D06BC5 /* ViewControllers */,
-				DD211A9D1B9BE15200C30D74 /* RecentsTableViewController.swift */,
 				DD211A9E1B9BE15200C30D74 /* RecentsTableViewController.xib */,
 				DD6D919B1B9FAEC700A5FD61 /* FontAwesome */,
 				DD1B0D1D1B47688900D06BC5 /* Supporting Files */,
@@ -261,7 +256,6 @@
 		DD1B0D581B478AE700D06BC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DD1B0D561B478AE200D06BC5 /* SpotAddressComponents.swift */,
 				DD4024EC1B63455600D23489 /* SpotComponents.swift */,
 				DD211AA91B9D07A400C30D74 /* Globals.swift */,
 			);
@@ -437,7 +431,8 @@
 		DD1B0D121B47688900D06BC5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Mike Jonas";
 				TargetAttributes = {
 					DD1B0D191B47688900D06BC5 = {
@@ -546,7 +541,6 @@
 				DD530BCD1B7AD0D60094AED0 /* SpotCollectionCell.swift in Sources */,
 				DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */,
 				DD738E701B4FAAD400AAE27A /* LocationSearchCell.swift in Sources */,
-				DD1B0D571B478AE200D06BC5 /* SpotAddressComponents.swift in Sources */,
 				DD1B0D831B4AF70800D06BC5 /* CameraView.swift in Sources */,
 				DD1B0D5E1B478BD600D06BC5 /* GooglePlacesAutocomplete.swift in Sources */,
 				DD1397DC1B6600CB00421CD6 /* ListSpotsTableViewController.swift in Sources */,
@@ -562,7 +556,6 @@
 				DD1B0D7C1B478E7A00D06BC5 /* TWPhoto.m in Sources */,
 				DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */,
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
-				DD211AA11B9BE15200C30D74 /* RecentsTableViewController.swift in Sources */,
 				DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */,
 				DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */,
 				DD6D6C771BA89DDA00ADC8FE /* UIView+Extension.swift in Sources */,
@@ -638,7 +631,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -654,6 +649,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(PODS_ROOT)/GoogleMaps/Frameworks\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -682,6 +678,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -692,6 +689,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(PODS_ROOT)/GoogleMaps/Frameworks\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -706,12 +704,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "\"$(PODS_ROOT)/GoogleMaps/Frameworks\"";
 				INFOPLIST_FILE = SnapSpot3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikejonas.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SnapSpot3/Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -722,12 +723,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "\"$(PODS_ROOT)/GoogleMaps/Frameworks\"";
 				INFOPLIST_FILE = SnapSpot3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikejonas.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SnapSpot3/Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -735,16 +739,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SnapSpot3Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikejonas.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SnapSpot3.app/SnapSpot3";
 			};
@@ -754,12 +756,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = SnapSpot3Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikejonas.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SnapSpot3.app/SnapSpot3";
 			};

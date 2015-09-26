@@ -12,8 +12,6 @@ class CameraViewController: UIViewController {
 
     @IBOutlet weak var cameraView: CameraView!
 
-
-    
     let photoPicker = TWPhotoPickerController()
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.barTintColor = nil
@@ -83,7 +81,7 @@ extension CameraViewController: EditSpotViewControllerDelegate {
         pageController.goToNextVC()
     }
     func spotDeleted(spotComponents: SpotComponents) {
-        println("THIS SHOULDN't EVER BE PERFORMED")
+        print("THIS SHOULDN't EVER BE PERFORMED")
         dismissViewControllerAnimated(true, completion: nil)
     }
     

@@ -13,9 +13,7 @@ protocol AddImageCameraViewControllerDelegate {
     func ImageAdded(image:UIImage)
 }
 
-
 class AddImageCameraViewController: UIViewController {
-    
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var cameraView: CameraView!
@@ -24,11 +22,11 @@ class AddImageCameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
         cameraView.delegate = self
         // Do any additional setup after loading the view.
     }
     override func viewDidLayoutSubviews() {
+        self.view.sendSubviewToBack(cameraView)
         navigationBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 64)  // Here you can set you Width and Height for your navBar
     }
     override func viewWillAppear(animated: Bool) {
@@ -57,7 +55,7 @@ extension AddImageCameraViewController: CameraViewDelegate {
         photoPicker.cropBlock = { (image:UIImage!, coord2d: CLLocationCoordinate2D) -> () in
             self.delegate?.ImageAdded(image)
             if(coord2d.latitude != 0 && coord2d.longitude != 0){
-                println(coord2d.latitude, coord2d.longitude)
+                print(coord2d.latitude, coord2d.longitude)
             }
         }
     }

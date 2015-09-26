@@ -44,7 +44,6 @@ class EditSpotViewController: UIViewController {
 
     let locationUtil = LocationUtil()
     var spotComponents = SpotComponents()
-    var spotAddressComponents:SpotAddressComponents?
     var marker = GMSMarker()
     var getLocationTimer:NSTimer?
     var getLocationTimerCycles = 0
@@ -92,7 +91,7 @@ class EditSpotViewController: UIViewController {
 
     
     // If I want to resignfirstresponder for touching anywhere
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -117,9 +116,10 @@ class EditSpotViewController: UIViewController {
         
         //Image
         spotComponents.images = imageArray
-        
-        //Address components
-        spotComponents.addressComponents = spotAddressComponents
+
+        //CHANGED
+//        //Address components
+//        spotComponents.addressComponents = spotAddressComponents
         
         if (delegate != nil) {
             delegate?.spotSaved(spotComponents)
@@ -154,9 +154,7 @@ class EditSpotViewController: UIViewController {
         let locationController = Globals.constants.appDelegate.coreLocationController
         locationController?.locationManager.stopUpdatingLocation()
         locationController?.locationManager.startUpdatingLocation()
-        var startTime = NSDate()
         getLocationTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("performGetLocation"), userInfo: nil, repeats: true)
-
     }
     
     func performGetLocation() {
@@ -165,14 +163,14 @@ class EditSpotViewController: UIViewController {
         if getLocationTimerCycles == 0 {
                 updateLocationStatusLabel("Estimating Location...", labelSubText:nil, isAnimated:false)
         } else if getLocationTimerCycles < 10{
-            println(location?.coordinate)
+            print(location?.coordinate)
             if location?.horizontalAccuracy <= 10 && location?.horizontalAccuracy >= 1 {
                 self.stopTimerIfRunning()
                 updateLocationStatusLabel("Location Found!", labelSubText: " (\(getAccuracy(location!.horizontalAccuracy))% Accuracy)", isAnimated:true)
                 self.updateMapAndReverseGeocode(location?.coordinate)
             } else {
                 if location?.horizontalAccuracy > 0 {
-                    println(location?.horizontalAccuracy)
+                    print(location?.horizontalAccuracy)
                 }
             }
         } else {
@@ -192,7 +190,7 @@ class EditSpotViewController: UIViewController {
         let darkTextColor = UIColor(white: 0.1, alpha: 1)
         let lightTextColor = UIColor(white: 0.3, alpha: 1)
         let mainLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(15),NSForegroundColorAttributeName: darkTextColor] as Dictionary!
-        var labelAttributedText = NSMutableAttributedString(string: labelText, attributes: mainLabelTextAttributes)
+        let labelAttributedText = NSMutableAttributedString(string: labelText, attributes: mainLabelTextAttributes)
         
         if let labelSubText = labelSubText {
             let subLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(14),NSForegroundColorAttributeName: lightTextColor] as Dictionary!
@@ -226,19 +224,27 @@ class EditSpotViewController: UIViewController {
         else { return 20 }
     }
     
-    func editSpot(spotObject:PFObject?) {
+    func editSpot(spotComponents:SpotComponents?) {
+        
         deleteSpotButton.hidden = false
-        if let spotObject = spotObject {
-            spotComponents.date = spotObject["date"] as? NSDate
-            
-            let imageFileNames = spotObject["localImagePaths"] as? [String]
-            let caption = spotObject["caption"] as? String
-            
-            imageArray = retrieveImagesLocally(imageFileNames!)
-            captionTextView.text = caption
-            if captionTextView.text != nil {captionPlaceholderLabel.hidden = true}
+        if let spotComponents = spotComponents {
+            self.spotComponents = spotComponents
+            print(spotComponents)
+
+            if let imagePaths = spotComponents.localImagePaths {
+                imageArray = retrieveImagesLocally(imagePaths)
+            }
             reloadImages()
+            
+            if let caption = spotComponents.caption {
+                captionTextView.text = caption
+                if caption != "" {
+                    captionPlaceholderLabel.hidden = true
+                }
+            }
+            updateMap(spotComponents.addressComponents)
         }
+        
     }
     
     func resetView() { //clear
@@ -247,7 +253,6 @@ class EditSpotViewController: UIViewController {
         captionPlaceholderLabel.hidden = false
         captionTextView.text = nil
         spotComponents = SpotComponents()
-        spotAddressComponents = nil
         updateMap(nil)
         scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
     }
@@ -300,7 +305,7 @@ extension EditSpotViewController {
     
     func setupImageButtons() {
         for imageView in imageViewArray {
-            var imageButton = UIButton()
+            let imageButton = UIButton()
             imageButton.frame = CGRectMake(imageView.bounds.origin.x, imageView.bounds.origin.y , 60,60)
             imageButton.titleLabel?.font = UIFont.fontAwesomeOfSize(28)
             imageButton.layer.shadowOffset = CGSizeMake(0, 0)
@@ -332,7 +337,8 @@ extension EditSpotViewController {
         }
     }
     func imageButtonTapped(sender:UIButton!) {
-        if let imageIndex = find(imageViewArray, sender.superview as! UIImageView) {
+        if let imageIndex = imageViewArray.indexOf(sender.superview as! UIImageView) {
+
             if sender.titleLabel?.text == String.fontAwesomeIconWithName(.Times) {
                 removeImage(imageIndex)
             } else {
@@ -349,7 +355,7 @@ extension EditSpotViewController {
         refreshLocationButton.setTitle(String.fontAwesomeIconWithName(.Refresh), forState: .Normal)
         
         let fontAwesomeAttributes = [NSFontAttributeName: UIFont.fontAwesomeOfSize(16)] as Dictionary!
-        var editMapLabelAttributedString = NSMutableAttributedString(string: String.fontAwesomeIconWithName(.Pencil), attributes: fontAwesomeAttributes)
+        let editMapLabelAttributedString = NSMutableAttributedString(string: String.fontAwesomeIconWithName(.Pencil), attributes: fontAwesomeAttributes)
         editMapLabelAttributedString.appendAttributedString(NSMutableAttributedString(string: " \(editMapLabel.text!)"))
         editMapLabel.attributedText = editMapLabelAttributedString
         
@@ -358,17 +364,18 @@ extension EditSpotViewController {
         mapView.mapType = kGMSTypeHybrid
         mapView.settings.setAllGesturesEnabled(false)
         marker.tappable = false
-        updateMap(spotAddressComponents?.coordinates)
+        updateMap(spotComponents.addressComponents)
     }
-    func updateMap(coordinates:CLLocationCoordinate2D?) {
-        if let coordinates = coordinates {
-            
-            self.spotAddressComponents?.coordinates = coordinates
+    func updateMap(addressComponents:SpotAddressComponents?) {
+        if let coordinates = addressComponents?.coordinates {
+            //NEW ADD MARKER LABEL
             let zoom18CameraCoordiantes = CLLocationCoordinate2D(latitude: coordinates.latitude + 0.00007, longitude: coordinates.longitude)
             let camera = GMSCameraPosition.cameraWithTarget(zoom18CameraCoordiantes, zoom: 18)
             mapView.camera = camera
             marker.map = mapView
             marker.position = coordinates
+            self.updateMarkerModal(self.spotComponents.addressComponents!)
+
         }
         else {
             let coordinates = CLLocationCoordinate2DMake(38, -90)
@@ -376,58 +383,59 @@ extension EditSpotViewController {
             mapView.camera = camera
             marker.map = nil
         }
+
     }
     func updateMapAndReverseGeocode(coordinates:CLLocationCoordinate2D?) {
-        updateMap(coordinates)
         if let coordinates = coordinates {
+            spotComponents.addressComponents?.coordinates = coordinates
+            updateMap(spotComponents.addressComponents)
+
+            
             locationUtil.reverseGeoCodeCoordinate(coordinates, completion: { (updatedAddressComponents) -> Void in
-                self.spotAddressComponents = updatedAddressComponents
-                self.updateMarkerModal(self.spotAddressComponents!)
+                self.spotComponents.addressComponents = updatedAddressComponents
+                self.updateMarkerModal(self.spotComponents.addressComponents!)
             })
         }
     }
     func mapViewTapped() {
         //REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
         presentViewController(gpaViewController, animated: true) { () -> Void in
-            self.gpaViewController.gpaViewController.updateMap(self.spotAddressComponents?.coordinates)
-            self.gpaViewController.gpaViewController.spotAddressComponents = self.spotAddressComponents
-            self.gpaViewController.gpaViewController.searchBar.text = self.spotAddressComponents?.fullAddress
-            self.gpaViewController.gpaViewController.searchBarAddressText = self.spotAddressComponents?.fullAddress
+            self.gpaViewController.gpaViewController.spotAddressComponents = self.spotComponents.addressComponents
+            self.gpaViewController.gpaViewController.updateMap(self.spotComponents.addressComponents?.coordinates)
+            self.gpaViewController.gpaViewController.searchBar.text = self.spotComponents.addressComponents?.fullAddress
+            self.gpaViewController.gpaViewController.searchBarAddressText = self.spotComponents.addressComponents?.fullAddress
         }
     }
     
-    func updateMarkerModal(address:SpotAddressComponents) -> () {
-        var addressString = address.fullAddress!
-        var markerTitleAndSnippet:(title: String?, snippet: String?)
-        if let locality = address.locality {
-            if let localityPosition = addressString.rangeOfString(locality, options: .BackwardsSearch)?.startIndex {
-                markerTitleAndSnippet.title = addressString.substringToIndex(localityPosition.predecessor())
-                markerTitleAndSnippet.snippet = addressString.substringFromIndex(localityPosition)
+    func updateMarkerModal(addressComponents:SpotAddressComponents?) -> () {
+        if let address = addressComponents {
+            let addressString = address.fullAddress!
+            var markerTitleAndSnippet:(title: String?, snippet: String?)
+            if let locality = address.locality {
+                if let localityPosition = addressString.rangeOfString(locality, options: .BackwardsSearch)?.startIndex {
+                    markerTitleAndSnippet.title = addressString.substringToIndex(localityPosition.predecessor())
+                    markerTitleAndSnippet.snippet = addressString.substringFromIndex(localityPosition)
+                }
+            } else {
+                markerTitleAndSnippet.1 = addressString
             }
-        } else {
-            markerTitleAndSnippet.1 = addressString
+            marker.title = markerTitleAndSnippet.title
+            marker.snippet = markerTitleAndSnippet.snippet
+            mapView.selectedMarker = marker
         }
-        marker.title = markerTitleAndSnippet.title
-        marker.snippet = markerTitleAndSnippet.snippet
-        mapView.selectedMarker = marker
     }
 }
 
 extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
-    func placeNotSaved() {
+    func placeViewClosed() {
         dismissViewControllerAnimated(true, completion: nil)
-        if self.spotAddressComponents != nil {
-            self.updateMarkerModal(self.spotAddressComponents!)
-        }
+        self.updateMarkerModal(self.spotComponents.addressComponents)
     }
     func placeSaved() {
         dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.spotAddressComponents = self.gpaViewController.gpaViewController.spotAddressComponents
-            self.updateMap(self.spotAddressComponents?.coordinates)
-            if self.spotAddressComponents != nil {
-                self.updateMarkerModal(self.spotAddressComponents!)
-            
-            }
+            self.spotComponents.addressComponents = self.gpaViewController.gpaViewController.spotAddressComponents
+            self.updateMap(self.spotComponents.addressComponents)
+            self.updateMarkerModal(self.spotComponents.addressComponents)
         })
     }
 }
@@ -454,10 +462,10 @@ extension EditSpotViewController: UITextViewDelegate {
         captionTextView.addSubview(captionPlaceholderLabel)
         captionPlaceholderLabel.frame.origin = CGPointMake(10, 10)
         captionPlaceholderLabel.textColor = UIColor(white: 0, alpha: 0.5)
-        captionPlaceholderLabel.hidden = count(captionTextView.text) != 0
+        captionPlaceholderLabel.hidden = captionTextView.text.characters.count != 0
     }
     func textViewDidChange(textView: UITextView) {
-        captionPlaceholderLabel.hidden = count(textView.text) != 0
+        captionPlaceholderLabel.hidden = textView.text.characters.count != 0
     }
     //    func textViewDidBeginEditing(textView: UITextView) {
     //        keyboardActiveView.hidden = false
@@ -483,12 +491,12 @@ extension EditSpotViewController: UITextViewDelegate {
 
 extension EditSpotViewController {
     func getColoredText(text:String) -> NSMutableAttributedString{
-        var string:NSMutableAttributedString = NSMutableAttributedString(string: text)
-        var words:[NSString] = text.componentsSeparatedByString(" ")
+        let string:NSMutableAttributedString = NSMutableAttributedString(string: text)
+        let words:[NSString] = text.componentsSeparatedByString(" ")
         
-        for (var word:NSString) in words {
+        for word in words {
             if (word.hasPrefix("#")) {
-                var range:NSRange = (string.string as NSString).rangeOfString(word as String)
+                let range:NSRange = (string.string as NSString).rangeOfString(word as String)
                 string.addAttribute(NSBackgroundColorAttributeName, value: UIColor.lightGrayColor(), range: range)
                 
                 string.replaceCharactersInRange(range, withString: word as String)

@@ -14,7 +14,7 @@ class FilterSpotsTableViewController: UITableViewController {
 
     
     override func viewWillAppear(animated: Bool) {
-        var query = PFQuery(className:"Spot")
+        let query = PFQuery(className:"Spot")
         query.fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             var hashtagArrays:[[String]] = []
@@ -26,8 +26,6 @@ class FilterSpotsTableViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -74,10 +72,10 @@ class FilterSpotsTableViewController: UITableViewController {
                 }
             }
         }
-        
-        arr = sorted(sortedHashtagDict, { t1, t2 in
+        arr = sortedHashtagDict.sort({ (t1, t2) -> Bool in
             return t1.0 < t2.0
         })
+
         
         return arr
     }
@@ -98,7 +96,7 @@ class FilterSpotsTableViewController: UITableViewController {
     
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
         let hashtag:(String,Int) = self.sortedHashtagsArr[indexPath.row]
         cell.textLabel?.text = "#\(hashtag.0)"
         cell.detailTextLabel?.text = "\(hashtag.1)"
@@ -108,24 +106,25 @@ class FilterSpotsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cellText = cell.textLabel?.text {
-            if contains(Globals.variables.filterSpotsHashtag, dropFirst(cellText)) {
+            if (Globals.variables.filterSpotsHashtag).contains(String(cellText.characters.dropFirst())) {
                 tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
             } else {
                 cell.selected = false
             }
+            
         }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedHashTag = self.sortedHashtagsArr[indexPath.row].0
         Globals.variables.filterSpotsHashtag.append(selectedHashTag)
-        find(Globals.variables.filterSpotsHashtag, selectedHashTag)!
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedHashTag = self.sortedHashtagsArr[indexPath.row].0
-        let itemToRemove = find(Globals.variables.filterSpotsHashtag, selectedHashTag)!
-        Globals.variables.filterSpotsHashtag.removeAtIndex(itemToRemove)
+        let deSelectedHashTag = self.sortedHashtagsArr[indexPath.row].0
+        if let itemToRemove = Globals.variables.filterSpotsHashtag.indexOf(deSelectedHashTag) {
+            Globals.variables.filterSpotsHashtag.removeAtIndex(itemToRemove)
+        }
     }
     
 

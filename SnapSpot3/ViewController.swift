@@ -10,14 +10,14 @@ import UIKit
 
 //GLOBALS!!!
 let pageController = ViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
-let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EditSpotViewController") as! EditSpotViewController!
+let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EditSpotViewController") as! EditSpotViewController
 
 class ViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
  
-    let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController") as! UIViewController
-    let cameraVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CameraNavController") as! UIViewController
-    let listSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ListSpotsNavController") as! UIViewController
-    let filterSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FilterSpotsNavController") as! UIViewController
+    let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController")
+    let cameraVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CameraNavController")
+    let listSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ListSpotsNavController")
+    let filterSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FilterSpotsNavController")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +35,13 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource, UIPa
     }
     
     func goToNextVC() {
-        let nextVC = pageViewController(self, viewControllerAfterViewController: viewControllers[0] as! UIViewController)!
+        let nextVC = pageViewController(self, viewControllerAfterViewController: viewControllers![0])!  //??? TOO MANY !'s
         setViewControllers([nextVC], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        
     }
 
     func goToPreviousVC() {
-        let previousVC = pageViewController(self, viewControllerBeforeViewController: viewControllers[0] as! UIViewController)!
+        let previousVC = pageViewController(self, viewControllerBeforeViewController: viewControllers![0])! //??? TOO MANY !'s
         setViewControllers([previousVC], direction: UIPageViewControllerNavigationDirection.Reverse, animated: true, completion: nil)
     }
     

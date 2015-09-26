@@ -1,106 +1,207 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraView" customModule="SnapSpot3" customModuleProvider="target">
             <connections>
-                <outlet property="cameraControlsView" destination="c6x-5r-Gg6" id="k60-6E-LVk"/>
                 <outlet property="view" destination="iN0-l3-epB" id="7qH-MA-sX5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="491" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6x-5r-Gg6" userLabel="Camera Controls View">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <subviews>
-                        <view alpha="0.40000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ps-an-Xpt">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAi-m9-6T9">
-                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                    <state key="normal" image="camera-roll-icon">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                        <rect key="frame" x="28" y="55" width="40" height="40"/>
-                                    </variation>
-                                    <connections>
-                                        <action selector="imagePickerButtonPressed:" destination="-1" eventType="touchUpInside" id="Wp1-n2-EJS"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8x-br-QsT">
-                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                    <state key="normal" image="shutter">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                        <rect key="frame" x="118" y="35" width="80" height="80"/>
-                                    </variation>
-                                    <connections>
-                                        <action selector="shutterButtonPressed:" destination="-1" eventType="touchUpInside" id="mbx-BQ-7XH"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <variation key="default">
-                                <mask key="subviews">
-                                    <exclude reference="ZAi-m9-6T9"/>
-                                    <exclude reference="j8x-br-QsT"/>
-                                </mask>
-                            </variation>
-                            <variation key="widthClass=compact" fixedFrame="YES">
-                                <rect key="frame" x="0.0" y="47" width="400" height="163"/>
-                                <mask key="subviews">
-                                    <include reference="ZAi-m9-6T9"/>
-                                    <include reference="j8x-br-QsT"/>
-                                </mask>
-                            </variation>
-                        </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRr-Bj-wtC">
-                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                            <state key="normal" title="Button" image="camera-swap">
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <variation key="widthClass=compact" fixedFrame="YES">
-                                <rect key="frame" x="262" y="11" width="28" height="28"/>
-                            </variation>
-                            <connections>
-                                <action selector="switchCameraButtonPressed:" destination="-1" eventType="touchUpInside" id="S5r-lX-kE8"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j1I-zF-3mY" userLabel="Header View">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <color key="backgroundColor" red="0.40304816174535329" green="0.66666666666666663" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="2J5-uO-yvp"/>
+                    </constraints>
                     <variation key="default">
-                        <mask key="subviews">
-                            <exclude reference="6Ps-an-Xpt"/>
-                            <exclude reference="lRr-Bj-wtC"/>
+                        <mask key="constraints">
+                            <exclude reference="2J5-uO-yvp"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="0.0" y="390" width="400" height="210"/>
-                        <mask key="subviews">
-                            <include reference="6Ps-an-Xpt"/>
-                            <include reference="lRr-Bj-wtC"/>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="2J5-uO-yvp"/>
                         </mask>
                     </variation>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQs-5q-vJL" userLabel="Camera View">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <color key="backgroundColor" red="0.93834827409999999" green="0.63170030399999999" blue="0.67039666340000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="YQs-5q-vJL" secondAttribute="height" multiplier="1:1" id="q6D-LY-d5y"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="q6D-LY-d5y"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="q6D-LY-d5y"/>
+                        </mask>
+                    </variation>
+                </view>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHm-wl-JV5">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="8Ql-Dg-4PT">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zEp-ts-Jsu">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="CR7-Os-jzI">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8x-br-QsT">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <state key="normal" image="shutter">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="147" y="49" width="80" height="80"/>
+                                            </variation>
+                                            <connections>
+                                                <action selector="shutterButtonPressed:" destination="-1" eventType="touchUpInside" id="mbx-BQ-7XH"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAi-m9-6T9">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <state key="normal" image="camera-roll-icon">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="26" y="69" width="40" height="40"/>
+                                            </variation>
+                                            <connections>
+                                                <action selector="imagePickerButtonPressed:" destination="-1" eventType="touchUpInside" id="Wp1-n2-EJS"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="j8x-br-QsT"/>
+                                            <exclude reference="ZAi-m9-6T9"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="j8x-br-QsT"/>
+                                            <include reference="ZAi-m9-6T9"/>
+                                        </mask>
+                                    </variation>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRr-Bj-wtC">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Button" image="camera-swap">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="321" y="15" width="28" height="28"/>
+                                </variation>
+                                <connections>
+                                    <action selector="switchCameraButtonPressed:" destination="-1" eventType="touchUpInside" id="S5r-lX-kE8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="zEp-ts-Jsu" secondAttribute="trailing" id="BDV-em-zNc"/>
+                            <constraint firstItem="zEp-ts-Jsu" firstAttribute="leading" secondItem="8Ql-Dg-4PT" secondAttribute="leading" id="Dpz-AM-7P5"/>
+                            <constraint firstAttribute="bottom" secondItem="zEp-ts-Jsu" secondAttribute="bottom" id="LFd-xc-uUO"/>
+                            <constraint firstItem="zEp-ts-Jsu" firstAttribute="top" secondItem="8Ql-Dg-4PT" secondAttribute="top" constant="51" id="ciZ-dO-7Me"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="zEp-ts-Jsu"/>
+                                <exclude reference="lRr-Bj-wtC"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="BDV-em-zNc"/>
+                                <exclude reference="Dpz-AM-7P5"/>
+                                <exclude reference="LFd-xc-uUO"/>
+                                <exclude reference="ciZ-dO-7Me"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="zEp-ts-Jsu"/>
+                                <include reference="lRr-Bj-wtC"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="BDV-em-zNc"/>
+                                <include reference="Dpz-AM-7P5"/>
+                                <include reference="LFd-xc-uUO"/>
+                                <include reference="ciZ-dO-7Me"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="GHm-wl-JV5" firstAttribute="top" secondItem="YQs-5q-vJL" secondAttribute="bottom" id="8CP-K5-kyL"/>
+                <constraint firstItem="j1I-zF-3mY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9Vy-8c-lBW"/>
+                <constraint firstItem="YQs-5q-vJL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BL0-KL-vJw"/>
+                <constraint firstItem="YQs-5q-vJL" firstAttribute="top" secondItem="j1I-zF-3mY" secondAttribute="bottom" id="V5o-9W-FkP"/>
+                <constraint firstAttribute="trailing" secondItem="YQs-5q-vJL" secondAttribute="trailing" id="ZQ3-8n-ikN"/>
+                <constraint firstItem="GHm-wl-JV5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="f7X-FD-06D"/>
+                <constraint firstAttribute="bottom" secondItem="GHm-wl-JV5" secondAttribute="bottom" id="iRm-Wc-MNr"/>
+                <constraint firstAttribute="trailing" secondItem="j1I-zF-3mY" secondAttribute="trailing" id="luq-8s-13L"/>
+                <constraint firstItem="j1I-zF-3mY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oMe-mh-h5K"/>
+                <constraint firstAttribute="trailing" secondItem="GHm-wl-JV5" secondAttribute="trailing" id="vYF-aE-i7o"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="c6x-5r-Gg6"/>
+                    <exclude reference="j1I-zF-3mY"/>
+                    <exclude reference="YQs-5q-vJL"/>
+                    <exclude reference="GHm-wl-JV5"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="9Vy-8c-lBW"/>
+                    <exclude reference="luq-8s-13L"/>
+                    <exclude reference="oMe-mh-h5K"/>
+                    <exclude reference="BL0-KL-vJw"/>
+                    <exclude reference="V5o-9W-FkP"/>
+                    <exclude reference="ZQ3-8n-ikN"/>
+                    <exclude reference="8CP-K5-kyL"/>
+                    <exclude reference="f7X-FD-06D"/>
+                    <exclude reference="iRm-Wc-MNr"/>
+                    <exclude reference="vYF-aE-i7o"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
                 <mask key="subviews">
-                    <include reference="c6x-5r-Gg6"/>
+                    <include reference="j1I-zF-3mY"/>
+                    <include reference="YQs-5q-vJL"/>
+                    <include reference="GHm-wl-JV5"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="9Vy-8c-lBW"/>
+                    <include reference="luq-8s-13L"/>
+                    <include reference="oMe-mh-h5K"/>
+                    <include reference="BL0-KL-vJw"/>
+                    <include reference="V5o-9W-FkP"/>
+                    <include reference="ZQ3-8n-ikN"/>
+                    <include reference="8CP-K5-kyL"/>
+                    <include reference="f7X-FD-06D"/>
+                    <include reference="iRm-Wc-MNr"/>
+                    <include reference="vYF-aE-i7o"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="581.5" y="241.5"/>
         </view>
     </objects>
     <resources>

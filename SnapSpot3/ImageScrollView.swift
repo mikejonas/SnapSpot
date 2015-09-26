@@ -14,36 +14,38 @@ class ImageScrollView: UIView, UIScrollViewDelegate {
     var pageControl = UIPageControl()
     var pageViews: [UIImageView?] = []
     var images: [UIImage]?
-    var currentImageView: UIImageView?
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         initScrollView()
     }
-    required init(coder aDecoder: NSCoder) {
+    
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initScrollView()
-
     }
+    
+
 
     func initScrollView() {
         scrollView.delegate = self
+        scrollView.backgroundColor = UIColor.blackColor()
         scrollView.pagingEnabled = true
 //        scrollView.alwaysBounceHorizontal = true
         self.addSubview(scrollView)
         self.addSubview(pageControl)
    
-        println(pageControl.bounds.width)
+        print(pageControl.bounds.width)
     }
     
-    func setupWithImages(images:[UIImage]) {
+    func setupWithImages(images:[UIImage], width:CGFloat) {
         self.images = images
-        setupView()
+        setupView(width)
+        
     }
-    func setupView() {
-        scrollView.frame = CGRectMake(0, 0, self.frame.width, self.frame.width)
-        pageControl.frame = CGRectMake(self.frame.width / 2, self.frame.width - 10, 0, 0)
+    func setupView(width:CGFloat) {
+        scrollView.frame = CGRectMake(0, 0, width, width)
+        pageControl.frame = CGRectMake(width / 2, width - 10, 0, 0)
         
         if let images = images {
             // 0
@@ -57,23 +59,10 @@ class ImageScrollView: UIView, UIScrollViewDelegate {
                 
             }
             // 2
-            let pagesScrollViewSize = scrollView.frame.size
-            scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(images.count), pagesScrollViewSize.height)
+            scrollView.contentSize = CGSizeMake(width * CGFloat(images.count), width)
             
             loadPages()
         }
-    }
-    
-    func calculateSize(images:[UIImage]) {
-        let pagesScrollViewSize = scrollView.frame.size
-//        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(images.count), pagesScrollViewSize.height)
-        
-        loadPages()
-    }
-    
-    func updateimageSize(height:CGFloat) {
-
-        
     }
     
     func loadPage(page: Int) {

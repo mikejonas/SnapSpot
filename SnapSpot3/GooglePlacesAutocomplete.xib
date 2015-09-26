@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GooglePlacesAutocompleteContainer" customModule="SnapSpot3" customModuleProvider="target">
             <connections>
-                <outlet property="mapView" destination="mqK-mI-fI8" id="jOS-Sv-smI"/>
+                <outlet property="mapView" destination="mqK-mI-fI8" id="TMh-wm-V17"/>
                 <outlet property="searchBar" destination="24m-Y8-A7A" id="kjW-B6-Zvx"/>
                 <outlet property="tableView" destination="6Gg-TX-rba" id="qba-cB-o36"/>
                 <outlet property="topConstraint" destination="0qa-fT-QpK" id="x97-An-kDn"/>

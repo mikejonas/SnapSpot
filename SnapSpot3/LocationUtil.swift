@@ -17,16 +17,19 @@ class LocationUtil: CLLocation {
         geocoder.reverseGeocodeCoordinate(coordinate) { response , error in
             var spotAddressComponents:SpotAddressComponents?
             if let address = response?.firstResult() {
-                let fullAddress = ", ".join(address.lines as! [String])
+                print(address)
+                let fullAddress = (address.lines as! [String]).joinWithSeparator(", ")
+                
                 spotAddressComponents = SpotAddressComponents(
                     coordinates: CLLocationCoordinate2D(latitude: address.coordinate.latitude, longitude: address.coordinate.longitude),
                     locality: address.locality,
+                    subLocality: address.subLocality,
                     administrativeArea: address.administrativeArea,
                     country: address.country,
                     fullAddress: fullAddress
                 )
             } else {
-                spotAddressComponents = SpotAddressComponents(coordinates: coordinate, locality: nil, administrativeArea: nil, country: nil, fullAddress: "\(coordinate.latitude), \(coordinate.longitude)")
+                spotAddressComponents = SpotAddressComponents(coordinates: coordinate, locality: nil, subLocality: nil, administrativeArea: nil, country: nil, fullAddress: "\(coordinate.latitude), \(coordinate.longitude)")
             }
             completion(spotAddressComponents: spotAddressComponents)
         }

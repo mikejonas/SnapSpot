@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 class ViewSpotViewController: UIViewController {
     
-    var spotObject: PFObject?
+    var spotComponents: SpotComponents?
     var images: [UIImage]?
     var superViewScreenShot:UIImage?
     var dateFormatter = NSDateFormatter()
@@ -49,7 +49,9 @@ class ViewSpotViewController: UIViewController {
 
     
     override func viewWillAppear(animated: Bool) {
-        reloadData(spotObject!)
+        if let spotComponents = spotComponents {
+            reloadData(spotComponents)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -131,40 +133,46 @@ class ViewSpotViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func reloadData(spotObject:PFObject) {
+    func reloadData(spot:SpotComponents) {
         isScrolledTOMap = false
         CloseMapsBar.hidden = true
         
         //Image
-        let imageFileNames = spotObject["localImagePaths"] as? [String]
-        let images = retrieveImagesLocally(imageFileNames!)
-        self.images = images
-        imageScrollView.setupWithImages(images)
-        imageScrollView.clipsToBounds = true
-        imageScrollViewHeight = imageScrollView.bounds.width
+        if let imagePaths = spot.localImagePaths {
+            print(imagePaths)
+            let images = retrieveImagesLocally(imagePaths)
+            self.images = images
+            imageScrollView.setupWithImages(images, width: self.view.bounds.width)
+            imageScrollView.clipsToBounds = true
+            imageScrollViewHeight = imageScrollView.bounds.width
+        }
+
         
         //Caption
-        let caption = spotObject["caption"] as? String
-        captionTextView.text = spotObject["caption"] as? String
-        captionTextView.resolveHashTags()
-        var attrs = [
+        if let caption = spot.caption {
+            captionTextView.text = caption
+            captionTextView.resolveHashTags()
+        }
+        
+        //Date
+        let attrs = [
             NSFontAttributeName : UIFont.systemFontOfSize(11.0),
             NSForegroundColorAttributeName: UIColor.lightGrayColor()
         ]
-        if let timeStamp = spotObject["date"] as? NSDate {
+        if let timeStamp = spot.date {
             dateFormatter.dateFormat = "MMMM dd, yyyy"
             let dateString = "Added: \(dateFormatter.stringFromDate(timeStamp))"
             captionTextView.appendAttributedText(dateString, attributes: attrs)
         }
+        
         //Address
-        let address = spotObject["address"] as? String
-        addressTextView.text = address
-
+        if let address = spot.addressComponents?.fullAddress {
+            addressTextView.text = address
+        }
 
         //Map
-        if let pfCoordinates = spotObject["coordinates"] as? PFGeoPoint {
-            locationCoordinates = CLLocationCoordinate2D(latitude: pfCoordinates.latitude, longitude: pfCoordinates.longitude)
-            updateMap(locationCoordinates)
+        if let coordinates = spot.addressComponents?.coordinates {
+            updateMap(coordinates)
         }
     }
     
@@ -208,7 +216,7 @@ class ViewSpotViewController: UIViewController {
     }
     
     func scrollDownToMap() {
-        var bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+        let bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
         self.scrollView.setContentOffset(bottomOffset, animated: true)
         mapView.settings.setAllGesturesEnabled(true)
         isScrolledTOMap = true
@@ -221,7 +229,7 @@ class ViewSpotViewController: UIViewController {
     }
     
     func scrollUpFromMap() {
-        var bottomOffset = CGPointMake(0, 0 - self.scrollView.contentInset.top);
+        let bottomOffset = CGPointMake(0, 0 - self.scrollView.contentInset.top);
         self.scrollView.setContentOffset(bottomOffset, animated: true)
         mapView.settings.setAllGesturesEnabled(false)
         isScrolledTOMap = false
@@ -257,7 +265,7 @@ class ViewSpotViewController: UIViewController {
     
     @IBAction func editButtonTapped(sender: UIButton) {
         self.presentViewController(editSpotVc, animated: false, completion: nil)
-        editSpotVc.editSpot(self.spotObject)
+        editSpotVc.editSpot(self.spotComponents)
 
     }
 
@@ -286,11 +294,11 @@ extension ViewSpotViewController:UIScrollViewDelegate {
 
 
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        var scrollY = scrollView.contentOffset.y
-        var bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+        let scrollY = scrollView.contentOffset.y
+        let bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
         
         if scrollY < -40 {
-            println(scrollY)
+            print(scrollY)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         
@@ -305,7 +313,7 @@ extension ViewSpotViewController:UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        var scrollY = scrollView.contentOffset.y - mapViewAmountPassedScreen
+        let scrollY = scrollView.contentOffset.y - mapViewAmountPassedScreen
 
         if scrollY > 0 {
             
@@ -341,7 +349,7 @@ extension ViewSpotViewController:UITextViewDelegate {
         
         // check for our fake URL scheme hash:helloWorld
         if URL.scheme == "hash" {
-            Globals.variables.filterSpotsHashtag = [URL.resourceSpecifier!]
+            Globals.variables.filterSpotsHashtag = [URL.resourceSpecifier]
             self.dismissViewControllerAnimated(true, completion: nil)
 
         }
@@ -354,16 +362,19 @@ extension ViewSpotViewController:UITextViewDelegate {
 //-------------------
 extension ViewSpotViewController: EditSpotViewControllerDelegate {
     func spotClosed() {
-        println("delegate from view spot vc closed")
+        print("delegate from view spot vc closed")
         dismissViewControllerAnimated(false, completion: nil)
     }
     func spotSaved(spotComponents: SpotComponents) {
-        println("delegate from view spot vc saved")
-        editSpotLocally(spotComponents, false)
-        dismissViewControllerAnimated(false, completion: nil)
+        print("delegate from view spot vc saved")
+        editSpotLocally(spotComponents, deleteSpot: false)
+        dismissViewControllerAnimated(false) { () -> Void in
+            self.reloadData(spotComponents)
+        }
+
     }
     func spotDeleted(spotComponents: SpotComponents) {
-        editSpotLocally(spotComponents, true)
+        editSpotLocally(spotComponents, deleteSpot: true)
         dismissViewControllerAnimated(false, completion: nil)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
