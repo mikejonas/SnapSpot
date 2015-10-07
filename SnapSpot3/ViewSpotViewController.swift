@@ -138,14 +138,13 @@ class ViewSpotViewController: UIViewController {
         CloseMapsBar.hidden = true
         
         //Image
-        if let imagePaths = spot.localImagePaths {
-            print(imagePaths)
-            let images = retrieveImagesLocally(imagePaths)
-            self.images = images
-            imageScrollView.setupWithImages(images, width: self.view.bounds.width)
-            imageScrollView.clipsToBounds = true
-            imageScrollViewHeight = imageScrollView.bounds.width
-        }
+        print(spot.localImagePaths)
+        let images = retrieveImagesLocally(spot.localImagePaths)
+        self.images = images
+        imageScrollView.setupWithImages(images, width: self.view.bounds.width)
+        imageScrollView.clipsToBounds = true
+        imageScrollViewHeight = imageScrollView.bounds.width
+        
 
         
         //Caption
@@ -166,12 +165,12 @@ class ViewSpotViewController: UIViewController {
         }
         
         //Address
-        if let address = spot.addressComponents?.fullAddress {
+        if let address = spot.addressComponents.fullAddress {
             addressTextView.text = address
         }
 
         //Map
-        if let coordinates = spot.addressComponents?.coordinates {
+        if let coordinates = spot.addressComponents.coordinates {
             updateMap(coordinates)
         }
     }
@@ -367,14 +366,14 @@ extension ViewSpotViewController: EditSpotViewControllerDelegate {
     }
     func spotSaved(spotComponents: SpotComponents) {
         print("delegate from view spot vc saved")
-        editSpotLocally(spotComponents, deleteSpot: false)
+        editSpotLocally(spotComponents)
         dismissViewControllerAnimated(false) { () -> Void in
             self.reloadData(spotComponents)
         }
 
     }
     func spotDeleted(spotComponents: SpotComponents) {
-        editSpotLocally(spotComponents, deleteSpot: true)
+        deleteSpotLocally(spotComponents)
         dismissViewControllerAnimated(false, completion: nil)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

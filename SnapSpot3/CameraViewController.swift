@@ -52,14 +52,16 @@ extension CameraViewController: CameraViewDelegate {
             if coord2d.latitude != 0 {photoCoordiantes = coord2d}
             self.dismissViewControllerAnimated(false, completion: { () -> Void in
                 self.presentViewController(editSpotVc, animated: false) { () -> Void in
-                    editSpotVc.addImage(image)
+                    editSpotVc.addImage(ImageUtil.scaleImageTo(newWidth: 1080, image: image))
                     editSpotVc.updateMapAndReverseGeocode(photoCoordiantes)
                 }
             })
         }
     }
     func cameraViewShutterButtonTapped(image: UIImage?) {
-        editSpotVc.addImage(image!)
+        if let image = image {
+            editSpotVc.addImage(ImageUtil.scaleImageTo(newWidth: 1080, image: image))
+        }
         presentViewController(editSpotVc, animated: false) { () -> Void in
             
             editSpotVc.refreshLocation(15)

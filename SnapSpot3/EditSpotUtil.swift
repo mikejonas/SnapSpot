@@ -34,34 +34,4 @@ class EditSpotUtil: NSObject {
         imageViewArray  = [photoThumbnail0, photoThumbnail1, photoThumbnail2]
     }
     
-    func addImage(image:UIImage) {
-        imageArray.append(image)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.reloadImages()
-        })
-    }
-    func removeImage(imageIndex:Int) {
-        imageArray.removeAtIndex(imageIndex)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.reloadImages()
-        })
-    }
-    
-    func reloadImages() {
-        if (imageArray.count == 0) {
-            self.photoThumbnail0?.image = nil
-        }
-        if (imageArray.count >= 1) {
-            self.photoThumbnail0.image = imageArray[0]
-            self.photoThumbnail1.image = nil
-            self.photoThumbnail2.image = nil
-        }
-        if (imageArray.count >= 2) {
-            self.photoThumbnail1.image = imageArray[1]
-            self.photoThumbnail2.image = nil
-        }
-        if (imageArray.count == 3) {
-            self.photoThumbnail2.image = imageArray[2]
-        }
-    }
 }

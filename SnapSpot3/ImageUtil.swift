@@ -8,13 +8,7 @@
 
 
 class ImageUtil {
-    
-    class func scaleAndCropImage(image: UIImage) -> UIImage {
-        //cropping image first then scaling is almost 2x as fast (9s for 150 runs).
-        return scaleImageTo(newWidth: 640, image: cropVerticalImageToSquare(image))
-    }
-
-    private class func cropVerticalImageToSquare(image:UIImage) -> UIImage {
+    class func cropVerticalImageToSquare(image:UIImage) -> UIImage {
         let screenWidth = UIScreen.mainScreen().bounds.size.width
         let navbarHeight:CGFloat = 64
         let posX:CGFloat = (image.size.width / screenWidth) * navbarHeight
@@ -26,7 +20,7 @@ class ImageUtil {
         return croppedImage
     }
     
-    private class func scaleImageTo(newWidth newWidth:CGFloat, image:UIImage) -> UIImage {
+    class func scaleImageTo(newWidth newWidth:CGFloat, image:UIImage) -> UIImage {
         let newHeight = (image.size.height/image.size.width) * newWidth
         let newSize = CGSizeMake(newWidth, newHeight)
         var resizedImage:UIImage

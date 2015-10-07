@@ -8,9 +8,12 @@
 
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
 
-    var allFiles:[NSURL] = []
+class SettingsTableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+    
+    let tableSections = [2, 3, 1]
+    var logInViewController: PFLogInViewController! = PFLogInViewController()
+    var signUpViewController: PFSignUpViewController! = PFSignUpViewController()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -20,120 +23,101 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        allFiles = listAllFiles()
         
-        var i = 0
-        for file in allFiles {
-            print("\(i): \(file)")
-            i++
+        if (PFUser.currentUser() == nil) {
+            self.logInViewController.fields = [PFLogInFields.UsernameAndPassword, PFLogInFields.LogInButton, PFLogInFields.SignUpButton, PFLogInFields.PasswordForgotten, PFLogInFields.DismissButton]
+            
+            let logInLogoTitle = UILabel()
+            logInLogoTitle.text = "Logo"
+            logInLogoTitle.textColor = UIColor.darkGrayColor()
+            logInLogoTitle.font = UIFont(name: "HelveticaNeue-Light", size: 40)
+
+            self.logInViewController.logInView?.logo = logInLogoTitle
+            
+            self.logInViewController.delegate = self
+            
+            let signUpLogoTitle = UILabel()
+            signUpLogoTitle.text = "LOGO"
+            signUpLogoTitle.textColor = UIColor.darkGrayColor()
+            signUpLogoTitle.font = UIFont(name: "HelveticaNeue-Light", size: 40)
+
+            
+            self.signUpViewController.signUpView?.logo = signUpLogoTitle
+            self.signUpViewController.delegate = self
+            self.logInViewController.signUpController = self.signUpViewController
         }
+        
     }
-    
-    
-    func listAllFiles() -> [NSURL] {
-        let fileManager = NSFileManager.defaultManager()
-        var files:[NSURL] = []
-        // We need just to get the documents folder url
-        let documentsUrl = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL
-        do {
-            // if you want to filter the directory contents you can do like this:
-            if let directoryUrls = try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsUrl, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions.SkipsSubdirectoryDescendants) {
-                files = directoryUrls
-            }
-        }
-        return files
-    }
-
-    func removeUnattachedFiles() {
-        var allAttachedfiles:[NSURL] = []
-        let query = PFQuery(className:"Spot")
-        query.fromLocalDatastore()
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            if let spots = objects {
-                
-                if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as [String] {
-                    let dir = dirs[0] //documents directory
-                    let fileManager = NSFileManager.defaultManager()
-                    
-                    
-                    for spot in spots {
-                        if let imageFileNames = spot["localImagePaths"] as? [String] {
-                            for imageFileName in imageFileNames {
-                                let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(imageFileName)
-                                allAttachedfiles.append(path)
-                            }
-                        }
-                    }
-                    
-                    
-                    
-                    for file in self.allFiles {
-                        if allAttachedfiles.contains(file) {
-                            print("ATTACHED: \(file)")
-                        } else {
-                            print("UNATTACHED: \(file)")
-                            
-                            do {
-                                try fileManager.removeItemAtURL(file)
-                                print("DELETED: \(file)")
-                            } catch {
-                                print("IMAGE NOT DELETED")
-                            }
-
-                            
-                        }
-                        
-                    }
-
-
-                }
-            }
-        }
-    }
-    
-    
     
     
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         pageController.goToNextVC()
     }
     
+    func signInButtonTapped() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let createAccountAction = UIAlertAction(title: "Create account", style: .Default) { (action) in
+                self.presentViewController(self.signUpViewController, animated: true, completion: nil)
+        }
+        alertController.addAction(createAccountAction)
+        
+        let signInAction = UIAlertAction(title: "Sign in", style: .Default) { (action) in
+                    self.presentViewController(self.logInViewController, animated: true, completion: nil)
+        }
+        alertController.addAction(signInAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            if let indexPaths = self.tableView.indexPathsForSelectedRows {
+                for indexPath in indexPaths {
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                }
+            }
+        }
+        alertController.addAction(cancelAction)
+  
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+    }
     
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        print("sections: \(tableView.numberOfSections)")
+        return tableSections.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        print("SECTION \(tableView.numberOfSections)")
+        return tableSections[section]
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 {
+            switch(indexPath.row) {
+            case 0:
+                signInButtonTapped()
+            default:
+                print(indexPath.section)
+            }
+        }
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
+    
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("settingsCell", forIndexPath: indexPath)
+//
+//        // Configure the cell...
+//
+//        return cell
+//    }
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -170,6 +154,42 @@ class SettingsTableViewController: UITableViewController {
     }
     */
 
+    
+    // Mark: Parse Login
+    func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
+        if (!username.isEmpty) || !password.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
+        print("Failed to login")
+    }
+    
+    
+    
+    // Mark: Parse Sign Up
+    
+    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func signUpViewController(signUpController: PFSignUpViewController, didFailToSignUpWithError error: NSError?) {
+        print("failed to sign up...")
+    }
+    
+    func signUpViewControllerDidCancelSignUp(signUpController: PFSignUpViewController) {
+        print("User dismissed sign up.")
+    }
+    
+    
+    
     /*
     // MARK: - Navigation
 

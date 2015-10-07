@@ -116,10 +116,6 @@ class EditSpotViewController: UIViewController {
         
         //Image
         spotComponents.images = imageArray
-
-        //CHANGED
-//        //Address components
-//        spotComponents.addressComponents = spotAddressComponents
         
         if (delegate != nil) {
             delegate?.spotSaved(spotComponents)
@@ -150,7 +146,6 @@ class EditSpotViewController: UIViewController {
         stopTimerIfRunning()
         refreshLocationButton.hidden = true
         refreshLocationActivityIndicator.startAnimating()
-        
         let locationController = Globals.constants.appDelegate.coreLocationController
         locationController?.locationManager.stopUpdatingLocation()
         locationController?.locationManager.startUpdatingLocation()
@@ -158,6 +153,7 @@ class EditSpotViewController: UIViewController {
     }
     
     func performGetLocation() {
+        print(":) :) :)")
         let locationController = Globals.constants.appDelegate.coreLocationController
         let location = locationController!.locationCoordinates
         if getLocationTimerCycles == 0 {
@@ -231,9 +227,8 @@ class EditSpotViewController: UIViewController {
             self.spotComponents = spotComponents
             print(spotComponents)
 
-            if let imagePaths = spotComponents.localImagePaths {
-                imageArray = retrieveImagesLocally(imagePaths)
-            }
+            imageArray = retrieveImagesLocally(spotComponents.localImagePaths)
+            
             reloadImages()
             
             if let caption = spotComponents.caption {
@@ -268,37 +263,36 @@ extension EditSpotViewController: AddImageCameraViewControllerDelegate {
     }
     func ImageAdded(image: UIImage) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        addImage(image)
+        addImage(ImageUtil.scaleImageTo(newWidth: 1080, image: image))
+        
     }
 }
 extension EditSpotViewController {
     func addImage(image:UIImage) {
         imageArray.append(image)
+        print("IMAGE ARRAY: \(imageArray)")
+        spotComponents.localImagePaths.append("\(randomStringWithLength(8)).jpg")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.reloadImages()
         })
+        print(spotComponents)
     }
     func removeImage(imageIndex:Int) {
         imageArray.removeAtIndex(imageIndex)
+        if imageIndex < spotComponents.localImagePaths.count {
+            spotComponents.localImagePaths.removeAtIndex(imageIndex)
+            print(spotComponents.localImagePaths)
+        }
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.reloadImages()
         })
     }
     func reloadImages() {
-        if (imageArray.count == 0) {
-            self.photoThumbnail0?.image = nil
+        for image in imageViewArray {
+            image.image = nil
         }
-        if (imageArray.count >= 1) {
-            self.photoThumbnail0?.image = imageArray[0]
-            self.photoThumbnail1?.image = nil
-            self.photoThumbnail2?.image = nil
-        }
-        if (imageArray.count >= 2) {
-            self.photoThumbnail1?.image = imageArray[1]
-            self.photoThumbnail2?.image = nil
-        }
-        if (imageArray.count == 3) {
-            self.photoThumbnail2?.image = imageArray[2]
+        for (index, _) in imageArray.enumerate() {
+            imageViewArray[index].image = imageArray[index]
         }
         self.reloadImageButtons()
     }
@@ -374,7 +368,7 @@ extension EditSpotViewController {
             mapView.camera = camera
             marker.map = mapView
             marker.position = coordinates
-            self.updateMarkerModal(self.spotComponents.addressComponents!)
+            self.updateMarkerModal(self.spotComponents.addressComponents)
 
         }
         else {
@@ -387,13 +381,13 @@ extension EditSpotViewController {
     }
     func updateMapAndReverseGeocode(coordinates:CLLocationCoordinate2D?) {
         if let coordinates = coordinates {
-            spotComponents.addressComponents?.coordinates = coordinates
+            spotComponents.addressComponents.coordinates = coordinates
             updateMap(spotComponents.addressComponents)
 
             
             locationUtil.reverseGeoCodeCoordinate(coordinates, completion: { (updatedAddressComponents) -> Void in
                 self.spotComponents.addressComponents = updatedAddressComponents
-                self.updateMarkerModal(self.spotComponents.addressComponents!)
+                self.updateMarkerModal(self.spotComponents.addressComponents)
             })
         }
     }
@@ -401,19 +395,19 @@ extension EditSpotViewController {
         //REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
         presentViewController(gpaViewController, animated: true) { () -> Void in
             self.gpaViewController.gpaViewController.spotAddressComponents = self.spotComponents.addressComponents
-            self.gpaViewController.gpaViewController.updateMap(self.spotComponents.addressComponents?.coordinates)
-            self.gpaViewController.gpaViewController.searchBar.text = self.spotComponents.addressComponents?.fullAddress
-            self.gpaViewController.gpaViewController.searchBarAddressText = self.spotComponents.addressComponents?.fullAddress
+            self.gpaViewController.gpaViewController.updateMap(self.spotComponents.addressComponents.coordinates)
+            self.gpaViewController.gpaViewController.searchBar.text = self.spotComponents.addressComponents.fullAddress
+            self.gpaViewController.gpaViewController.searchBarAddressText = self.spotComponents.addressComponents.fullAddress
         }
     }
     
-    func updateMarkerModal(addressComponents:SpotAddressComponents?) -> () {
-        if let address = addressComponents {
-            let addressString = address.fullAddress!
+    func updateMarkerModal(addressComponents:SpotAddressComponents) -> () {
+
+        if let addressString = addressComponents.fullAddress {
             var markerTitleAndSnippet:(title: String?, snippet: String?)
-            if let locality = address.locality {
+            if let locality = addressComponents.locality {
                 if let localityPosition = addressString.rangeOfString(locality, options: .BackwardsSearch)?.startIndex {
-                    markerTitleAndSnippet.title = addressString.substringToIndex(localityPosition.predecessor())
+//                    markerTitleAndSnippet.title = addressString.substringToIndex(localityPosition.predecessor())
                     markerTitleAndSnippet.snippet = addressString.substringFromIndex(localityPosition)
                 }
             } else {
@@ -423,6 +417,8 @@ extension EditSpotViewController {
             marker.snippet = markerTitleAndSnippet.snippet
             mapView.selectedMarker = marker
         }
+
+        
     }
 }
 
@@ -433,7 +429,7 @@ extension EditSpotViewController: GooglePlacesAutocompleteDelegate {
     }
     func placeSaved() {
         dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.spotComponents.addressComponents = self.gpaViewController.gpaViewController.spotAddressComponents
+            self.spotComponents.addressComponents = self.gpaViewController.gpaViewController.spotAddressComponents!
             self.updateMap(self.spotComponents.addressComponents)
             self.updateMarkerModal(self.spotComponents.addressComponents)
         })

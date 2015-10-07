@@ -40,7 +40,8 @@ import AVFoundation
     }
     override func layoutSubviews() {
         self.view.frame = screenSize
-        print(screenSize)
+        print(UIScreen.mainScreen().bounds)
+        print(self.view.frame)
     }
 
     override func awakeFromNib() {
@@ -101,7 +102,7 @@ import AVFoundation
                 { (imageDataSampleBuffer, error) -> Void in
                     self.imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                     let convertedImage = UIImage(data: self.imageData!)!
-                    let croppedImage = ImageUtil.scaleAndCropImage(convertedImage)
+                    let croppedImage = ImageUtil.cropVerticalImageToSquare(convertedImage)
                     self.delegate?.cameraViewShutterButtonTapped(croppedImage)
             }
         } else {

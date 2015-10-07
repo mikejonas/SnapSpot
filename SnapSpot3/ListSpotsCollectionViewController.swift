@@ -100,8 +100,8 @@ class ListSpotsCollectionViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell:SpotCollectionCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SpotCollectionCell
 
-        let city = spots[indexPath.row].addressComponents!.locality
-        let city2 = spots[indexPath.row].addressComponents!.subLocality
+        let city = spots[indexPath.row].addressComponents.locality
+        let city2 = spots[indexPath.row].addressComponents.subLocality
         
         if city != nil {
             cell.locationLabel.text = city
@@ -109,12 +109,12 @@ class ListSpotsCollectionViewController: UICollectionViewController {
             cell.locationLabel.text = city2
         }
         
-        if let imageFileNames = spots[indexPath.row].localImagePaths {
-            let imageArray = retrieveImagesLocally(imageFileNames)
-            if imageArray.count > 0 {
-                cell.imageThumbnail.image = imageArray[0]
-            }
+        let imageFileNames = spots[indexPath.row].localImagePaths
+        let imageArray = retrieveImagesLocally(imageFileNames)
+        if imageArray.count > 0 {
+            cell.imageThumbnail.image = imageArray[0]
         }
+        
         
         if let timeStamp = spots[indexPath.row].date {
             dateFormatter.dateFormat = "MMM dd"
