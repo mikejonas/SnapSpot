@@ -10,10 +10,12 @@ import Foundation
 
 struct Globals {
     struct variables {
+        static var syncing:Bool = false
         static var filterSpotsHashtag:[String] = []
     }
     
     struct constants {
         static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        static let defaults = NSUserDefaults.standardUserDefaults()
     }
 }

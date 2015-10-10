@@ -14,7 +14,7 @@ let editSpotVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControll
 
 class ViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
  
-    let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController")
+    let settingsVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController")
     let cameraVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CameraNavController")
     let listSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ListSpotsNavController")
     let filterSpotsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FilterSpotsNavController")
