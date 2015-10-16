@@ -9,13 +9,11 @@
 import UIKit
 
 
-class SettingsTableViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+class SettingsTableViewController: UITableViewController {
     
-    let tableSections = [3, 3, 2]
-    var logInViewController: PFLogInViewController! = PFLogInViewController()
-    var signUpViewController: PFSignUpViewController! = PFSignUpViewController()
+    let tableSections = [3, 1, 2, 2]
     
-    
+    let signUpVc = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
     
     @IBOutlet weak var logInCell: UITableViewCell!
     @IBOutlet weak var syncSwitch: UISwitch!
@@ -30,42 +28,22 @@ class SettingsTableViewController: UITableViewController, PFLogInViewControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Login view controller
-        self.logInViewController.fields = [PFLogInFields.UsernameAndPassword, PFLogInFields.LogInButton, PFLogInFields.SignUpButton, PFLogInFields.PasswordForgotten, PFLogInFields.DismissButton]
-    
-        let logInLogoTitle = UILabel()
-        logInLogoTitle.text = "Logo"
-        logInLogoTitle.textColor = UIColor.darkGrayColor()
-        logInLogoTitle.font = UIFont(name: "HelveticaNeue-Light", size: 40)
-    
-        self.logInViewController.logInView?.logo = logInLogoTitle
-        self.logInViewController.delegate = self
-        
-        // Sign up view controller
-        let signUpLogoTitle = UILabel()
-        signUpLogoTitle.text = "LOGO"
-        signUpLogoTitle.textColor = UIColor.darkGrayColor()
-        signUpLogoTitle.font = UIFont(name: "HelveticaNeue-Light", size: 40)
-
-        self.signUpViewController.signUpView?.logo = signUpLogoTitle
-        self.signUpViewController.delegate = self
-        self.logInViewController.signUpController = self.signUpViewController
         
     }
     
     
     @IBAction func syncSwitchTapped(sender: UISwitch) {
-        if (syncSwitch.on && PFUser.currentUser() == nil) {
+        if (syncSwitch.on /*&& PFUser.currentUser() == nil*/) {
             //LOGGED OUT USERS CANNOT SYNC!
             showSignUpAlert("You need a SnapSpot account in order to sync")
-        } else if (!syncSwitch.on && PFUser.currentUser() == nil) {
+        } else if (!syncSwitch.on /*&& PFUser.currentUser() == nil*/) {
             //This should never occur
             print("??? HMMMM")
-        } else if (syncSwitch.on && PFUser.currentUser() != nil) {
+        } else if (syncSwitch.on /*&& PFUser.currentUser() != nil*/) {
             //Set sync to true
             Globals.constants.defaults.setBool(true, forKey: "isSyncSet")
             self.refreshTable()
-        } else if (!syncSwitch.on && PFUser.currentUser() != nil) {
+        } else if (!syncSwitch.on /*&& PFUser.currentUser() != nil*/) {
             //Set sync to false
             Globals.constants.defaults.setBool(false, forKey: "isSyncSet")
             self.refreshTable()
@@ -77,32 +55,32 @@ class SettingsTableViewController: UITableViewController, PFLogInViewControllerD
     }
     
     func refreshTable() {
-        if let user = PFUser.currentUser()?.username{
-            logInCell.textLabel?.text = "\(user)"
-            logInCell.detailTextLabel?.text = nil
-            if Globals.constants.defaults.boolForKey("isSyncSet") == true {
-                self.syncSwitch.setOn(true, animated: false)
-            } else {
-                self.syncSwitch.setOn(false, animated: false)
-            }
-        } else {
-            logInCell.textLabel?.text = "SnapSpot"
-            logInCell.detailTextLabel?.text = "Sign in"
-        }
+//        if let user = PFUser.currentUser()?.username{
+//            logInCell.textLabel?.text = "\(user)"
+//            logInCell.detailTextLabel?.text = nil
+//            if Globals.constants.defaults.boolForKey("isSyncSet") == true {
+//                self.syncSwitch.setOn(true, animated: false)
+//            } else {
+//                self.syncSwitch.setOn(false, animated: false)
+//            }
+//        } else {
+//            logInCell.textLabel?.text = "SnapSpot"
+//            logInCell.detailTextLabel?.text = "Sign in"
+//        }
     }
     
     
     func showSignUpAlert(message:String?) {
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .ActionSheet)
         let createAccountAction = UIAlertAction(title: "Create account", style: .Default) { (action) in
-                self.presentViewController(self.signUpViewController, animated: true, completion: nil)
+                self.presentViewController(self.signUpVc, animated: true, completion: nil)
         }
         alertController.addAction(createAccountAction)
         
-        let signInAction = UIAlertAction(title: "Sign in", style: .Default) { (action) in
-                    self.presentViewController(self.logInViewController, animated: true, completion: nil)
-        }
-        alertController.addAction(signInAction)
+//        let signInAction = UIAlertAction(title: "Sign in", style: .Default) { (action) in
+//            self.presentViewController(self.logInViewController, animated: true, completion: nil)
+//        }
+//        alertController.addAction(signInAction)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
             self.syncSwitch.setOn(false, animated: true)
@@ -137,7 +115,8 @@ class SettingsTableViewController: UITableViewController, PFLogInViewControllerD
         case 0:
             switch(indexPath.row) {
             case 0:
-                PFUser.currentUser() == nil ? showSignUpAlert(nil) : self.performSegueWithIdentifier("toAccountSettings", sender: self)
+                print("check current user")
+//                PFUser.currentUser() == nil ? showSignUpAlert(nil) : self.performSegueWithIdentifier("toAccountSettings", sender: self)
             default: break
             }
         default:
@@ -190,42 +169,6 @@ class SettingsTableViewController: UITableViewController, PFLogInViewControllerD
     }
     */
 
-    
-    // Mark: Parse Login
-    func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
-        if (!username.isEmpty) || !password.isEmpty {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
-        print("Failed to login")
-    }
-    
-    
-    
-    // Mark: Parse Sign Up
-    
-    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("toAccountSettings", sender: self)
-    }
-    
-    func signUpViewController(signUpController: PFSignUpViewController, didFailToSignUpWithError error: NSError?) {
-        print("failed to sign up...")
-    }
-    
-    func signUpViewControllerDidCancelSignUp(signUpController: PFSignUpViewController) {
-        print("User dismissed sign up.")
-    }
-    
-    
     
     /*
     // MARK: - Navigation

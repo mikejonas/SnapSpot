@@ -14,18 +14,18 @@ class FilterSpotsTableViewController: UITableViewController {
 
     
     override func viewWillAppear(animated: Bool) {
-        let query = PFQuery(className:"Spot")
-        query.fromLocalDatastore()
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            var hashtagArrays:[[String]] = []
-            if let spots = objects {
-                for spot in spots {
-                    hashtagArrays.append(spot["hashTags"] as! [String])
-                }
-                self.sortedHashtagsArr = self.countAndsortArrays(hashtagArrays)
-                self.tableView.reloadData()
-            }
-        }
+//        let query = PFQuery(className:"Spot")
+//        query.fromLocalDatastore()
+//        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+//            var hashtagArrays:[[String]] = []
+//            if let spots = objects {
+//                for spot in spots {
+//                    hashtagArrays.append(spot["hashTags"] as! [String])
+//                }
+//                self.sortedHashtagsArr = self.countAndsortArrays(hashtagArrays)
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     override func viewDidAppear(animated: Bool) {

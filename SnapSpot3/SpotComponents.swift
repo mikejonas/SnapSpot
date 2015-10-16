@@ -10,7 +10,7 @@ import Foundation
 
 struct SpotComponents: CustomStringConvertible {
     var localObjectID: String?
-    var user: PFUser?
+    var user: String?
     var caption: String?
     var hashTags: [String]?
     var localImagePaths: [String] = []
@@ -35,14 +35,13 @@ struct SpotAddressComponents: CustomStringConvertible {
     }
 }
 
-func convertParseObjectToSpotComponents(spotObject:PFObject) -> SpotComponents {
-    var coordinates: CLLocationCoordinate2D?
-    if let pfCoordinates = spotObject["coordinates"] as? PFGeoPoint {
-        coordinates = CLLocationCoordinate2D(latitude: pfCoordinates.latitude, longitude: pfCoordinates.longitude)
-    }
+func convertFirebaseObjectToSpotComponents(spotObject:AnyObject) -> SpotComponents {
+    
+    let location = spotObject["location"]
+    let coordiantes = spotObject["coordinates"]
     
     let spotAddressComponents = SpotAddressComponents(
-        coordinates: coordinates,
+        coordinates: getCoordinatesFromlatlng(spotObject["lat"] as? Double, lng: spotObject["lng"] as? Double),
         locality: spotObject["locality"] as? String,
         subLocality: spotObject["subLocality"] as? String,
         administrativeArea: spotObject["administrativeArea"] as? String,
@@ -51,144 +50,198 @@ func convertParseObjectToSpotComponents(spotObject:PFObject) -> SpotComponents {
     )
     
     let spotComponents = SpotComponents(
-        localObjectID: spotObject["localObjectID"] as? String,
-        user: spotObject["user"] as? PFUser,
+        localObjectID: nil,
+        user: nil,
         caption: spotObject["caption"] as? String,
         hashTags: spotObject["hashTags"] as? [String],
         localImagePaths: spotObject["localImagePaths"] as! [String],
         images: [],
         addressComponents: spotAddressComponents,
-        date: spotObject["date"] as? NSDate,
-        isSynced: spotObject["isSynced"] as? Bool
+        date: convertTimeStampToNSDate(spotObject["date"] as? Double),
+        isSynced: nil
     )
+    
     return spotComponents
 }
 
+func convertTimeStampToNSDate(timeStamp:Double?) -> NSDate? {
+    if let timeStamp = timeStamp {
+        return NSDate(timeIntervalSince1970: timeStamp)
+    } else {
+        return nil
+    }
+}
+
+func getCoordinatesFromlatlng(lat:Double?, lng:Double?) ->CLLocationCoordinate2D? {
+    print("LAT: \(lat), LNG: \(lng)")
+    if let lat = lat, lng = lng {
+        return CLLocationCoordinate2DMake(lat,lng)
+    } else {
+        return nil
+    }
+}
 
 
 func saveSpotLocally(components: SpotComponents) {
     print(components)
-    //Create Parse class named spot and save data to the class
-    let spotObject = PFObject(className: "Spot")
-    spotObject["localObjectID"] = randomStringWithLength(10)
-    if let user = components.user {
-        spotObject["user"] = user
-    }
-    spotObject["caption"] = components.caption
-    spotObject["hashTags"] = components.hashTags
-    spotObject["localImagePaths"] = components.localImagePaths
-    print(components.localImagePaths)
-    saveImagesLocally(components.images, newImagePaths: spotObject["localImagePaths"] as! [String])
-    spotObject["date"] = components.date
-
-    spotObject["isSynced"] = false
+    
+    let ref = Firebase(url: "https://snapspot.firebaseio.com")
+    let spotsRef = ref.childByAppendingPath("spots")
+    
+    var newSpot = [String:AnyObject]()
+    var newSpotLocation = [String:AnyObject]()
+    
+    newSpot["caption"] = components.caption
+    newSpot["hashTags"] = components.hashTags
+    newSpot["localImagePaths"] = components.localImagePaths
+    saveImagesLocally(components.images, newImagePaths: newSpot["localImagePaths"] as! [String])
+    newSpot["date"] = components.date?.timeIntervalSince1970
     if let coordinates = components.addressComponents.coordinates {
-        let geopoint = PFGeoPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        spotObject["coordinates"] = geopoint
+        newSpotLocation["coordinates"] = ["lat" : coordinates.latitude, "lng" : coordinates.longitude]
     }
     if let address = components.addressComponents.fullAddress {
-        spotObject["address"] = address
+        newSpotLocation["address"] = address
     }
     if let locality = components.addressComponents.locality {
-        spotObject["locality"] = locality
+        newSpotLocation["locality"] = locality
     }
     if let subLocality = components.addressComponents.subLocality {
-        spotObject["subLocality"] = subLocality
+        newSpotLocation["subLocality"] = subLocality
     }
     if let administrativeArea = components.addressComponents.administrativeArea {
-        spotObject["administrativeArea"] = administrativeArea
+        newSpotLocation["administrativeArea"] = administrativeArea
     }
     if let country = components.addressComponents.country {
-        spotObject["country"] = country
+        newSpotLocation["country"] = country
     }
-    spotObject.pinInBackgroundWithBlock{ success, error in
-        print("Object has been saved locally.")
-        spotObject.saveEventually({ (success, error) -> Void in
-            
-        })
-    }
+    newSpot["location"] = newSpotLocation
+    let newSpotRef = spotsRef.childByAutoId()
+    newSpotRef.setValue(newSpot)
+    
+    
+    
+    
+//    //Create Parse class named spot and save data to the class
+//    let spotObject = PFObject(className: "Spot")
+//    spotObject["localObjectID"] = randomStringWithLength(10)
+//    if let user = components.user {
+//        spotObject["user"] = user
+//    }
+//    spotObject["caption"] = components.caption
+//    spotObject["hashTags"] = components.hashTags
+//    spotObject["localImagePaths"] = components.localImagePaths
+//    print(components.localImagePaths)
+//    saveImagesLocally(components.images, newImagePaths: spotObject["localImagePaths"] as! [String])
+//    spotObject["date"] = components.date
+//
+//    spotObject["isSynced"] = false
+//    if let coordinates = components.addressComponents.coordinates {
+//        let geopoint = PFGeoPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
+//        spotObject["coordinates"] = geopoint
+//    }
+//    if let address = components.addressComponents.fullAddress {
+//        spotObject["address"] = address
+//    }
+//    if let locality = components.addressComponents.locality {
+//        spotObject["locality"] = locality
+//    }
+//    if let subLocality = components.addressComponents.subLocality {
+//        spotObject["subLocality"] = subLocality
+//    }
+//    if let administrativeArea = components.addressComponents.administrativeArea {
+//        spotObject["administrativeArea"] = administrativeArea
+//    }
+//    if let country = components.addressComponents.country {
+//        spotObject["country"] = country
+//    }
+//    spotObject.pinInBackgroundWithBlock{ success, error in
+//        print("Object has been saved locally.")
+//        spotObject.saveEventually({ (success, error) -> Void in
+//            
+//        })
+//    }
 }
 
 func editSpotLocally(components: SpotComponents) {
-    let query = PFQuery(className:"Spot")
-    query.fromLocalDatastore()
-    query.whereKey("localObjectID", equalTo: components.localObjectID!)
-    query.getFirstObjectInBackgroundWithBlock { (returnedSpotObject, error) -> Void in
-        if let spotObject = returnedSpotObject  {
-            
-            let newComponentsImagePaths = components.localImagePaths
-            let localComponentsImagePaths = spotObject["localImagePaths"] as! [String]
-            
-            //DELETE IMAGES
-            var imagesToDelete:[String] = []
-            for imagePath in localComponentsImagePaths {
-                if !newComponentsImagePaths.contains(imagePath) {
-                    imagesToDelete.append(imagePath)
-                }
-            }
-            deleteImagesLocallyFromApp(imagesToDelete)
-            //Save Images
-            var imagesToSave:[UIImage] = []
-            var imagePathsToSave:[String] = []
-            for (i, newImagePath) in newComponentsImagePaths.enumerate() {
-                if !localComponentsImagePaths.contains(newImagePath) {
-                    imagesToSave.append(components.images[i])
-                    imagePathsToSave.append(newImagePath)
-                }
-            }
-            saveImagesLocally(imagesToSave, newImagePaths: imagePathsToSave)
-
-            spotObject["localObjectID"] = components.localObjectID
-            if let user = components.user {
-                spotObject["user"] = user
-            }
-            spotObject["caption"] = components.caption
-            spotObject["hashTags"] = components.hashTags
-            spotObject["localImagePaths"] = newComponentsImagePaths
-            spotObject["date"] = components.date
-            spotObject["isSynced"] = components.isSynced
-            if let coordinates = components.addressComponents.coordinates {
-                let geopoint = PFGeoPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
-                spotObject["coordinates"] = geopoint
-            }
-            if let address = components.addressComponents.fullAddress {
-                spotObject["address"] = address
-            }
-            if let locality = components.addressComponents.locality {
-                spotObject["locality"] = locality
-            }
-            if let subLocality = components.addressComponents.subLocality {
-                spotObject["subLocality"] = subLocality
-            }
-            if let administrativeArea = components.addressComponents.administrativeArea {
-                spotObject["administrativeArea"] = administrativeArea
-            }
-            if let country = components.addressComponents.country {
-                spotObject["country"] = country
-            }
-            
-            spotObject.saveEventually({ (isSaved, error) -> Void in
-                print("ERROR \(error)")
-                print("IsSaved \(isSaved)")
-            })
-        }
-    }
+//    let query = PFQuery(className:"Spot")
+//    query.fromLocalDatastore()
+//    query.whereKey("localObjectID", equalTo: components.localObjectID!)
+//    query.getFirstObjectInBackgroundWithBlock { (returnedSpotObject, error) -> Void in
+//        if let spotObject = returnedSpotObject  {
+//            
+//            let newComponentsImagePaths = components.localImagePaths
+//            let localComponentsImagePaths = spotObject["localImagePaths"] as! [String]
+//            
+//            //DELETE IMAGES
+//            var imagesToDelete:[String] = []
+//            for imagePath in localComponentsImagePaths {
+//                if !newComponentsImagePaths.contains(imagePath) {
+//                    imagesToDelete.append(imagePath)
+//                }
+//            }
+//            deleteImagesLocallyFromApp(imagesToDelete)
+//            //Save Images
+//            var imagesToSave:[UIImage] = []
+//            var imagePathsToSave:[String] = []
+//            for (i, newImagePath) in newComponentsImagePaths.enumerate() {
+//                if !localComponentsImagePaths.contains(newImagePath) {
+//                    imagesToSave.append(components.images[i])
+//                    imagePathsToSave.append(newImagePath)
+//                }
+//            }
+//            saveImagesLocally(imagesToSave, newImagePaths: imagePathsToSave)
+//
+//            spotObject["localObjectID"] = components.localObjectID
+//            if let user = components.user {
+//                spotObject["user"] = user
+//            }
+//            spotObject["caption"] = components.caption
+//            spotObject["hashTags"] = components.hashTags
+//            spotObject["localImagePaths"] = newComponentsImagePaths
+//            spotObject["date"] = components.date
+//            spotObject["isSynced"] = components.isSynced
+//            if let coordinates = components.addressComponents.coordinates {
+//                let geopoint = PFGeoPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
+//                spotObject["coordinates"] = geopoint
+//            }
+//            if let address = components.addressComponents.fullAddress {
+//                spotObject["address"] = address
+//            }
+//            if let locality = components.addressComponents.locality {
+//                spotObject["locality"] = locality
+//            }
+//            if let subLocality = components.addressComponents.subLocality {
+//                spotObject["subLocality"] = subLocality
+//            }
+//            if let administrativeArea = components.addressComponents.administrativeArea {
+//                spotObject["administrativeArea"] = administrativeArea
+//            }
+//            if let country = components.addressComponents.country {
+//                spotObject["country"] = country
+//            }
+//            
+//            spotObject.saveEventually({ (isSaved, error) -> Void in
+//                print("ERROR \(error)")
+//                print("IsSaved \(isSaved)")
+//            })
+//        }
+//    }
 }
 
 func deleteSpotLocally(spotComponents: SpotComponents) {
-    let query = PFQuery(className:"Spot")
-    query.fromLocalDatastore()
-    query.whereKey("date", equalTo: spotComponents.date!)
-    query.getFirstObjectInBackgroundWithBlock { (returnedSpotObject, error) -> Void in
-        if let spotObject = returnedSpotObject  {
-            spotObject.unpinInBackgroundWithBlock({ (success, error) -> Void in
-                if success {
-                    print(deleteImagesLocallyFromApp(spotObject["localImagePaths"] as? [String]))
-                    spotObject.deleteEventually()
-                }
-            })
-        }
-    }
+//    let query = PFQuery(className:"Spot")
+//    query.fromLocalDatastore()
+//    query.whereKey("date", equalTo: spotComponents.date!)
+//    query.getFirstObjectInBackgroundWithBlock { (returnedSpotObject, error) -> Void in
+//        if let spotObject = returnedSpotObject  {
+//            spotObject.unpinInBackgroundWithBlock({ (success, error) -> Void in
+//                if success {
+//                    print(deleteImagesLocallyFromApp(spotObject["localImagePaths"] as? [String]))
+//                    spotObject.deleteEventually()
+//                }
+//            })
+//        }
+//    }
 }
 
 

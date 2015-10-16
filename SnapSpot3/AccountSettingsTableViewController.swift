@@ -47,13 +47,13 @@ class AccountSettingsTableViewController: UITableViewController {
             }
         case 1:
             switch(indexPath.row) {
-            case 0:
-                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
-                    print("LOG OUT!!!: Error? \(error)")
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.navigationController?.popViewControllerAnimated(true)
-                })
-                
+//            case 0:
+//                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+//                    print("LOG OUT!!!: Error? \(error)")
+//                    self.dismissViewControllerAnimated(true, completion: nil)
+//                    self.navigationController?.popViewControllerAnimated(true)
+//                })
+//                
             default:
                 print(indexPath.section)
             }

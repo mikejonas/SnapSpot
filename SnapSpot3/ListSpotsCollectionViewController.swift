@@ -26,29 +26,48 @@ class ListSpotsCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         print("COLLECTION VIEW DID LOAD")
-    
-        // Do any additional setup after loading the view.
         collectionView?.backgroundColor = UIColor.whiteColor()
+        
+        // Get a reference to our posts
+        let ref = Firebase(url:"https://snapspot.firebaseio.com/spots")
+        
+        // Attach a closure to read the data at our posts reference
+        ref.observeEventType(.ChildAdded, withBlock: { snapshot in
+                print("OBJECT: \(snapshot.value)")
+                self.spots.append(convertFirebaseObjectToSpotComponents(snapshot.value))
+                print(self.spots)
+                self.collectionView!.reloadData()
+            }, withCancelBlock: { error in
+                print(error.description)
+                print("CANCEL BLOCK!!!!")
+        })
+        
+        //TODO HASHTAGS
+        
+        
+        
+        
     }
     
-    func collectionViewTestReloadData() {
-        let query = PFQuery(className:"Spot")
-        query.fromLocalDatastore()
-        query.orderByDescending("date")
-        if Globals.variables.filterSpotsHashtag.count > 0 {
-            query.whereKey("hashTags", containedIn: Globals.variables.filterSpotsHashtag)
-        }
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            if let spots = objects {
-                self.spots = []
-                for spot in spots {
-                    print(spot)
-                    self.spots.append(convertParseObjectToSpotComponents(spot))
-                }
-            }
-            self.collectionView!.reloadData()
-        }
-    }
+//    func collectionViewTestReloadData() {
+//        let query = PFQuery(className:"Spot")
+//        query.fromLocalDatastore()
+//        query.orderByDescending("date")
+//        if Globals.variables.filterSpotsHashtag.count > 0 {
+//            query.whereKey("hashTags", containedIn: Globals.variables.filterSpotsHashtag)
+//        }
+//        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+//            if let spots = objects {
+//                self.spots = []
+//                for spot in spots {
+//                    print("SPOT: \(spot)")
+//                    self.spots.append(convertFirebaseObjectToSpotComponents(spot))
+//                    
+//                }
+//            }
+//            self.collectionView!.reloadData()
+//        }
+//    }
     
 
     override func didReceiveMemoryWarning() {

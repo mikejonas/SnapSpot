@@ -18,18 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.coreLocationController = CoreLocationController()
-
         
         // GOOGLE MAPS SDK
         GMSServices.provideAPIKey("AIzaSyB-0-hv2zKDeYl17vRTaDOPKhuQiZnsXmo")
-        
-        // PARSE SDK.
-        Parse.enableLocalDatastore()
-        Parse.setApplicationId("jdPBPoucTIJWhKQ3X1qWcxNPJUIYXu95gafFYmSa",
-            clientKey: "d9KidMZPEgd1rDKvgKFL7LJrd0Jww3qu4QWnLopH")
-        // [Optional] Track statistics around application opens.
-        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
-        
+
+        //FIREBASE
+        Firebase.defaultConfig().persistenceEnabled = true
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         

@@ -45,13 +45,9 @@
 		DD211A9A1B9BD7DD00C30D74 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211A991B9BD7DD00C30D74 /* CAPSPageMenu.swift */; };
 		DD211AAA1B9D07A400C30D74 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211AA91B9D07A400C30D74 /* Globals.swift */; };
 		DD211AAC1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211AAB1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift */; };
-		DD2554C71BC36C9700F3F54F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2554C61BC36C9700F3F54F /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD2554C91BC4616400F3F54F /* CustomLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2554C81BC4616400F3F54F /* CustomLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD2554CB1BC4617F00F3F54F /* customSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2554CA1BC4617F00F3F54F /* customSignUpViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD2554CD1BC4CDF500F3F54F /* ParseLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2554CC1BC4CDF500F3F54F /* ParseLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD2554CF1BC4CE2200F3F54F /* ParseLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2554CE1BC4CE2200F3F54F /* ParseLoginView.swift */; settings = {ASSET_TAGS = (); }; };
 		DD2554D11BC775AA00F3F54F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD2554D01BC775AA00F3F54F /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
 		DD2554D31BC77B4000F3F54F /* AccountSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2554D21BC77B4000F3F54F /* AccountSettingsTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DD3B0C691BCDE00E00C7D070 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3B0C681BCDE00E00C7D070 /* SignUpViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024EC1B63455600D23489 /* SpotComponents.swift */; };
 		DD4024EF1B63FF3F00D23489 /* EditSpotUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */; };
 		DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */; };
@@ -132,13 +128,9 @@
 		DD211A991B9BD7DD00C30D74 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
 		DD211AA91B9D07A400C30D74 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		DD211AAB1B9E26FE00C30D74 /* StringAndImageBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringAndImageBarButtonItem.swift; sourceTree = "<group>"; };
-		DD2554C61BC36C9700F3F54F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		DD2554C81BC4616400F3F54F /* CustomLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoginViewController.swift; sourceTree = "<group>"; };
-		DD2554CA1BC4617F00F3F54F /* customSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customSignUpViewController.swift; sourceTree = "<group>"; };
-		DD2554CC1BC4CDF500F3F54F /* ParseLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLoginViewController.swift; sourceTree = "<group>"; };
-		DD2554CE1BC4CE2200F3F54F /* ParseLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLoginView.swift; sourceTree = "<group>"; };
 		DD2554D01BC775AA00F3F54F /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DD2554D21BC77B4000F3F54F /* AccountSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsTableViewController.swift; sourceTree = "<group>"; };
+		DD3B0C681BCDE00E00C7D070 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		DD4024EC1B63455600D23489 /* SpotComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotComponents.swift; sourceTree = "<group>"; };
 		DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSpotUtil.swift; sourceTree = "<group>"; };
 		DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -290,11 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				DD4024F71B65A4E800D23489 /* ViewController.swift */,
-				DD2554C61BC36C9700F3F54F /* LoginViewController.swift */,
-				DD2554CC1BC4CDF500F3F54F /* ParseLoginViewController.swift */,
-				DD2554CE1BC4CE2200F3F54F /* ParseLoginView.swift */,
-				DD2554C81BC4616400F3F54F /* CustomLoginViewController.swift */,
-				DD2554CA1BC4617F00F3F54F /* customSignUpViewController.swift */,
+				DD3B0C681BCDE00E00C7D070 /* SignUpViewController.swift */,
 				DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */,
 				DD2554D21BC77B4000F3F54F /* AccountSettingsTableViewController.swift */,
 				DD1B0D211B47688900D06BC5 /* CameraViewController.swift */,
@@ -570,23 +558,19 @@
 				DD738E6E1B4F917D00AAE27A /* AddImageCameraViewController.swift in Sources */,
 				DD2554D31BC77B4000F3F54F /* AccountSettingsTableViewController.swift in Sources */,
 				DD1B0D611B478C0500D06BC5 /* EditSpotViewController.swift in Sources */,
-				DD2554CB1BC4617F00F3F54F /* customSignUpViewController.swift in Sources */,
 				DD1B0D221B47688900D06BC5 /* CameraViewController.swift in Sources */,
-				DD2554C91BC4616400F3F54F /* CustomLoginViewController.swift in Sources */,
 				DD530C081B7E84640094AED0 /* ViewSpotViewController.swift in Sources */,
 				DD761FFC1BBE515E009C442D /* DebugImagesTableViewCell.swift in Sources */,
 				DD211A681B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift in Sources */,
 				DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */,
 				DD1B0D7C1B478E7A00D06BC5 /* TWPhoto.m in Sources */,
+				DD3B0C691BCDE00E00C7D070 /* SignUpViewController.swift in Sources */,
 				DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */,
 				DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */,
 				DD4024ED1B63455600D23489 /* SpotComponents.swift in Sources */,
-				DD2554CD1BC4CDF500F3F54F /* ParseLoginViewController.swift in Sources */,
 				DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */,
 				DD6D6C771BA89DDA00ADC8FE /* UIView+Extension.swift in Sources */,
-				DD2554CF1BC4CE2200F3F54F /* ParseLoginView.swift in Sources */,
 				DD1398571B6ABDEA00421CD6 /* SetupViewSpotVC.swift in Sources */,
-				DD2554C71BC36C9700F3F54F /* LoginViewController.swift in Sources */,
 				DD0D551F1B85896F0095DFDF /* ButtonIconRight.swift in Sources */,
 				DD1B0D7B1B478E7A00D06BC5 /* TWImageScrollView.m in Sources */,
 				DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */,

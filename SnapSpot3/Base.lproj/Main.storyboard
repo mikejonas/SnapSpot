@@ -1575,6 +1575,7 @@
                         <viewControllerLayoutGuide type="bottom" id="X8Z-fq-cXE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aTv-3C-0Ki">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FD5-fJ-iqS">
@@ -1657,6 +1658,7 @@
                         <viewControllerLayoutGuide type="bottom" id="w5W-Os-2Aq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Mw1-rg-DnS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PYz-di-XCU">
@@ -1715,16 +1717,16 @@
                                 <exclude reference="zSQ-jd-phm"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="AYQ-Fl-bh8"/>
                                 <exclude reference="St7-OU-g2a"/>
                                 <exclude reference="ZEI-2h-G28"/>
                                 <exclude reference="ZZR-Nw-wNY"/>
                                 <exclude reference="dii-PF-Bdz"/>
                                 <exclude reference="fHH-GE-8sq"/>
                                 <exclude reference="nBa-MV-RUs"/>
+                                <exclude reference="AYQ-Fl-bh8"/>
+                                <exclude reference="l6d-PQ-UYv"/>
                                 <exclude reference="Vqd-Xy-OtM"/>
                                 <exclude reference="jYl-qC-ekC"/>
-                                <exclude reference="l6d-PQ-UYv"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1735,16 +1737,16 @@
                                 <include reference="zSQ-jd-phm"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="AYQ-Fl-bh8"/>
                                 <include reference="St7-OU-g2a"/>
                                 <include reference="ZEI-2h-G28"/>
                                 <include reference="ZZR-Nw-wNY"/>
                                 <include reference="dii-PF-Bdz"/>
                                 <include reference="fHH-GE-8sq"/>
                                 <include reference="nBa-MV-RUs"/>
+                                <include reference="AYQ-Fl-bh8"/>
+                                <include reference="l6d-PQ-UYv"/>
                                 <include reference="Vqd-Xy-OtM"/>
                                 <include reference="jYl-qC-ekC"/>
-                                <include reference="l6d-PQ-UYv"/>
                             </mask>
                         </variation>
                     </view>
@@ -1767,6 +1769,7 @@
                         <viewControllerLayoutGuide type="bottom" id="59j-b8-Rve"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="u1m-8X-naW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sDI-6p-nXM">
@@ -1814,11 +1817,11 @@
                                 <exclude reference="hlY-Qu-41o"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="2fr-dG-HV5"/>
-                                <exclude reference="n0C-1y-MG8"/>
                                 <exclude reference="4fy-ig-FkV"/>
                                 <exclude reference="Epy-hV-DXE"/>
                                 <exclude reference="iLe-wm-JhH"/>
+                                <exclude reference="2fr-dG-HV5"/>
+                                <exclude reference="n0C-1y-MG8"/>
                                 <exclude reference="61w-XW-KIh"/>
                                 <exclude reference="E7m-7z-SjU"/>
                                 <exclude reference="Hhf-X3-aRU"/>
@@ -1835,11 +1838,11 @@
                                 <include reference="hlY-Qu-41o"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="2fr-dG-HV5"/>
-                                <include reference="n0C-1y-MG8"/>
                                 <include reference="4fy-ig-FkV"/>
                                 <include reference="Epy-hV-DXE"/>
                                 <include reference="iLe-wm-JhH"/>
+                                <include reference="2fr-dG-HV5"/>
+                                <include reference="n0C-1y-MG8"/>
                                 <include reference="61w-XW-KIh"/>
                                 <include reference="E7m-7z-SjU"/>
                                 <include reference="Hhf-X3-aRU"/>

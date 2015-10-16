@@ -7,6 +7,4 @@
 //
 
 #import "TWPhotoPicker/TWPhotoPickerController.h"
-#import <Parse/Parse.h>
-#import <Bolts/Bolts.h>
-#import <ParseUI/ParseUI.h>
+#import <Firebase/Firebase.h>
