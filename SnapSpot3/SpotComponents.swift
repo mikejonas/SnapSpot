@@ -37,27 +37,27 @@ struct SpotAddressComponents: CustomStringConvertible {
 
 func convertFirebaseObjectToSpotComponents(spotObject:AnyObject) -> SpotComponents {
     
-    let location = spotObject["location"]
-    let coordiantes = spotObject["coordinates"]
+    let json = JSON(spotObject)
+    
     
     let spotAddressComponents = SpotAddressComponents(
-        coordinates: getCoordinatesFromlatlng(spotObject["lat"] as? Double, lng: spotObject["lng"] as? Double),
-        locality: spotObject["locality"] as? String,
-        subLocality: spotObject["subLocality"] as? String,
-        administrativeArea: spotObject["administrativeArea"] as? String,
-        country: spotObject["country"] as? String,
-        fullAddress: spotObject["address"] as? String
+        coordinates: getCoordinatesFromlatlng(json["location"]["coordinates"]["lat"].double, lng: json["location"]["coordinates"]["lng"].double),
+        locality: json["location"]["locality"].string,
+        subLocality: json["location"]["subLocality"].string,
+        administrativeArea: json["location"]["administrativeArea"].string,
+        country: json["location"]["country"].string,
+        fullAddress: json["location"]["address"].string
     )
     
     let spotComponents = SpotComponents(
         localObjectID: nil,
         user: nil,
-        caption: spotObject["caption"] as? String,
-        hashTags: spotObject["hashTags"] as? [String],
-        localImagePaths: spotObject["localImagePaths"] as! [String],
+        caption: json["caption"].string,
+        hashTags: json["hashTags"].arrayValue.map { $0.string!},
+        localImagePaths: json["localImagePaths"].arrayValue.map { $0.string!},
         images: [],
         addressComponents: spotAddressComponents,
-        date: convertTimeStampToNSDate(spotObject["date"] as? Double),
+        date: convertTimeStampToNSDate(json["date"].double),
         isSynced: nil
     )
     
