@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,14 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        Alamofire.request(.GET, "http://httpbin.org/get", parameters: ["foo": "bar"])
-            .response { request, response, data, error in
-                print(request)
-                print(response)
-                print(data)
-                print(error)
+        Alamofire.request(.GET, "https://httpbin.org/get")
+            .responseString { response in
+                print("Response String: \(response.result.value)")
+            }
+            .responseJSON { response in
+                print("Response JSON: \(response.result.value)")
         }
-        
         
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)

@@ -53,6 +53,7 @@
 		DD4024EF1B63FF3F00D23489 /* EditSpotUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */; };
 		DD4024F31B659D4200D23489 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */; };
 		DD4024F81B65A4E800D23489 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4024F71B65A4E800D23489 /* ViewController.swift */; };
+		DD484AA31BD5D4B600CC9317 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DD484A9C1BD5D3C100CC9317 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DD530BCD1B7AD0D60094AED0 /* SpotCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530BCC1B7AD0D60094AED0 /* SpotCollectionCell.swift */; };
 		DD530C011B7D61690094AED0 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530C001B7D61690094AED0 /* ImageScrollView.swift */; };
 		DD530C081B7E84640094AED0 /* ViewSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD530C071B7E84640094AED0 /* ViewSpotViewController.swift */; };
@@ -77,6 +78,20 @@
 			remoteInfo = SnapSpot3;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DD484AA41BD5D4B600CC9317 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DD484AA31BD5D4B600CC9317 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		54B3E08B5FCA9286E1D3F02B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +152,7 @@
 		DD4024EE1B63FF3F00D23489 /* EditSpotUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSpotUtil.swift; sourceTree = "<group>"; };
 		DD4024F21B659D4200D23489 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DD4024F71B65A4E800D23489 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DD484A9C1BD5D3C100CC9317 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
 		DD530BCC1B7AD0D60094AED0 /* SpotCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCollectionCell.swift; sourceTree = "<group>"; };
 		DD530C001B7D61690094AED0 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		DD530C071B7E84640094AED0 /* ViewSpotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +260,7 @@
 		DD1B0D441B476CC600D06BC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DD484A9C1BD5D3C100CC9317 /* Alamofire.framework */,
 				DD1B0D461B476CE800D06BC5 /* CoreLocation.framework */,
 				DD1B0D411B476C8700D06BC5 /* AVFoundation.framework */,
 				6296593DD1281AE5F9C4D50C /* libPods.a */,
@@ -409,8 +426,8 @@
 				DD1B0D171B47688900D06BC5 /* Frameworks */,
 				DD1B0D181B47688900D06BC5 /* Resources */,
 				FFA58F736D5AE544912ABA62 /* Copy Pods Resources */,
-				DD1C35C71BD5C82C00489C14 /* Run Script */,
 				D240AC4460517225ED9DFA69 /* Embed Pods Frameworks */,
+				DD484AA41BD5D4B600CC9317 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -538,22 +555,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DD1C35C71BD5C82C00489C14 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/IOS/Alamofire.framework",
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
 			showEnvVarsInLog = 0;
 		};
 		FFA58F736D5AE544912ABA62 /* Copy Pods Resources */ = {
