@@ -39,6 +39,7 @@
 		DD1B0D7F1B478E7A00D06BC5 /* TWPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D741B478E7A00D06BC5 /* TWPhotoPickerController.m */; };
 		DD1B0D831B4AF70800D06BC5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B0D821B4AF70800D06BC5 /* CameraView.swift */; };
 		DD1B0D851B4AF72500D06BC5 /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1B0D841B4AF72500D06BC5 /* CameraView.xib */; };
+		DD1C35C21BD5C43C00489C14 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1C35C11BD5C43C00489C14 /* SwiftyJSON.swift */; settings = {ASSET_TAGS = (); }; };
 		DD1E4DD81B4C39C3005147DD /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */; };
 		DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */; };
 		DD211A681B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD211A671B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift */; };
@@ -122,6 +123,7 @@
 		DD1B0D801B478FAA00D06BC5 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		DD1B0D821B4AF70800D06BC5 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		DD1B0D841B4AF72500D06BC5 /* CameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
+		DD1C35C11BD5C43C00489C14 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		DD1E4DD51B4C39C3005147DD /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		DD1E4DD61B4C39C3005147DD /* LocationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUtil.swift; sourceTree = "<group>"; };
 		DD211A671B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSpotsTableViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 		DD1B0D1D1B47688900D06BC5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DD1C35C11BD5C43C00489C14 /* SwiftyJSON.swift */,
 				DD1B0D1E1B47688900D06BC5 /* Info.plist */,
 				DD1B0D801B478FAA00D06BC5 /* Bridging-Header.h */,
 				DD1B0D261B47688900D06BC5 /* Images.xcassets */,
@@ -563,6 +566,7 @@
 				DD761FFC1BBE515E009C442D /* DebugImagesTableViewCell.swift in Sources */,
 				DD211A681B9B9CFF00C30D74 /* FilterSpotsTableViewController.swift in Sources */,
 				DD1E4DD91B4C39C3005147DD /* LocationUtil.swift in Sources */,
+				DD1C35C21BD5C43C00489C14 /* SwiftyJSON.swift in Sources */,
 				DD1B0D7C1B478E7A00D06BC5 /* TWPhoto.m in Sources */,
 				DD3B0C691BCDE00E00C7D070 /* SignUpViewController.swift in Sources */,
 				DD1B0D201B47688900D06BC5 /* AppDelegate.swift in Sources */,
