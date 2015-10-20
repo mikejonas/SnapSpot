@@ -25,6 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //FIREBASE
         Firebase.defaultConfig().persistenceEnabled = true
         
+        
+        
+        Alamofire.request(.GET, "http://httpbin.org/get", parameters: ["foo": "bar"])
+            .response { request, response, data, error in
+                print(request)
+                print(response)
+                print(data)
+                print(error)
+        }
+        
+        
+        
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         
         var initialViewController:UIViewController

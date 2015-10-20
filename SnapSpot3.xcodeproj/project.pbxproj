@@ -409,6 +409,8 @@
 				DD1B0D171B47688900D06BC5 /* Frameworks */,
 				DD1B0D181B47688900D06BC5 /* Resources */,
 				FFA58F736D5AE544912ABA62 /* Copy Pods Resources */,
+				DD1C35C71BD5C82C00489C14 /* Run Script */,
+				D240AC4460517225ED9DFA69 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -521,6 +523,37 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D240AC4460517225ED9DFA69 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD1C35C71BD5C82C00489C14 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/IOS/Alamofire.framework",
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 			showEnvVarsInLog = 0;
 		};
 		FFA58F736D5AE544912ABA62 /* Copy Pods Resources */ = {
@@ -720,10 +753,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "\"$(PODS_ROOT)/GoogleMaps/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(PODS_ROOT)/GoogleMaps/Frameworks\"",
+					"$(PROJECT_DIR)/SnapSpot3.xcodeproj",
+				);
 				INFOPLIST_FILE = SnapSpot3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikejonas.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -739,10 +776,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "\"$(PODS_ROOT)/GoogleMaps/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(PODS_ROOT)/GoogleMaps/Frameworks\"",
+					"$(PROJECT_DIR)/SnapSpot3.xcodeproj",
+				);
 				INFOPLIST_FILE = SnapSpot3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikejonas.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
